@@ -910,7 +910,7 @@ class Solution:
 **Space:** O(n)
 
 ## 13. Sort Colors
-**Reference:** https://leetcode.com/problems/merge-intervals/solutions/350272/python3-sort-o-nlog-n/
+**Reference:** https://leetcode.com/problems/sort-colors/solutions/26549/java-solution-both-2-pass-and-1-pass/
 
 **Description:** Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue. We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively. You must solve this problem without using the library's sort function. Follow up: Could you come up with a one-pass algorithm using only constant extra space?
 
@@ -943,6 +943,74 @@ public void sortColors(int[] nums) {
         index++;
     }
 }
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 14. Container With Most Water
+**Reference:** https://leetcode.com/problems/container-with-most-water/description/
+https://leetcode.com/problems/container-with-most-water/ (official)
+
+**Description:** You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container.
+
+**Constraints:** n == height.length, 2 <= n <= 10^5, 0 <= height[i] <= 10^4
+
+**Examples:** 
+```python3
+height = [1,8,6,2,5,4,8,3,7] #=> 49
+height = [1,1] #=> 1
+```
+
+**Hint:** Use two pointers. The area between two lines is limited by the shorter line. Fatter lines have more area (if height is equal). Create start and end pointers. Maintain global max. At each step, find new area and update global max if it is greater. Move the shorter line's ptr forward one step (because shorter is the limiter). Stop when ptrs converge
+
+```javascript
+const maxArea = (height) => {
+  let maxarea = 0;
+  let left = 0, right = height.length - 1;
+
+  while (left < right) {
+      const width = right - left;
+      maxarea = Math.max(maxarea, Math.min(height[left], height[right]) * width);
+
+      if (height[left] > height[right]) right--;
+      else left++;
+  }
+  return maxarea;
+};
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 15. Container With Most Water
+**Reference:** https://leetcode.com/problems/container-with-most-water/description/
+https://leetcode.com/problems/container-with-most-water/ (official)
+
+**Description:** You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container.
+
+**Constraints:** n == height.length, 2 <= n <= 10^5, 0 <= height[i] <= 10^4
+
+**Examples:** 
+```python3
+height = [1,8,6,2,5,4,8,3,7] #=> 49
+height = [1,1] #=> 1
+```
+
+**Hint:** Use two pointers. The area between two lines is limited by the shorter line. Fatter lines have more area (if height is equal). Create start and end pointers. Maintain global max. At each step, find new area and update global max if it is greater. Move the shorter line's ptr forward one step (because shorter is the limiter). Stop when ptrs converge
+
+```javascript
+const maxArea = (height) => {
+  let maxarea = 0;
+  let left = 0, right = height.length - 1;
+
+  while (left < right) {
+      const width = right - left;
+      maxarea = Math.max(maxarea, Math.min(height[left], height[right]) * width);
+
+      if (height[left] > height[right]) right--;
+      else left++;
+  }
+  return maxarea;
+};
 ```
 **Time:** O(n)
 **Space:** O(1)
