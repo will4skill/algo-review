@@ -1118,3 +1118,37 @@ public class Solution {
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 19. Subarray Sum Equals K
+**Reference:** https://leetcode.com/problems/subarray-sum-equals-k/editorial/
+
+**Description:** Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k. A subarray is a contiguous non-empty sequence of elements within an array.
+
+**Constraints:** 1 <= nums.length <= 2 * 10^4, -1000 <= nums[i] <= 1000, -10^7 <= k <= 10^7
+
+**Examples:** 
+```python3
+nums = [1,1,1], k = 2 #=> 2
+nums = [1,2,3], k = 3] #=> 2
+```
+
+**Hint:** Maybe Recursive DP. Keep a global count, use a HashMap. For each number in arr, increament local sum if sum - k is in the hashmap, increment the global count, either way add the sum to the hash map or increment it if it is already there
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count = 0, sum = 0;
+        HashMap < Integer, Integer > map = new HashMap < > ();
+        map.put(0, 1);
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (map.containsKey(sum - k))
+                count += map.get(sum - k);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
+```
+**Time:** O(n)
+**Space:** O(n)
