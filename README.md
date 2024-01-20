@@ -469,3 +469,33 @@ type("caty") is str #=> True
 # const tom = new Person("Tom", 44)
 # console.log(tom instanceof Person) #=> true
 ```
+
+
+## 1. Two Sum
+**Reference:** https://leetcode.com/problems/two-sum/solutions/3619262/3-method-s-c-java-python-beginner-friendly/
+
+**Input:** Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+**Limits:** You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+**Examples:** 
+```python3
+nums = [2,7,11,15], target = 9 #=> [0,1]
+```
+
+**Hint:** Load values into hash map, iterate over nums and check hash map for complement
+
+```python3
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        numMap = {}
+        n = len(nums)
+        for i in range(n):
+            complement = target - nums[i]
+            if complement in numMap:
+                return [numMap[complement], i]
+            numMap[nums[i]] = i
+        return []  # No solution found
+```
+**Time:** O(n)
+**Space:** O(n)
