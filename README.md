@@ -1042,3 +1042,43 @@ def longestConsecutive(self, nums):
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 17. Rotate Array
+**Reference:** https://leetcode.com/problems/rotate-array/solutions/54250/easy-to-read-java-solution/
+
+**Description:** Given an integer array nums, rotate the array to the right by k steps, where k is non-negative. Follow up: Try to come up with as many solutions as you can. There are at least three different ways to solve this problem. Could you do it in-place with O(1) extra space?
+
+**Constraints:** 1 <= nums.length <= 10^5. -2^31 <= nums[i] <= 2^31 - 1. 0 <= k <= 10^5
+
+**Examples:** 
+```python3
+nums = [1,2,3,4,5,6,7], k = 3 #=> [5,6,7,1,2,3,4]
+nums = [-1,-100,3,99], k = 2 #=> [3,99,-1,-100]
+```
+
+**Hint:** 
+Steps:
+1. Reverse entire nums
+2. Reverse nums before k
+3. Reverse nums k to end
+
+```python3
+public void rotate(int[] nums, int k) {
+    k %= nums.length;
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
+}
+
+public void reverse(int[] nums, int start, int end) {
+    while (start < end) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start++;
+        end--;
+    }
+}
+```
+**Time:** O(n)
+**Space:** O(1)
