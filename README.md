@@ -994,7 +994,7 @@ gas = [1,2,3,4,5], cost = [3,4,5,1,2] #=> 3
 gas = [2,3,4], cost = [3,4,3] #=> -1
 ```
 
-**Hint:** "if we run out of fuel say at some ith gas station. All the gas station between ith and starting point are bad starting point as well.
+**Hint:** Sim to maximum sub array. "if we run out of fuel say at some ith gas station. All the gas station between ith and starting point are bad starting point as well.
 So, this means we can start trying at next gas station on the i + 1 station." If it is possible to make a round trip, the sum of all gas - the cost of all trips must be >= 0. Try starting from i = 0, if you reach a negative tank, start again at the next index
 
 ```python3
@@ -1011,3 +1011,34 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 16. Longest Consecutive Sequence
+**Reference:** https://leetcode.com/problems/longest-consecutive-sequence/solutions/41057/simple-o-n-with-explanation-just-walk-each-streak/
+
+**Description:** Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. You must write an algorithm that runs in O(n) time.
+
+**Constraints:** 0 <= nums.length <= 10^5, -10^9 <= nums[i] <= 10^9
+
+**Examples:** 
+```python3
+nums = [100,4,200,1,3,2] #=> 4
+nums = [0,3,7,2,5,8,4,6,0,1] #=> 9
+```
+
+**Hint:** Maybe Recursive DP. Maintain global max. For each number use a set to traverse as for as possible, once you can't, compare that local max with the global max distance, only travere + direction otherwise you'll need some kind of visited set
+
+```python3
+def longestConsecutive(self, nums):
+    nums = set(nums)
+    best = 0
+    for x in nums:
+        if x - 1 not in nums:
+            y = x + 1
+            while y in nums:
+                y += 1
+            best = max(best, y - x)
+    return best
+};
+```
+**Time:** O(n)
+**Space:** O(n)
