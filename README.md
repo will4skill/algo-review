@@ -1082,3 +1082,39 @@ public void reverse(int[] nums, int start, int end) {
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 18. Contiguous Array
+**Reference:** https://leetcode.com/problems/rotate-array/solutions/54250/easy-to-read-java-solution/
+
+**Description:** Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
+
+**Constraints:** 1 <= nums.length <= 10^5, nums[i] is either 0 or 1.
+
+**Examples:** 
+```python3
+nums = [0,1] #=> 2
+nums = [0,1,0] #=> 2
+```
+
+**Hint:** Maybe Recursive DP. Keep track of global max, if curr == 0 subract 1 from count if curr == 1 add 1.  If count == 0, start new subarray length 1. If count is in hashmap replace it iff new count is longer if it is not in the hashmap, add a new hashmap for it
+
+```java
+public class Solution {
+    public int findMaxLength(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        int maxlen = 0, count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            count = count + (nums[i] == 1 ? 1 : -1);
+            if (map.containsKey(count)) {
+                maxlen = Math.max(maxlen, i - map.get(count));
+            } else {
+                map.put(count, i);
+            }
+        }
+        return maxlen;
+    }
+}
+```
+**Time:** O(n)
+**Space:** O(n)
