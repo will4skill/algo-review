@@ -648,3 +648,57 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 7. Squares of a Sorted Array
+**Reference:** https://leetcode.com/problems/move-zeroes/solutions/562911/two-pointers-technique-python-o-n-time-o-1-space/
+
+**Description:** Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order. Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
+
+**Constraints:** 1 <= nums.length <= 10^4, -10^4 <= nums[i] <= 10^4, nums is sorted in non-decreasing order.
+
+**Examples:** 
+```python3
+nums = [-4,-1,0,3,10] #=> [0,1,9,16,100]
+nums = [-7,-3,2,3,11] #=> [4,9,9,49,121]
+```
+
+**Hint:** Square everything, reverse the negative numbers (or just use two pointers), then use merge from merge sort
+
+```python3
+class Solution:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        arr1 = []
+        arr2 = []
+        output = []
+
+        for num in nums:
+            if num < 0:
+                arr1.insert(0,num**2)
+            else:
+                arr2.append(num**2)
+        
+        idx1 = 0
+        idx2 = 0
+
+        while idx1 < len(arr1) and idx2 < len(arr2):
+            num1 = arr1[idx1]
+            num2 = arr2[idx2]
+            if num1 < num2:
+                output.append(num1)
+                idx1 += 1
+            else:
+                output.append(num2)
+                idx2 += 1
+
+        while idx1 < len(arr1):
+            output.append(arr1[idx1])
+            idx1 += 1
+
+        while idx2 < len(arr2):
+            output.append(arr2[idx2])
+            idx2 += 1
+
+        return output
+```
+**Time:** O(n)
+**Space:** O(n)
