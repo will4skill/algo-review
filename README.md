@@ -833,3 +833,78 @@ class Solution {
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 11. Combination Sum
+**Reference:** https://leetcode.com/problems/permutations/discuss/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)
+
+**Description:** Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+**Constraints:** 1 <= nums.length <= 6, -10 <= nums[i] <= 10, All the integers of nums are unique.
+
+**Examples:** 
+```python3
+nums = [1,2,3] #=> [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+nums = [0,1] #=> [[0,1],[1,0]]
+nums = [1] #=> [[1]]
+```
+
+**Hint:** Backtracking, include or don't include each number until target = 0
+
+```java
+public List<List<Integer>> combinationSum(int[] nums, int target) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, target, 0);
+    return list;
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+    if(remain < 0) return;
+    else if(remain == 0) list.add(new ArrayList<>(tempList));
+    else{ 
+        for(int i = start; i < nums.length; i++){
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+**Time:** O(2^n)
+**Space:** O(n)
+
+## 12. Merge Intervals
+**Reference:** https://leetcode.com/problems/merge-intervals/solutions/350272/python3-sort-o-nlog-n/
+
+**Description:** Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+**Constraints:** 1 <= intervals.length <= 10^4, intervals[i].length == 2, 0 <= starti <= endi <= 10^4
+
+**Examples:** 
+```python3
+intervals = [[1,3],[2,6],[8,10],[15,18]] #=> [[1,6],[8,10],[15,18]]
+intervals = [[1,4],[4,5]] #=> [[1,5]]
+```
+
+**Hint:** Sort the intervals, then iterate over them comparing curr to prev and merging if overlap
+
+```python3
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort()
+        merged = []
+        for i in range(len(intervals)):
+            if merged == []:
+                merged.append(intervals[i])
+            else:
+                previous_end = merged[-1][1]
+                current_start = intervals[i][0]
+                current_end = intervals[i][1]
+                if previous_end >= current_start: # overlap
+                    merged[-1][1] = max(previous_end,current_end)
+                else:
+                    merged.append(intervals[i])
+        return merged
+```
+**Time:** O(nlog(n))
+**Space:** O(n)
