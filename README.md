@@ -474,7 +474,7 @@ type("caty") is str #=> True
 ## 1. Two Sum
 **Reference:** https://leetcode.com/problems/two-sum/solutions/3619262/3-method-s-c-java-python-beginner-friendly/
 
-**Input:** Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+**Description:** Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
 **Constraints:** You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
@@ -502,7 +502,7 @@ class Solution:
 ## 2. Best Time to Buy and Sell Stock
 **Reference:** https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 
-**Input:** You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+**Description:** You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
 **Constraints:** 1 <= prices.length <= 10^5, 0 <= prices[i] <= 10^4
 
@@ -530,7 +530,7 @@ class Solution:
 ## 3. Majority Element
 **Reference:** https://leetcode.com/problems/majority-element/solutions/51712/python-different-solutions/
 
-**Input:** Given an array nums of size n, return the majority element. The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+**Description:** Given an array nums of size n, return the majority element. The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
 
 **Constraints:** n == nums.length, 1 <= n <= 5 * 10^4, -10^9 <= nums[i] <= 10^9
 
@@ -561,7 +561,7 @@ class Solution:
 ## 4. Contains Duplicate
 **Reference:** https://leetcode.com/problems/majority-element/solutions/51712/python-different-solutions/
 
-**Input:** Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+**Description:** Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
 **Constraints:** 1 <= nums.length <= 10^5, -10^9 <= nums[i] <= 10^9
 
@@ -592,7 +592,7 @@ class Solution:
 https://aaronice.gitbook.io/lintcode/sweep-line/meeting-rooms
 https://github.com/neetcode-gh/leetcode/blob/main/python/0252-meeting-rooms.py
 
-**Input:** Given an array of meeting time intervals consisting of start and end times[[s1,e1],[s2,e2],...](si< ei), determine if a person could attend all meetings.
+***Description:** Given an array of meeting time intervals consisting of start and end times[[s1,e1],[s2,e2],...](si< ei), determine if a person could attend all meetings.
 
 **Constraints:** ??
 
@@ -616,4 +616,35 @@ class Solution:
         return True
 ```
 **Time:** O(nlog(n))
+**Space:** O(1)
+
+## 6. Move Zeroes
+**Reference:** https://leetcode.com/problems/move-zeroes/solutions/562911/two-pointers-technique-python-o-n-time-o-1-space/
+
+**Description:** Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements. Note that you must do this in-place without making a copy of the array. Follow up: Could you minimize the total number of operations done?
+
+**Constraints:** 1 <= nums.length <= 10^4, -2^31 <= nums[i] <= 2^31 - 1
+
+**Examples:** 
+```python3
+nums = [0,1,0,3,12] #=> [1,3,12,0,0]
+nums = [0] #=> [0]
+```
+
+**Hint:** Fast and slow pointer, slow searches for zeros, swap fast and slow when zero found
+
+```python3
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        slow = 0
+        for fast in range(len(nums)):
+            if nums[fast] != 0 and nums[slow] == 0:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
+
+            # wait while we find a non-zero element to
+            # swap with you
+            if nums[slow] != 0:
+                slow += 1
+```
+**Time:** O(n)
 **Space:** O(1)
