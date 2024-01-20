@@ -743,3 +743,56 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 9. 3Sum
+**Reference:** https://leetcode.com/problems/3sum/solutions/593246/3sum/
+
+**Description:** Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.
+
+**Constraints:** 3 <= nums.length <= 3000, -10^5 <= nums[i] <= 10^5
+
+**Examples:** 
+```python3
+nums = [-1,0,1,2,-1,-4] #=> [[-1,-1,2],[-1,0,1]]
+nums = [0,1,1] #=> []
+nums = [0,0,0] #=> [[0,0,0]]
+```
+
+**Hint:** Sort arr, then for each entry, compare the left and right elements after the current one
+
+```javascript
+const threeSum = (nums) => {
+	nums.sort((a,b) => a-b)
+	const result=[]
+	if(nums.length < 3) return result
+
+  for(let i=0; i< nums.length; i++){
+      let left = i+1
+      let right = nums.length-1
+      if(nums[i] === nums[i-1]) continue
+      // Two Sum II
+      while(left < right){
+          const sum = nums[i] + nums[left] + nums[right]
+          if(sum === 0){
+              const arr=[nums[i], nums[left], nums[right]]
+              result.push(arr)
+              while(left < right && nums[left] === nums[left+1]){
+                  left++
+              }
+              while(left < right && nums[right] === nums[right-1]){
+                  right--
+              }
+              left++
+              right--
+          }else if(sum > 0){
+              right--
+          }else{
+              left++
+          }
+      }
+  }
+  return result
+};
+```
+**Time:** O(n^2)
+**Space:** O(n)
