@@ -476,7 +476,7 @@ type("caty") is str #=> True
 
 **Input:** Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
-**Limits:** You may assume that each input would have exactly one solution, and you may not use the same element twice.
+**Constraints:** You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
 **Examples:** 
 ```python3
@@ -489,8 +489,7 @@ nums = [2,7,11,15], target = 9 #=> [0,1]
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         numMap = {}
-        n = len(nums)
-        for i in range(n):
+        for i in range(len(nums)):
             complement = target - nums[i]
             if complement in numMap:
                 return [numMap[complement], i]
@@ -499,3 +498,31 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 2. Best Time to Buy and Sell Stock
+**Reference:** https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+
+**Input:** You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+**Constraints:** 1 <= prices.length <= 10^5, 0 <= prices[i] <= 10^4
+
+**Examples:** 
+```python3
+prices = [7,1,5,3,6,4] #=> 5
+prices = [7,6,4,3,1] #=> 0, 
+```
+
+**Hint:** Iterate from end, try each buy day
+
+```python3
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxSeen = prices[-1]
+        maxProfitValue = 0
+        for i in range(len(prices) - 2, -1, -1):
+            maxSeen = max(maxSeen, prices[i+1])
+            maxProfitValue = max(maxProfitValue, maxSeen - prices[i])
+        return maxProfitValue
+```
+**Time:** O(n)
+**Space:** O(1)
