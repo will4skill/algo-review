@@ -908,3 +908,41 @@ class Solution:
 ```
 **Time:** O(nlog(n))
 **Space:** O(n)
+
+## 13. Sort Colors
+**Reference:** https://leetcode.com/problems/merge-intervals/solutions/350272/python3-sort-o-nlog-n/
+
+**Description:** Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue. We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively. You must solve this problem without using the library's sort function. Follow up: Could you come up with a one-pass algorithm using only constant extra space?
+
+**Constraints:** n == nums.length, 1 <= n <= 300, nums[i] is either 0, 1, or 2.
+
+**Examples:** 
+```python3
+nums = [2,0,2,1,1,0] #=> [0,0,1,1,2,2]
+nums = [2,0,1] #=> [0,1,2]
+```
+
+**Hint:** Count each color, then insert them in order (2 pass), or 2 pointer (below)
+
+```java
+public void sortColors(int[] nums) {
+    // 1-pass
+    int p1 = 0, p2 = nums.length - 1, index = 0;
+    while (index <= p2) {
+        if (nums[index] == 0) {
+            nums[index] = nums[p1];
+            nums[p1] = 0;
+            p1++;
+        }
+        if (nums[index] == 2) {
+            nums[index] = nums[p2];
+            nums[p2] = 2;
+            p2--;
+            index--;
+        }
+        index++;
+    }
+}
+```
+**Time:** O(n)
+**Space:** O(1)
