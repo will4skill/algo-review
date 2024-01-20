@@ -532,7 +532,7 @@ class Solution:
 
 **Input:** Given an array nums of size n, return the majority element. The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
 
-**Constraints:** 1 <= prices.length <= 10^5, 0 <= prices[i] <= 10^4
+**Constraints:** n == nums.length, 1 <= n <= 5 * 10^4, -10^9 <= nums[i] <= 10^9
 
 **Examples:** 
 ```python3
@@ -556,4 +556,64 @@ class Solution:
         return candidate
 ```
 **Time:** O(n)
+**Space:** O(1)
+
+## 4. Contains Duplicate
+**Reference:** https://leetcode.com/problems/majority-element/solutions/51712/python-different-solutions/
+
+**Input:** Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+**Constraints:** 1 <= nums.length <= 10^5, -10^9 <= nums[i] <= 10^9
+
+**Examples:** 
+```python3
+nums = [1,2,3,1] #=> true
+nums = [1,2,3,4] #=> false
+```
+
+**Hint:** Use set or HashMap
+
+```python3
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        mySet = set()
+        for num in nums:
+            if num in mySet:
+                return True
+            else:
+                mySet.add(num)
+        return False
+```
+**Time:** O(n)
+**Space:** O(n)
+
+## 5. Meeting Rooms
+**Reference:** 
+https://aaronice.gitbook.io/lintcode/sweep-line/meeting-rooms
+https://github.com/neetcode-gh/leetcode/blob/main/python/0252-meeting-rooms.py
+
+**Input:** Given an array of meeting time intervals consisting of start and end times[[s1,e1],[s2,e2],...](si< ei), determine if a person could attend all meetings.
+
+**Constraints:** ??
+
+**Examples:** 
+```python3
+[[0,30],[5,10],[15,20]] #=> false
+[[7,10],[2,4]] #=> true
+```
+
+**Hint:** Sort and then compare each element
+
+```python3
+class Solution:
+    def canAttendMeetings(self, intervals):
+        intervals.sort(key=lambda i: i[0])
+        for i in range(1, len(intervals)):
+            i1 = intervals[i - 1]
+            i2 = intervals[i]
+            if i1[1] > i2[0]:
+                return False
+        return True
+```
+**Time:** O(nlog(n))
 **Space:** O(1)
