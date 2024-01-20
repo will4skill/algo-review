@@ -509,7 +509,7 @@ class Solution:
 **Examples:** 
 ```python3
 prices = [7,1,5,3,6,4] #=> 5
-prices = [7,6,4,3,1] #=> 0, 
+prices = [7,6,4,3,1] #=> 0
 ```
 
 **Hint:** Iterate from end, try each buy day
@@ -523,6 +523,37 @@ class Solution:
             maxSeen = max(maxSeen, prices[i+1])
             maxProfitValue = max(maxProfitValue, maxSeen - prices[i])
         return maxProfitValue
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 3. Majority Element
+**Reference:** https://leetcode.com/problems/majority-element/solutions/51712/python-different-solutions/
+
+**Input:** Given an array nums of size n, return the majority element. The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+**Constraints:** 1 <= prices.length <= 10^5, 0 <= prices[i] <= 10^4
+
+**Examples:** 
+```python3
+nums = [3,2,3] #=> 3
+nums = [2,2,1,1,1,2,2] #=> 2
+```
+
+**Hint:** Boyer Moore: Same element, inc count. Diff and count zero, pick new candidate. Diff and count > 0, decrement
+
+```python3
+class Solution:
+    def majorityElement(self, nums):
+        candidate, count = nums[0], 0
+        for num in nums:
+            if num == candidate: # Same number, increase count
+                count += 1
+            elif count == 0: # diff number and count zero, pick new candidate
+                candidate, count = num, 1
+            else: # diff number and count > 0 decrease candidate 
+                count -= 1
+        return candidate
 ```
 **Time:** O(n)
 **Space:** O(1)
