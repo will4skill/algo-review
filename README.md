@@ -1152,3 +1152,38 @@ public class Solution {
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 20. Meeting Rooms II
+**Reference:** https://aaronice.gitbook.io/lintcode/sweep-line/meeting-rooms-ii
+https://github.com/neetcode-gh/leetcode/blob/main/python/0253-meeting-rooms-ii.py
+
+**Description:** Given an array of meeting time intervals consisting of start and end times[[s1,e1],[s2,e2],...](si< ei), find the minimum number of conference rooms required.
+
+**Constraints:** 1 <= nums.length <= 2 * 10^4, -1000 <= nums[i] <= 1000, -10^7 <= k <= 10^7
+
+**Examples:** 
+```python3
+[[0, 30],[5, 10],[15, 20] #=> 2
+[[7,10],[2,4]] #=> 1
+```
+
+**Hint:** Split the start and end times into separate arrays. Sort each in ascending order. Consider each meeting start time. If it ends before the current meeting end time, you need a new room. If not check the next meeting end time
+
+```python3
+def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        time = []
+        for start, end in intervals:
+            time.append((start, 1))
+            time.append((end, -1))
+        
+        time.sort(key=lambda x: (x[0], x[1]))
+        
+        count = 0
+        max_count = 0
+        for t in time:
+            count += t[1]
+            max_count = max(max_count, count)
+        return max_count
+```
+**Time:** O((N * logN) + (M * logM))
+**Space:** O(1)
