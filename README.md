@@ -1198,7 +1198,7 @@ def minMeetingRooms(self, intervals: List[List[int]]) -> int:
 **Examples:** 
 ```python3
 nums = [-1,2,1,-4], target = 1 #=> 2
-nums = [0,0,0], target =  #=> 0
+nums = [0,0,0], target = 1  #=> 0
 ```
 
 **Hint:** Same as 3sum with global max
@@ -1224,3 +1224,32 @@ class Solution:
 ```
 **Time:** O(n^2)
 **Space:** O(n)
+
+## 22. Non-overlapping Intervals
+**Reference:** https://leetcode.com/problems/non-overlapping-intervals/solutions/276056/python-greedy-interval-scheduling/
+
+**Description:** Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+**Constraints:** 1 <= intervals.length <= 10^5, intervals[i].length == 2, -5 * 10^4 <= starti < endi <= 5 * 10^4
+
+**Examples:** 
+```python3
+intervals = [[1,2],[2,3],[3,4],[1,3]] #=> 1
+intervals = [[1,2],[1,2],[1,2]]  #=> 2
+intervals = [[1,2],[2,3]] #=> 0
+```
+
+**Hint:** Sort the list. Iterate over list. If prev end is past curr start, increment the count. Otherwise, prev becomes curr
+
+```python3
+def eraseOverlapIntervals(intervals):
+	end, cnt = float('-inf'), 0
+	for s, e in sorted(intervals, key=lambda x: x[1]):
+		if s >= end: 
+			end = e
+		else: 
+			cnt += 1
+	return cnt
+```
+**Time:** O(nlog(n))
+**Space:** O(1)
