@@ -2515,11 +2515,11 @@ class Solution:
         last_even = head.next
         
         while last_even is not None and last_even.next is not None:
-            curr_odd.next = last_even.next // point last odd in chain to next odd
-            curr_odd = curr_odd.next // increment curr odd pointer
-            last_even.next = curr_odd.next // point last even to next node
-            last_even = last_even.next // increment last even
-            curr_odd.next = first_even // finish chain
+            curr_odd.next = last_even.next # point last odd in chain to next odd
+            curr_odd = curr_odd.next # increment curr odd pointer
+            last_even.next = curr_odd.next # point last even to next node
+            last_even = last_even.next # increment last even
+            curr_odd.next = first_even # finish chain
         
         return head
 ```
