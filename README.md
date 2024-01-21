@@ -1187,3 +1187,40 @@ def minMeetingRooms(self, intervals: List[List[int]]) -> int:
 ```
 **Time:** O((N * logN) + (M * logM))
 **Space:** O(1)
+
+## 21. 3Sum Closest
+**Reference:** https://leetcode.com/problems/3sum-closest/solutions/7871/python-o-n-2-solution/
+
+**Description:** Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+**Constraints:** 3 <= nums.length <= 500, -1000 <= nums[i] <= 1000, -10^4 <= target <= 10^4
+
+**Examples:** 
+```python3
+nums = [-1,2,1,-4], target = 1 #=> 2
+nums = [0,0,0], target =  #=> 0
+```
+
+**Hint:** Same as 3sum with global max
+
+```python3
+class Solution:
+    def threeSumClosest(self, num, target):
+        num.sort()
+        result = num[0] + num[1] + num[2]
+        for i in range(len(num) - 2):
+            j, k = i+1, len(num) - 1
+            while j < k:
+                sum = num[i] + num[j] + num[k]
+                if sum == target:
+                    return sum
+                if abs(sum - target) < abs(result - target):
+                    result = sum
+                if sum < target:
+                    j += 1
+                elif sum > target:
+                    k -= 1
+        return result
+```
+**Time:** O(n^2)
+**Space:** O(n)
