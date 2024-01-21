@@ -1643,7 +1643,7 @@ s = "3[a2[c]]" #=> "accaccacc"
 s = "2[abc]3[cd]ef" #=> "abcabccdcdcdef"
 ```
 
-**Hint:** If we see digit, it means that we need to form number, so just do it: multiply already formed number by 10 and add this digit.
+**Hint:** Maybe use recursion? If we see digit, it means that we need to form number, so just do it: multiply already formed number by 10 and add this digit.
 If we see open bracket [, it means, that we just right before finished to form our number: so we put it into our stack. Also we put in our stack empty string.
 If we have close bracket ], it means that we just finished [...] block and what we have in our stack: on the top it is solution for what we have inside bracktes, before we have number of repetitions of this string rep and finally, before we have string built previously: so we concatenate str2 and str1 * rep.
 Finally, if we have some other symbol, that is letter, we add it the the last element of our stack.
@@ -1716,6 +1716,68 @@ public int[] asteroidCollision(int[] asteroids) {
         }
         return res;
     }
+```
+**Time:** O(n)
+**Space:** O(n)
+
+## 33. Basic Calculator II
+**Reference:** https://leetcode.com/problems/basic-calculator-ii/solutions/63003/share-my-java-solution/
+
+**Description:** Given a string s which represents an expression, evaluate this expression and return its value. The integer division should truncate toward zero. You may assume that the given expression is always valid. All intermediate results will be in the range of [-2^31, 2^31 - 1]. Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
+
+**Constraints:**
+1. 1 <= s.length <= 3 * 10^5
+2. s consists of integers and operators ('+', '-', '*', '/') separated by some number of spaces.
+3. s represents a valid expression.
+4. All the integers in the expression are non-negative integers in the range [0, 2^31 - 1].
+5. The answer is guaranteed to fit in a 32-bit integer.
+
+**Examples:** 
+```python3
+s = "3+2*2" #=> 7
+s = " 3/2 " #=> 1
+s = " 3+5 / 2 " #=> 5
+```
+
+**Hint:** Iterate over input string. If you encounter a digit append it to any adjacent digits that you just saw in num variable. If + operator, append num to stack. If - operator append -num to stack. If * or / pop stack and * or / num and popped then push result.  At the end of the loop, the stack will contain only numbers. Add all of them together and return the result
+
+```java
+public class Solution {
+	public int calculate(String s) {
+	    int len;
+	    if(s==null || (len = s.length())==0) return 0;
+	    Stack<Integer> stack = new Stack<Integer>();
+	    int num = 0;
+	    char sign = '+';
+	    for(int i=0;i<len;i++){
+	        if(Character.isDigit(s.charAt(i))){
+	            num = num*10+s.charAt(i)-'0';
+	        }
+	        if((!Character.isDigit(s.charAt(i)) &&' '!=s.charAt(i)) || i==len-1){
+	            if(sign=='-'){
+	                stack.push(-num);
+	            }
+	            if(sign=='+'){
+	                stack.push(num);
+	            }
+	            if(sign=='*'){
+	                stack.push(stack.pop()*num);
+	            }
+	            if(sign=='/'){
+	                stack.push(stack.pop()/num);
+	            }
+	            sign = s.charAt(i);
+	            num = 0;
+	        }
+	    }
+	
+	    int re = 0;
+	    for(int i:stack){
+	        re += i;
+	    }
+	    return re;
+	}
+}
 ```
 **Time:** O(n)
 **Space:** O(n)
