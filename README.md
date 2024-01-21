@@ -3546,3 +3546,55 @@ def invertTree(self, root):
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 68. Balanced Binary Tree
+**Reference:** https://leetcode.com/problems/balanced-binary-tree/solutions/35691/the-bottom-up-o-n-solution-would-be-better/
+
+**Description:** Given a binary tree, determine if it is height-balanced.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 5000].
+-10^4 <= Node.val <= 10^4
+
+**Examples:** 
+```python3
+root = [1,2,2,3,3,null,null,4,4] #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/1b563df0-94b1-4b1f-bd6c-6a7c8db17461)
+
+
+```python3
+root = [3,9,20,null,null,15,7] #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/c1645ec2-e88d-4d42-9e93-f87b717c3185)
+
+
+```python3
+root = [] #=> true
+```
+
+**Hint:** Balanced if no two subtrees differ in height by more than 1.  Use bottom up DFS, bubbling up -1 if the height don't match or just check the height at each node (O(n^2))
+
+```cpp
+class solution {
+public:
+int dfsHeight (TreeNode *root) {
+        if (root == NULL) return 0;
+        
+        int leftHeight = dfsHeight (root -> left);
+        if (leftHeight == -1) return -1;
+        int rightHeight = dfsHeight (root -> right);
+        if (rightHeight == -1) return -1;
+        
+        if (abs(leftHeight - rightHeight) > 1)  return -1;
+        return max (leftHeight, rightHeight) + 1;
+    }
+    bool isBalanced(TreeNode *root) {
+        return dfsHeight (root) != -1;
+    }
+};
+```
+**Time:** O(n)
+**Space:** O(1)
