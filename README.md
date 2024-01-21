@@ -2440,3 +2440,256 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 46. Swap Nodes in Pairs
+**Reference:** https://leetcode.com/problems/swap-nodes-in-pairs/submissions/725221815/
+
+**Description:** Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+**Constraints:** 
+The number of nodes in the list is in the range [0, 100].
+0 <= Node.val <= 100
+
+**Examples:** 
+```python3
+head = [1,2,3,4] #=> [2,1,4,3]
+head = [] #=> []
+head = [1] #=> [1]
+```
+
+**Hint:** No real trick, just have to keep track of pointers while iterating over list
+
+```python3
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head or not head.next:
+            return head
+
+        newHead = head.next
+        prev = None
+
+        while head and head.next:
+            sec = head.next
+            third = head.next.next
+
+            head.next = third
+            sec.next = head
+
+            if prev:
+                prev.next = sec
+
+            prev = head
+            head = third
+
+        return newHead
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 47. Odd Even Linked List
+**Reference:** https://leetcode.com/problems/swap-nodes-in-pairs/submissions/725221815/
+
+**Description:** No real trick, just have to keep track of pointers while iterating over list
+
+**Constraints:** 
+The number of nodes in the list is in the range [0, 100].
+0 <= Node.val <= 100
+
+**Examples:** 
+```python3
+head = [1,2,3,4] #=> [2,1,4,3]
+head = [] #=> []
+head = [1] #=> [1]
+```
+
+**Hint:** No real trick, just have to keep track of pointers while iterating over list
+
+```python3
+class Solution:
+    def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return head
+        
+        curr_odd = head
+        first_even = head.next
+        last_even = head.next
+        
+        while last_even is not None and last_even.next is not None:
+            curr_odd.next = last_even.next // point last odd in chain to next odd
+            curr_odd = curr_odd.next // increment curr odd pointer
+            last_even.next = curr_odd.next // point last even to next node
+            last_even = last_even.next // increment last even
+            curr_odd.next = first_even // finish chain
+        
+        return head
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 48. Add Two Numbers
+**Reference:** https://leetcode.com/problems/add-two-numbers/solutions/3675747/beats-100-c-java-python-beginner-friendly/
+
+**Description:** You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+**Constraints:** 
+The number of nodes in each linked list is in the range [1, 100].
+0 <= Node.val <= 9
+It is guaranteed that the list represents a number that does not have leading zeros.
+
+**Examples:** 
+```python3
+l1 = [2,4,3], l2 = [5,6,4] #=> [7,0,8]
+l1 = [0], l2 = [0] #=> [0]
+l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9] #=> [8,9,9,9,0,0,0,1]
+```
+
+**Hint:** Iterate through both lists, while keeping track of carry
+
+```python3
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        dummyHead = ListNode(0)
+        tail = dummyHead
+        carry = 0
+
+        while l1 is not None or l2 is not None or carry != 0:
+            digit1 = l1.val if l1 is not None else 0
+            digit2 = l2.val if l2 is not None else 0
+
+            sum = digit1 + digit2 + carry
+            digit = sum % 10
+            carry = sum // 10
+
+            newNode = ListNode(digit)
+            tail.next = newNode
+            tail = tail.next
+
+            l1 = l1.next if l1 is not None else None
+            l2 = l2.next if l2 is not None else None
+
+        result = dummyHead.next
+        dummyHead.next = None
+        return result
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 49. Sort List
+**Reference:** https://leetcode.com/problems/sort-list/solutions/1795126/c-merge-sort-2-pointer-easy-to-understand/
+
+**Description:** Given the head of a linked list, return the list after sorting it in ascending order. Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
+
+**Constraints:** 
+The number of nodes in the list is in the range [0, 5 * 10^4].
+-10^5 <= Node.val <= 10^5
+
+**Examples:** 
+```python3
+head = [4,2,1,3] #=> [1,2,3,4]
+head = [-1,5,3,4,0] #=> [-1,0,3,4,5]
+head = [] #=> []
+```
+
+**Hint:** 
+"1. Using 2pointer / fast-slow pointer find the middle node of the list.
+2. Now call mergeSort for 2 halves.
+3. Merge the Sort List (divide and conqueror Approach)"
+
+```python3
+class Solution:
+    def sortList(self, head):
+        if head is None or head.next is None:
+            return head
+
+        temp = None
+        slow = head
+        fast = head
+
+        while fast is not None and fast.next is not None:
+            temp = slow
+            slow = slow.next
+            fast = fast.next.next
+
+        temp.next = None
+
+        l1 = self.sortList(head)
+        l2 = self.sortList(slow)
+
+        return self.mergeList(l1, l2)
+
+    def mergeList(self, l1, l2):
+        ptr = ListNode(0)
+        curr = ptr
+
+        while l1 is not None and l2 is not None:
+            if l1.val <= l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+
+            curr = curr.next
+
+        if l1 is not None:
+            curr.next = l1
+
+        if l2 is not None:
+            curr.next = l2
+
+        return ptr.next
+```
+**Time:** O(nlog(n)
+**Space:** O(1)
+
+## 50. Reorder List
+**Reference:** https://leetcode.com/problems/reorder-list/solutions/801883/python-3-steps-to-success-explained/
+
+**Description:** You are given the head of a singly linked-list. The list can be represented as:
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+**Constraints:** 
+The number of nodes in the list is in the range [1, 5 * 10^4].
+1 <= Node.val <= 1000
+
+**Examples:** 
+```python3
+head = [1,2,3,4] #=> [1,4,2,3]
+head = [1,2,3,4,5] #=> [1,5,2,4,3]
+```
+
+**Hint:** Find the middle of the list. Reverse the second half of the list.  Merge the two lists
+
+```python3
+class Solution:
+    def reorderList(self, head):
+        #step 1: find middle
+        if not head: return []
+        slow, fast = head, head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        #step 2: reverse second half
+        prev, curr = None, slow.next
+        while curr:
+            nextt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nextt    
+        slow.next = None
+        
+        #step 3: merge lists
+        head1, head2 = head, prev
+        while head2:
+            nextt = head1.next
+            head1.next = head2
+            head1 = head2
+            head2 = nextt
+```
+**Time:** O(n)
+**Space:** O(1)
