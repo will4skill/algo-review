@@ -2744,3 +2744,69 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 52. Reverse Nodes in k-Group
+**Reference:** https://leetcode.com/problems/reverse-nodes-in-k-group/solutions/11440/non-recursive-java-solution-and-idea/
+
+**Description:** Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list. k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+You may not alter the values in the list's nodes, only nodes themselves may be changed.
+
+Follow-up: Can you solve the problem in O(1) extra memory space?
+
+**Constraints:** 
+The number of nodes in the list is n.
+1 <= k <= n <= 5000
+0 <= Node.val <= 1000
+
+**Examples:** 
+
+```python3
+head = [1,2,3,4,5], k = 2 #=> [2,1,4,3,5]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/a9db01cf-f2c3-4aa4-aa5a-6291db266280)
+
+```python3
+head = [1,2,3,4,5], k = 3 #=> [3,2,1,4,5]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/b65959b0-2523-4a98-a50d-f96cf4d98882)
+
+
+**Hint:** "First, build a function reverse() to reverse the ListNode between begin and end. Then walk thru the linked list and apply reverse() iteratively. See the code below."
+
+```python3
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        def reverse(begin, end):
+            curr = begin.next
+            prev = begin
+            first = curr
+            for _ in range(k):
+                if curr:
+                    next = curr.next
+                    curr.next = prev
+                    prev = curr
+                    curr = next
+            begin.next = prev
+            first.next = curr
+            return first
+
+        if not head or not head.next or k == 1:
+            return head
+
+        dummyhead = ListNode(-1)
+        dummyhead.next = head
+        begin = dummyhead
+        i = 0
+        while head:
+            i += 1
+            if i % k == 0:
+                begin = reverse(begin, head.next)
+                head = begin.next
+            else:
+                head = head.next
+        return dummyhead.next
+```
+**Time:** O(n^2) ??
+**Space:** O(1)
