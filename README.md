@@ -1459,3 +1459,61 @@ s = "a#c", t = "b" #=> false
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 28. Evaluate Reverse Polish Notation
+**Reference:** https://leetcode.com/problems/evaluate-reverse-polish-notation/
+
+**Description:** You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation. Evaluate the expression. Return an integer that represents the value of the expression.
+
+Note that:
+1. The valid operators are '+', '-', '*', and '/'.
+2. Each operand may be an integer or another expression.
+3. The division between two integers always truncates toward zero.
+4. There will not be any division by zero.
+5. The input represents a valid arithmetic expression in a reverse polish notation.
+6. The answer and all the intermediate calculations can be represented in a 32-bit integer.
+ 
+
+**Constraints:** 1 <= tokens.length <= 10^4, tokens[i] is either an operator: "+", "-", "*", or "/", or an integer in the range [-200, 200].
+
+**Examples:** 
+```python3
+tokens = ["2","1","+","3","*"] #=> 9
+tokens = ["4","13","5","/","+"] #=> 6
+```
+
+**Hint:** 
+
+```javascript
+const OPERATORS = new Set(["+", "-", "/", "*"]);
+
+const evalRPN = (tokens) => {
+    const stack = [];
+    for (const token of tokens) {
+        if (!OPERATORS.has(token)) {
+            stack.push(Number(token));
+            continue;
+        }
+        const number2 = stack.pop();
+        const number1 = stack.pop();
+        switch (token) {
+            case "+": {
+                stack.push(number1 + number2);
+                break;
+            } case "-": {
+                stack.push(number1 - number2);
+                break;
+            } case "/": {
+                stack.push(Math.trunc(number1 / number2));
+                break;
+            } case "*": {
+                stack.push(number1 * number2);
+                break;
+            }
+        }
+    }
+    return stack.pop();
+};
+```
+**Time:** O(n)
+**Space:** O(n)
