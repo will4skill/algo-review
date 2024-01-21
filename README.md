@@ -3267,7 +3267,7 @@ class Solution:
 **Description:** Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.
 
 Machine 1 (sender) has the function:
-```
+```code
 string encode(vector<string> strs) {
   // ... your code
   return encoded_string;
@@ -3275,7 +3275,7 @@ string encode(vector<string> strs) {
 ```
 
 Machine 2 (receiver) has the function:
-```
+```code
 vector<string> decode(string s) {
   //... your code
   return strs;
@@ -3283,12 +3283,12 @@ vector<string> decode(string s) {
 ``
 
 So Machine 1 does:
-```
+```code
 string encoded_string = encode(strs);
 ```
 
 and Machine 2 does:
-```
+```code 
 vector<string> strs2 = decode(encoded_string);
 ```
 
