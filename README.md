@@ -1786,6 +1786,7 @@ public class Solution {
 **Reference:** https://leetcode.com/problems/trapping-rain-water/solutions/17357/sharing-my-simple-c-code-o-n-time-o-1-space/
 
 **Description:** Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
 ![image](https://github.com/will4skill/algo-review/assets/10373005/3c2ddbed-c3e1-41bd-8d2c-5a7c8e678f50)
 
 **Constraints:** n == height.length,  1 <= n <= 2 * 10^4, 0 <= height[i] <= 10^5
@@ -1823,3 +1824,59 @@ public:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 35. Basic Calculator
+**Reference:** https://leetcode.com/problems/basic-calculator/solutions/1456850/python-basic-calculator-i-ii-iii-easy-solution-detailed-explanation/
+
+**Description:** Given a string s representing a valid expression, implement a basic calculator to evaluate it, and return the result of the evaluation. Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
+
+**Constraints:**
+1 <= s.length <= 3 * 10^5
+s consists of digits, '+', '-', '(', ')', and ' '.
+s represents a valid expression.
+'+' is not used as a unary operation (i.e., "+1" and "+(2 + 3)" is invalid).
+'-' could be used as a unary operation (i.e., "-1" and "-(2 + 3)" is valid).
+There will be no two consecutive operators in the input.
+Every number and running calculation will fit in a signed 32-bit integer.
+
+**Examples:** 
+```python3
+s = "1 + 1" #=> 2
+s = " 2-1 + 2 " #=> 3
+s = "(1+(4+5+2)-3)+(6+8)" #=> 23
+```
+
+**Hint:** Iterate over input string. If you encounter a digit append it to any adjacent digits that you just saw in num variable. If + operator, append num to stack. If - operator append -num to stack. If * or / pop stack and * or / num and popped then push result. If you encounter a "(" you recurse with the rest of the string. If you encounter a ")" you return from a recursion. At the end of the loop, the stack will contain only numbers. Add all of them together and return the result
+
+```python3
+class Solution:
+    def calculate(self, s):    
+        def calc(it):
+            def update(op, v):
+                if op == "+": stack.append(v)
+                if op == "-": stack.append(-v)
+                if op == "*": stack.append(stack.pop() * v)
+                if op == "/": stack.append(int(stack.pop() / v))
+        
+            num, stack, sign = 0, [], "+"
+            
+            while it < len(s):
+                if s[it].isdigit():
+                    num = num * 10 + int(s[it])
+                elif s[it] in "+-*/":
+                    update(sign, num)
+                    num, sign = 0, s[it]
+                elif s[it] == "(":
+                    num, j = calc(it + 1)
+                    it = j - 1
+                elif s[it] == ")":
+                    update(sign, num)
+                    return sum(stack), it + 1
+                it += 1
+            update(sign, num)
+            return sum(stack)
+
+        return calc(0)
+```
+**Time:** O(n)
+**Space:** O(n)
