@@ -1398,9 +1398,6 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 ```python3
 ["MyQueue", "push", "push", "peek", "pop", "empty"]
 [[], [1], [2], [], [], []] #=> [null, null, null, 1, 1, false]
-
-intervals = [[1,2],[1,2],[1,2]]  #=> 2
-intervals = [[1,2],[2,3]] #=> 0
 ```
 
 **Hint:** Use and input stack and and output stack. Push to input stack. Pop for output stack. Empty checks both stacks, and peek returns the end of the output stack after moving all elements to it from input stack 
@@ -1427,4 +1424,38 @@ class Queue:
         return not self._in and not self._out
 ```
 **Time:** O(1)
+**Space:** O(1)
+
+## 27. Backspace String Compare
+**Reference:** https://leetcode.com/problems/backspace-string-compare/solutions/135603/java-c-python-o-n-time-and-o-1-space/
+
+**Description:** Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character. Note that after backspacing an empty text, the text will continue empty. Follow up: Can you solve it in O(n) time and O(1) space?
+
+**Constraints:** 1 <= s.length, t.length <= 200, s and t only contain lowercase letters and '#' characters.
+
+**Examples:** 
+```python3
+s = "ab#c", t = "ad#c" #=> true
+s = "ab##", t = "c#d#"  #=> true
+s = "a#c", t = "b" #=> false
+```
+
+**Hint:** From inside infinite loop. Iterate from end, keep if char, skip next char if you see #
+
+```python3
+    def backspaceCompare(self, S, T):
+        i, j = len(S) - 1, len(T) - 1
+        backS = backT = 0
+        while True:
+            while i >= 0 and (backS or S[i] == '#'):
+                backS += 1 if S[i] == '#' else -1
+                i -= 1
+            while j >= 0 and (backT or T[j] == '#'):
+                backT += 1 if T[j] == '#' else -1
+                j -= 1
+            if not (i >= 0 and j >= 0 and S[i] == T[j]):
+                return i == j == -1
+            i, j = i - 1, j - 1
+```
+**Time:** O(n)
 **Space:** O(1)
