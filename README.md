@@ -1671,3 +1671,51 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 32. Asteroid Collision
+**Reference:** https://leetcode.com/problems/asteroid-collision/solutions/193403/java-easy-to-understand-solution/
+
+**Description:** We are given an array asteroids of integers representing asteroids in a row. For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed. Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
+
+**Constraints:** 2 <= asteroids.length <= 10^4, -1000 <= asteroids[i] <= 1000, asteroids[i] != 0
+
+**Examples:** 
+```python3
+asteroids = [5,10,-5] #=> [5,10]
+asteroids = [8,-8] #=> []
+asteroids = [10,2,-5] #=> [10]
+```
+
+**Hint:** If the asteroid is with + sign, simply push onto stack since it can't collide, irrespective of whether the stack top is + (both same direction & hence can't collide) or stack top is - (since both in opposite direction & the stack top is present to left of the asteroid & also moving left, they can't collide)
+
+If the asteroid is with - sign, there can be couple of cases :
+1. if stack top is +ve & absolute value is lesser than the asteroid, then it has to be blown off, so pop it off.
+2. if the stack top is also -ve, simply push the asteroid, no question of collision since both move in left direction.
+3. if the absolute value of asteroid & stack top are same, both would be blown off, so effectively pop off from stack & do nothing with the current asteroid.
+
+```java
+public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> s = new Stack<>();
+        for(int i: asteroids){
+            if(i > 0){
+                s.push(i);
+            }else{// i is negative
+                while(!s.isEmpty() && s.peek() > 0 && s.peek() < Math.abs(i)){
+                    s.pop();
+                }
+                if(s.isEmpty() || s.peek() < 0){
+                    s.push(i);
+                }else if(i + s.peek() == 0){
+                    s.pop(); //equal
+                }
+            }
+        }
+        int[] res = new int[s.size()];   
+        for(int i = res.length - 1; i >= 0; i--){
+            res[i] = s.pop();
+        }
+        return res;
+    }
+```
+**Time:** O(n)
+**Space:** O(n)
