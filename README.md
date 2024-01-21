@@ -3260,3 +3260,79 @@ class Solution:
 ```
 **Time:** O(nlogn)
 **Space:** O(n)
+
+## 64. Encode and Decode Strings
+**Reference:** https://leetcode.com/problems/largest-number/solutions/1012321/javascript-with-sort-o-nlogn/
+
+**Description:** Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.
+
+Machine 1 (sender) has the function:
+```
+string encode(vector<string> strs) {
+  // ... your code
+  return encoded_string;
+}
+```
+
+Machine 2 (receiver) has the function:
+```
+vector<string> decode(string s) {
+  //... your code
+  return strs;
+}
+``
+
+So Machine 1 does:
+```
+string encoded_string = encode(strs);
+```
+
+and Machine 2 does:
+```
+vector<string> strs2 = decode(encoded_string);
+```
+
+strs2 in Machine 2 should be the same as strs in Machine 1.
+
+Implement the encode and decode methods.
+
+Note:
+1. The string may contain any possible characters out of 256 valid ascii characters. Your algorithm should be generalized enough to work on any possible characters.
+2. Do not use class member/global/static variables to store states. Your encode and decode algorithms should be stateless.
+3. Do not rely on any library method such as eval or serialize methods. You should implement your own encode/decode algorithm.
+
+**Constraints:** 
+1 <= nums.length <= 100
+0 <= nums[i] <= 10^9
+
+**Examples:** 
+```python3
+nums = [10,2] #=> "210"
+nums = [3,30,34,5,9] #=> "9534330"
+```
+
+**Hint:** Create a delimiter for your encode method. She uses / and the length of the word to avoid collisions with real characters.
+
+```python3
+class Solution:
+    def encode(self, strs):
+        res = ''
+        for s in strs:
+            encoded = str(len(s)) + '/' + s
+            res += encoded
+        return res
+    def decode(self, str):
+        res, i = [], 0
+        while i < len(str):
+            # For example, 12/abc
+            e = i
+            while e < len(str) and str[e] != '/':
+                e += 1
+            size = int(str[i:e])
+            word = str[e + 1, e + 1 + size]
+            i = e + 1 + size
+            res.append(word)
+        return res
+```
+**Time:** O(n)
+**Space:** O(n)
