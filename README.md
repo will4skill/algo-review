@@ -1594,4 +1594,36 @@ class MinStack {
 }
 ```
 **Time:** O(1)
-**Space:** O(1)
+**Space:** O(n)
+
+## 30. Daily Temperatures
+**Reference:** https://leetcode.com/problems/daily-temperatures/
+
+**Description:** Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+
+**Constraints:** 1 <= temperatures.length <= 10^5, 30 <= temperatures[i] <= 100
+
+**Examples:** 
+```python3
+temperatures = [73,74,75,71,69,72,76,73] #=> [1,1,4,2,1,1,0,0]
+temperatures = [30,40,50,60] #=> [1,1,1,0]
+temperatures = [30,60,90] #=> [1,1,0]
+```
+
+**Hint:** Create an answer array with same length as temperature array and initialize it to zeros. Iterate over temperatures. If stack is not empty, there are previous days that have not seen a warmer day.  While curr temp is > preday, set answer[prevDay] = currDay - prevDay. Push curr idx (currDay) onto stack. Note: you are pushing an offset, temp tuple. Return stack
+
+```python3
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        res = [0] * len(temperatures)
+        stack = []  # pair: [temp, index]
+
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1][0]:
+                stackT, stackInd = stack.pop()
+                res[stackInd] = i - stackInd
+            stack.append((t, i))
+        return res
+```
+**Time:** O(n)
+**Space:** O(n) note: (O(1) space possible)
