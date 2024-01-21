@@ -3231,3 +3231,32 @@ class Solution:
 **Time:** O(((N + 26) * N) * (M - N))
 **Space:** O(1)
 
+## 63. Largest Number
+**Reference:** https://leetcode.com/problems/largest-number/solutions/1012321/javascript-with-sort-o-nlogn/
+
+**Description:** Given a list of non-negative integers nums, arrange them such that they form the largest number and return it. Since the result may be very large, so you need to return a string instead of an integer.
+
+**Constraints:** 
+1 <= nums.length <= 100
+0 <= nums[i] <= 10^9
+
+**Examples:** 
+```python3
+nums = [10,2] #=> "210"
+nums = [3,30,34,5,9] #=> "9534330"
+```
+
+**Hint:** Use custom sort that compares the concatenated order of each character. Then join
+
+```python3
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        if not nums or len(nums) == 0:
+            return '0'
+        nums = sorted(map(str, nums), key=lambda x: x * 9, reverse=True)
+        if nums[0] == '0':
+            return '0'
+        return ''.join(nums)
+```
+**Time:** O(nlogn)
+**Space:** O(n)
