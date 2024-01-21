@@ -1298,3 +1298,42 @@ class Solution {
 ```
 **Time:** O(nlogn)
 **Space:** O(n)
+
+## 24. Sliding Window Maximum
+**Reference:** https://leetcode.com/problems/sliding-window-maximum/
+
+**Description:** You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+
+**Constraints:** 1 <= nums.length <= 10^5, -10^4 <= nums[i] <= 10^4, 1 <= k <= nums.length
+
+**Examples:** 
+```python3
+nums = [1,3,-1,-3,5,3,6,7], k = 3 #=> [3,3,5,5,6,7]
+nums = [1], k = 1  #=> [1]
+```
+
+**Hint:** Use deque. Find the max value in the initial window position and save that value in the output array. Start with nums[0] in queue. If new element is smaller, add it to right. Add left most val to output. Max value is always left most value. Remove left value when it is out of bounds. When adding a new value to queue, remove all smaller values. *Monotonically decreasing queue [queue always decreasing]
+
+```python3
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        output = []
+        q = collections.deque()  # index
+        l = r = 0
+        # O(n) O(n)
+        while r < len(nums):
+            # pop smaller values from q
+            while q and nums[q[-1]] < nums[r]:
+                q.pop()
+            q.append(r)
+            # remove left val from window
+            if l > q[0]:
+                q.popleft()
+            if (r + 1) >= k:
+                output.append(nums[q[0]])
+                l += 1
+            r += 1
+        return output
+```
+**Time:** O(n)
+**Space:** O(n)
