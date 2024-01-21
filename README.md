@@ -1880,3 +1880,282 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 36. Largest Rectangle in Histogram
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0084-largest-rectangle-in-histogram.py
+
+**Description:** Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+**Constraints:** 1 <= heights.length <= 10^5, 0 <= heights[i] <= 10^4
+
+**Examples:** 
+
+```python3
+heights = [2,1,5,6,2,3] #=> 10
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/261a3590-cbd7-4aac-8e44-acd2253b9986)
+
+```python3
+heights = [2,4] #=> 4
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d9fb025a-1154-4ac1-9ae5-9431d069ef2b)
+
+
+**Hint:** For each height, store height and start idx (how far back you can extend) tuple in stack. Add new heights until the new height is shorter than the prev top of stack. Compute the previous max area. Pop the stack until you encounter a smaller previous than the new height. Iterate through the remaining stack elements and compute the max area between those and the main loop max area.
+
+```python3
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        maxArea = 0
+        stack = []  # pair: (index, height)
+
+        for i, h in enumerate(heights):
+            start = i
+            while stack and stack[-1][1] > h:
+                index, height = stack.pop()
+                maxArea = max(maxArea, height * (i - index))
+                start = index
+            stack.append((start, h))
+
+        for i, h in stack:
+            maxArea = max(maxArea, h * (len(heights) - i))
+        return maxArea
+```
+**Time:** O(n)
+**Space:** O(n) 
+
+## 37. Maximum Frequency Stack
+**Reference:** https://leetcode.com/problems/maximum-frequency-stack/solutions/163410/c-java-python-o-1/
+
+**Description:** Design a stack-like data structure to push elements to the stack and pop the most frequent element from the stack.
+
+Implement the FreqStack class:
+1. FreqStack() constructs an empty frequency stack.
+2. void push(int val) pushes an integer val onto the top of the stack.
+3. int pop() removes and returns the most frequent element in the stack.
+   a. If there is a tie for the most frequent element, the element closest to the stack's top is removed and returned.
+
+**Constraints:** 
+0 <= val <= 10^9
+At most 2 * 10^4 calls will be made to push and pop.
+It is guaranteed that there will be at least one element in the stack before calling pop.
+
+**Examples:** 
+```python3
+["FreqStack", "push", "push", "push", "push", "push", "push", "pop", "pop", "pop", "pop"]
+[[], [5], [7], [5], [7], [4], [5], [], [], [], []] #=> [null, null, null, null, null, null, null, 5, 7, 5, 4]
+```
+
+**Hint:** Use a freq to count the freq of elements. m is a map of stack. If element x has n frequence, we will push x n times in m[1], m[2] .. m[n]
+maxfreq records the maximum frequence. 
+push(x) will push x to m[++freq[x]]
+pop() will pop from the m[maxfreq]
+
+```python3
+    def __init__(self):
+        self.freq = collections.Counter()
+        self.m = collections.defaultdict(list)
+        self.maxf = 0
+
+    def push(self, x):
+        freq, m = self.freq, self.m
+        freq[x] += 1
+        self.maxf = max(self.maxf, freq[x])
+        m[freq[x]].append(x)
+
+    def pop(self):
+        freq, m, maxf = self.freq, self.m, self.maxf
+        x = m[maxf].pop()
+        if not m[maxf]: self.maxf = maxf - 1
+        freq[x] -= 1
+        return x
+```
+**Time:** O(1)
+**Space:** O(n)
+
+## 38. Longest Valid Parentheses
+**Reference:** https://leetcode.com/problems/longest-valid-parentheses/solutions/14126/my-o-n-solution-using-a-stack/
+
+**Description:** Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses 
+
+**Constraints:** 0 <= s.length <= 3 * 10^4, s[i] is '(', or ')'.
+
+**Examples:** 
+```python3
+s = "(()" #=> 2
+s = ")()())" #=> 4
+s = "" #=> 0
+```
+
+**Hint:** Scan the string from beginning to end.
+If current character is '(',
+push its index to the stack. If current character is ')' and the
+character at the index of the top of stack is '(', we just find a
+matching pair so pop from the stack. Otherwise, we push the index of
+')' to the stack.
+After the scan is done, the stack will only
+contain the indices of characters which cannot be matched. 
+If the stack is empty, the whole input
+string is valid. Otherwise, we can scan the stack to get longest
+valid substring: use the opposite side - substring between adjacent indices
+should be valid parentheses.
+
+```cpp
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n = s.length(), longest = 0;
+        stack<int> st;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(') st.push(i);
+            else {
+                if (!st.empty()) {
+                    if (s[st.top()] == '(') st.pop();
+                    else st.push(i);
+                }
+                else st.push(i);
+            }
+        }
+        if (st.empty()) longest = n;
+        else {
+            int a = n, b = 0;
+            while (!st.empty()) {
+                b = st.top(); st.pop();
+                longest = max(longest, a-b-1);
+                a = b;
+            }
+            longest = max(longest, a);
+        }
+        return longest;
+    }
+};
+```
+**Time:** O(n)
+**Space:** O(n)
+
+## 39. Merge Two Sorted Lists
+**Reference:** https://leetcode.com/problems/merge-two-sorted-lists/solutions/1826666/c-easy-to-understand-2-approaches-recursive-iterative/
+
+**Description:** You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.Return the head of the merged linked list.
+
+**Constraints:**
+The number of nodes in both lists is in the range [0, 50].
+-100 <= Node.val <= 100
+Both list1 and list2 are sorted in non-decreasing order.
+
+**Examples:** 
+```python3
+list1 = [1,2,4], list2 = [1,3,4] #=> [1,1,2,3,4,4]
+list1 = [], list2 = [] #=> []
+list1 = [], list2 = [0] #=> [0]
+```
+
+**Hint:** Use the merge logic from merge sort. Don't forget the longer list leftovers at end. Note: You can also use recursion if you want
+
+```cpp
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+       
+        // if list1 happen to be NULL
+        // we will simply return list2.
+        if(list1 == NULL)
+            return list2;
+		
+        // if list2 happen to be NULL
+        // we will simply return list1.
+        if(list2 == NULL)
+            return list1;
+        
+        ListNode * ptr = list1;
+        if(list1 -> val > list2 -> val)
+        {
+            ptr = list2;
+            list2 = list2 -> next;
+        }
+        else
+        {
+            list1 = list1 -> next;
+        }
+        ListNode *curr = ptr;
+        
+        // till one of the list doesn't reaches NULL
+        while(list1 &&  list2)
+        {
+            if(list1 -> val < list2 -> val){
+                curr->next = list1;
+                list1 = list1 -> next;
+            }
+            else{
+                curr->next = list2;
+                list2 = list2 -> next;
+            }
+            curr = curr -> next;
+                
+        }
+		
+        // adding remaining elements of bigger list.
+        if(!list1)
+            curr -> next = list2;
+        else
+            curr -> next = list1;
+            
+        return ptr;
+       
+    }
+};
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 40. Linked List Cycle
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0739-daily-temperatures.py
+
+**Description:** Given head, the head of a linked list, determine if the linked list has a cycle in it. There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter. Return true if there is a cycle in the linked list. Otherwise, return false.
+
+Follow up: Can you solve it using O(1) (i.e. constant) memory?
+
+**Constraints:** 
+The number of the nodes in the list is in the range [0, 10^4].
+-10^5 <= Node.val <= 10^5
+pos is -1 or a valid index in the linked-list.
+
+**Examples:** 
+
+```python3
+head = [3,2,0,-4], pos = 1 #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/6cbc219c-8680-4a93-a9e6-8e660775555c)
+
+```python3
+head = [1,2], pos = 0 #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4895e03b-0ae6-46c9-b64a-3e1db97b2959)
+
+```python3
+head = [1], pos = -1 #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/40f53512-147f-40a5-89ff-d2cc4d13efe3)
+
+**Hint:** Use a fast (2x) pointer and slow pointer, if they converge before reaching the end there is a cycle. 
+
+```python3
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if head == None: return False
+        slowPtr = head
+        fastPtr = head.next
+        while fastPtr != None and fastPtr.next != None:
+            if slowPtr == fastPtr: return True
+            slowPtr = slowPtr.next
+            fastPtr = fastPtr.next.next
+        return False
+```
+**Time:** O(n)
+**Space:** O(1)
+
