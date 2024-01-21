@@ -1799,7 +1799,7 @@ height = [4,2,0,3,2,5] #=> 9
 
 **Hint:** Note: Move smaller height's pointer toward middle. Create left and right pointers at ends of array. Iterate until they converge. If left height < right height if left height >= leftMax, update leftMax otherwise, increment answer with leftMax - height[left]. Either way, increment left pointer. If left height >= right height repeat proces on right side, but decrement right pointer
 
-```java
+```cpp
 class Solution {
 public:
     int trap(int A[], int n) {
