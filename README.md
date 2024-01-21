@@ -3637,3 +3637,36 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 70. Maximum Depth of Binary Tree
+**Reference:** https://leetcode.com/problems/maximum-depth-of-binary-tree/solutions/1770060/c-recursive-dfs-example-dry-run-well-explained/
+
+**Description:** Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 10^4].
+-100 <= Node.val <= 100
+
+**Examples:** 
+```python3
+root = [3,9,20,null,null,15,7] #=> 3
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/392bc241-239d-4959-8c4a-73ad06c1eb21)
+
+```python3
+root = [1,null,2] #=> 2
+```
+
+**Hint:** Similar to normal recursive DFS except, call recurse on left and right and save the result then swap the results and return root at end
+
+```python3
+class Solution(object):
+    def maxDepth(self, root):
+        if not root: return 0
+        maxLeft = self.maxDepth(root.left)
+        maxRight = self.maxDepth(root.right)
+        return max(maxLeft, maxRight) + 1
+```
+**Time:** O(n)
+**Space:** O(height of tree)
