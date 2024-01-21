@@ -2951,3 +2951,38 @@ class Solution:
 ```
 **Time:** O(nlog(n))
 **Space:** O(1)
+
+## 57. Longest Substring Without Repeating Characters
+**Reference:** https://leetcode.com/problems/longest-substring-without-repeating-characters/solutions/127839/longest-substring-without-repeating-characters/
+
+**Description:** Given a string, find the length of the longest substring without repeating characters.
+
+**Constraints:** 
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] consists of only lowercase English letters.
+
+**Examples:** 
+```python3
+"abcabcbb" #=> 3
+"bbbbb" #=> 1
+"pwwkew" #=> 3
+```
+
+**Hint:** Note: substrings don't get reordered. Use sliding window and a hashMap. Start with left ptrs at index 0. Map the curr char to current index of i. If hashMap already has current char, increment i to one index after hashMap[currentChar]. Update global max if possible globalMax = max(globalMax, j - i + 1). Increment hashMap[currentChar] to j + 1
+
+```javascript
+const lengthOfLongestSubstring = (s) => {
+  let max = 0;
+  const hashMap = {};
+  for (let j = 0, i = 0; j < s.length; j++) {
+    const char = s[j];
+    if (hashMap[char]) i = Math.max(hashMap[char], i) // skip chars
+    max = Math.max(max, j - i + 1);
+    hashMap[char] = j + 1; // Map character to its index
+  }
+  return max
+};
+```
+**Time:** O(n)
+**Space:** O(min(m, n)) n = string size, n = charset size
