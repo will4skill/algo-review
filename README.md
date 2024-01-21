@@ -3189,3 +3189,45 @@ class Solution:
 ```
 **Time:** O(m*nlogn))
 **Space:** O(n)
+
+## 62. Longest Repeating Character Replacement
+**Reference:** https://leetcode.com/problems/longest-repeating-character-replacement/solutions/91271/java-12-lines-o-n-sliding-window-solution-with-explanation/
+
+**Description:** You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.
+
+**Constraints:** 
+1 <= s.length <= 10^5
+s consists of only uppercase English letters.
+0 <= k <= s.length
+
+**Examples:** 
+```python3
+s = "ABAB", k = 2 #=> 4
+s = "AABABBA", k = 1 #=> 4
+```
+
+**Hint:** Use sliding window starting with L and R ptrs at idx 0. Use a map to count the number of current char. If the length of the window - the freq of the most frequent char in window is <= k, keep moving right ptr right. Else move left ptr until valid again. Return largest window
+
+```python3
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        count = [0] * 26
+        start = 0
+        maxCount = 0
+        maxLength = 0
+
+        for end in range(len(s)):
+            count[ord(s[end]) - ord('A')] += 1
+            maxCount = max(maxCount, count[ord(s[end]) - ord('A')])
+
+            if end - start + 1 - maxCount > k:
+                count[ord(s[start]) - ord('A')] -= 1
+                start += 1
+
+            maxLength = max(maxLength, end - start + 1)
+
+        return maxLength  
+```
+**Time:** O(((N + 26) * N) * (M - N))
+**Space:** O(1)
+
