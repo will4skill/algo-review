@@ -3336,3 +3336,58 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 65. Minimum Window Substring
+**Reference:** https://leetcode.com/problems/minimum-window-substring/solutions/26808/here-is-a-10-line-template-that-can-solve-most-substring-problems/
+
+**Description:** Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "". The testcases will be generated such that the answer is unique. Follow up: Could you find an algorithm that runs in O(m + n) time?
+
+**Constraints:** 
+m == s.length
+n == t.length
+1 <= m, n <= 10^5
+s and t consist of uppercase and lowercase English letters.
+
+**Examples:** 
+```python3
+s = "ADOBECODEBANC", t = "ABC" #=> "BANC"
+s = "a", t = "a" #=> "a"
+s = "a", t = "aa" #=> ""
+```
+
+**Hint:** use a hashmap assisted with two pointers
+"1. Use two pointers: start and end to represent a window.
+2. Move end to find a valid window.
+3. When a valid window is found, move start to find a smaller window."
+
+```java
+class Solution {
+  public String minWindow(String s, String t) {
+    int [] map = new int[128];
+    for (char c : t.toCharArray()) {
+      map[c]++;
+    }
+    int start = 0, end = 0, minStart = 0, minLen = Integer.MAX_VALUE, counter = t.length();
+    while (end < s.length()) {
+      final char c1 = s.charAt(end);
+      if (map[c1] > 0) counter--;
+      map[c1]--;
+      end++;
+      while (counter == 0) {
+        if (minLen > end - start) {
+          minLen = end - start;
+          minStart = start;
+        }
+        final char c2 = s.charAt(start);
+        map[c2]++;
+        if (map[c2] > 0) counter++;
+        start++;
+      }
+    }
+
+    return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
+  }
+}
+```
+**Time:** ???
+**Space:** ???
