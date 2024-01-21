@@ -1781,3 +1781,45 @@ public class Solution {
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 34. Trapping Rain Water
+**Reference:** https://leetcode.com/problems/trapping-rain-water/solutions/17357/sharing-my-simple-c-code-o-n-time-o-1-space/
+
+**Description:** Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+![image](https://github.com/will4skill/algo-review/assets/10373005/3c2ddbed-c3e1-41bd-8d2c-5a7c8e678f50)
+
+**Constraints:** n == height.length,  1 <= n <= 2 * 10^4, 0 <= height[i] <= 10^5
+
+**Examples:** 
+```python3
+height = [0,1,0,2,1,0,1,3,2,1,2,1] #=> 6
+height = [4,2,0,3,2,5] #=> 9
+```
+
+**Hint:** Note: Move smaller height's pointer toward middle. Create left and right pointers at ends of array. Iterate until they converge. If left height < right height if left height >= leftMax, update leftMax otherwise, increment answer with leftMax - height[left]. Either way, increment left pointer. If left height >= right height repeat proces on right side, but decrement right pointer
+
+```java
+class Solution {
+public:
+    int trap(int A[], int n) {
+        int left=0; int right=n-1;
+        int res=0;
+        int maxleft=0, maxright=0;
+        while(left<=right){
+            if(A[left]<=A[right]){
+                if(A[left]>=maxleft) maxleft=A[left];
+                else res+=maxleft-A[left];
+                left++;
+            }
+            else{
+                if(A[right]>=maxright) maxright= A[right];
+                else res+=maxright-A[right];
+                right--;
+            }
+        }
+        return res;
+    }
+};
+```
+**Time:** O(n)
+**Space:** O(1)
