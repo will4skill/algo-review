@@ -2810,3 +2810,78 @@ class Solution:
 ```
 **Time:** O(n^2) ??
 **Space:** O(1)
+
+## 53. Valid Palindrome
+**Reference:** https://leetcode.com/problems/valid-palindrome/solutions/350929/solution-in-python-3-beats-100-two-lines-o-1-solution-as-well/
+
+**Description:** A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.
+
+**Constraints:** 
+1 <= s.length <= 2 * 10^5
+s consists only of printable ASCII characters.
+
+**Examples:** 
+```python3
+s = "A man, a plan, a canal: Panama" #=> true
+s = "race a car" #=> false
+s = " " #=> true
+```
+
+**Hint:** Start and end pointers, keep going until they converge
+
+```python3
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+    	i, j = 0, len(s) - 1
+    	while i < j:
+    		a, b = s[i].lower(), s[j].lower()
+    		if a.isalnum() and b.isalnum():
+    			if a != b: return False
+    			else:
+    				i, j = i + 1, j - 1
+    				continue
+    		i, j = i + (not a.isalnum()), j - (not b.isalnum())
+    	return True
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 54. Valid Anagram
+**Reference:** https://leetcode.com/problems/valid-anagram/solutions/3687854/3-method-s-c-java-python-beginner-friendly/
+
+**Description:** Given two strings s and t, return true if t is an anagram of s, and false otherwise. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once. Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
+
+**Constraints:** 
+1 <= s.length, t.length <= 5 * 10^4
+s and t consist of lowercase English letters.
+
+**Examples:** 
+```python3
+s = "anagram", t = "nagaram" #=> true
+s = "rat", t = "car" #=> false
+```
+
+**Hint:** Either sort and compare or use a hashMap to compare character frequencies
+
+```python3
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        count = [0] * 26
+        
+        # Count the frequency of characters in string s
+        for x in s:
+            count[ord(x) - ord('a')] += 1
+        
+        # Decrement the frequency of characters in string t
+        for x in t:
+            count[ord(x) - ord('a')] -= 1
+        
+        # Check if any character has non-zero frequency
+        for val in count:
+            if val != 0:
+                return False
+
+        return True
+```
+**Time:** O(n)
+**Space:** O(n)
