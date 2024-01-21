@@ -1253,3 +1253,48 @@ def eraseOverlapIntervals(intervals):
 ```
 **Time:** O(nlog(n))
 **Space:** O(1)
+
+## 23. Employee Free Time
+**Reference:** https://aaronice.gitbook.io/lintcode/sweep-line/employee-free-time
+
+**Description:** We are given a list scheduleof employees, which represents the working time for each employee.
+Each employee has a list of non-overlappingIntervals, and these intervals are in sorted order.
+Return the list of finite intervals representing common, positive-length free time forallemployees, also in sorted order. 
+
+(Even though we are representing Intervals in the form [x, y], the objects inside are Intervals, not lists or arrays. For example, schedule[0][0].start = 1, schedule[0][0].end = 2, and schedule[0][0][0] is not defined.)
+
+Also, we wouldn't include intervals like [5, 5] in our answer, as they have zero length. 0 <= schedule[i].start < schedule[i].end <= 10^8.
+
+**Constraints:** schedule and schedule[i] are lists with lengths in range [1, 50].
+
+**Examples:** 
+```python3
+schedule = [[[1,2],[5,6]],[[1,3]],[[4,10]]] #=> [[3,4]]
+schedule = [[[1,3],[6,7]],[[2,4]],[[2,5],[9,12]]]  #=> [[5,6],[7,9]]
+```
+
+**Hint:** Sort the intervals by start times. Initialize temp to be the first interval. Iterate over the interval list.  If temp.end < curr.start (no overlap) add that interval to the output and set temp to current. Otherwise, if there is overlap and the current interval ends after temp set temp to be the current interval.
+
+```java
+class Solution {
+    public List<Interval> employeeFreeTime(List<List<Interval>> avails) {
+        List<Interval> result = new ArrayList<>();
+        List<Interval> timeLine = new ArrayList<>();
+        avails.forEach(e -> timeLine.addAll(e));
+        Collections.sort(timeLine, ((a, b) -> a.start - b.start));
+
+        Interval temp = timeLine.get(0);
+        for (Interval each : timeLine) {
+            if (temp.end < each.start) {
+                result.add(new Interval(temp.end, each.start));
+                temp = each;
+            } else {
+                temp = temp.end < each.end ? each : temp;
+            }
+        }
+        return result;
+    }
+}
+```
+**Time:** O(nlogn)
+**Space:** O(n)
