@@ -3506,3 +3506,43 @@ public boolean isPalindrome(String s){
 ```
 **Time:** ???
 **Space:** ???
+
+## 67. Invert Binary Tree
+**Reference:** https://leetcode.com/problems/invert-binary-tree/solutions/62714/3-4-lines-python/
+
+**Description:** Given the root of a binary tree, invert the tree, and return its root.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+
+**Examples:** 
+```python3
+root = [4,2,7,1,3,6,9] #=> [4,7,2,9,6,3,1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/e2ec979c-6302-48a1-8262-35c1f2a24f77)
+
+
+```python3
+root = [2,1,3] #=> [2,3,1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4851be24-ae71-4ac0-91e3-6e9c9c9ea8fa)
+
+
+```python3
+root = [] #=> []
+```
+
+**Hint:** Similar to normal recursive DFS except, call recurse on left and right and save the result then swap the results and return root at end
+
+```python3
+def invertTree(self, root):
+    if root:
+        invert = self.invertTree
+        root.left, root.right = invert(root.right), invert(root.left)
+        return root
+```
+**Time:** O(n)
+**Space:** O(n)
