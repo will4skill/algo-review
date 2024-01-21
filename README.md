@@ -3152,3 +3152,40 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 61. Group Anagrams
+**Reference:** https://leetcode.com/problems/group-anagrams/solutions/2384037/python-easily-understood-hash-table-fast-simple/
+
+**Description:** Given an array of strings strs, group the anagrams together. You can return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+**Constraints:** 
+1 <= strs.length <= 10^4
+0 <= strs[i].length <= 100
+strs[i] consists of lowercase English letters.
+
+**Examples:** 
+```python3
+strs = ["eat","tea","tan","ate","nat","bat"] #=> [["bat"],["nat","tan"],["ate","eat","tea"]]
+strs = [""] #=> [[""]]
+strs = ["a"] #=> [["a"]]
+```
+
+**Hint:** Use hash table. The key is the character count the values are the strings themselves. Return the hash table values
+
+```python3
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        strs_table = {}
+
+        for string in strs:
+            sorted_string = ''.join(sorted(string))
+
+            if sorted_string not in strs_table:
+                strs_table[sorted_string] = []
+
+            strs_table[sorted_string].append(string)
+
+        return list(strs_table.values())   
+```
+**Time:** O(m*nlogn))
+**Space:** O(n)
