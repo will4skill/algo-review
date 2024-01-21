@@ -2986,3 +2986,82 @@ const lengthOfLongestSubstring = (s) => {
 ```
 **Time:** O(n)
 **Space:** O(min(m, n)) n = string size, n = charset size
+
+## 58. String to Integer (atoi)
+**Reference:** https://leetcode.com/problems/string-to-integer-atoi/solutions/425289/python-99-89-no-cheating-by-using-int/
+
+**Description:** Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
+
+The algorithm for myAtoi(string s) is as follows:
+
+1. Read in and ignore any leading whitespace.
+2. Check if the next character (if not already at the end of the string) is '-' or '+'. Read this character in if it is either. This determines if the final result is negative or positive respectively. Assume the result is positive if neither is present.
+3. Read in next the characters until the next non-digit character or the end of the input is reached. The rest of the string is ignored.
+4. Convert these digits into an integer (i.e. "123" -> 123, "0032" -> 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).
+5. If the integer is out of the 32-bit signed integer range [-2^31, 2^31 - 1], then clamp the integer so that it remains in the range. Specifically, integers less than -2^31 should be clamped to -2^31, and integers greater than 2^31 - 1 should be clamped to 2^31 - 1.
+6. Return the integer as the final result.
+
+Note:
+1. Only the space character ' ' is considered a whitespace character.
+2. Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.
+
+**Constraints:** 
+0 <= s.length <= 200
+s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
+
+**Examples:** 
+```python3
+s = "42" #=> 42
+s = "   -42" #=> -42
+s = "4193 with words" #=> 4193
+```
+
+**Hint:** Remove leading whitespace. Note the sign. Use hashMap to conver digits to numbers. Check for overflow.
+
+```python3
+MAPPING = {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
+    "0": 0,
+}
+
+MAX_INT = 2**31-1
+MIN_INT = -(2**31)
+
+class Solution:
+    def myAtoi(self, string: str) -> int:
+        s = string.lstrip(' ')
+        if not s:
+            return 0
+        
+        sign = -1 if s[0] == "-" else 1
+        if sign != 1 or s[0] == "+":
+            s = s[1:]
+            
+        res = 0
+        for c in s:
+            if c not in MAPPING:
+                return self.limit(res * sign)
+            
+            res *= 10
+            res += MAPPING[c]
+            
+        return self.limit(res * sign)
+    
+    def limit(self, x: int) -> int:
+        if x > MAX_INT:
+            return MAX_INT
+        if x < MIN_INT:
+            return MIN_INT
+        return x
+```
+**Time:** O(n)
+**Space:** O(1)
+
