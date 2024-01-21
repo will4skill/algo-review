@@ -2917,3 +2917,37 @@ class Solution(object):
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 56. Longest Common Prefix
+**Reference:** https://leetcode.com/problems/longest-common-prefix/solutions/3273176/python3-c-java-19-ms-beats-99-91/
+
+**Description:** Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string "".
+
+**Constraints:** 
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] consists of only lowercase English letters.
+
+**Examples:** 
+```python3
+strs = ["flower","flow","flight"] #=> "fl"
+strs = ["dog","racecar","car"] #=> ""
+```
+
+**Hint:** Sort the input list v lexicographically. "If the array is sorted alphabetically then you can assume that the first element of the array and the last element of the array will have most different prefixes of all comparisons that could be made between strings in the array. If this is true, you only have to compare these two strings."
+
+```python3
+class Solution:
+    def longestCommonPrefix(self, v: List[str]) -> str:
+        ans=""
+        v=sorted(v)
+        first=v[0]
+        last=v[-1]
+        for i in range(min(len(first),len(last))):
+            if(first[i]!=last[i]):
+                return ans
+            ans+=first[i]
+        return ans 
+```
+**Time:** O(nlog(n))
+**Space:** O(1)
