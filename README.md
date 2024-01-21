@@ -1597,7 +1597,7 @@ class MinStack {
 **Space:** O(n)
 
 ## 30. Daily Temperatures
-**Reference:** https://leetcode.com/problems/daily-temperatures/
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0739-daily-temperatures.py
 
 **Description:** Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
 
@@ -1627,3 +1627,47 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n) note: (O(1) space possible)
+
+## 31. Decode String
+**Reference:** https://leetcode.com/problems/decode-string/solutions/941309/python-stack-solution-explained/
+
+**Description:** Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer. You may assume that the input string is always valid; there are no extra white spaces, square brackets are well-formed, etc. Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there will not be input like 3a or 2[4].
+The test cases are generated so that the length of the output will never exceed 10^5.
+
+**Constraints:** 1 <= s.length <= 30, s consists of lowercase English letters, digits, and square brackets '[]', s is guaranteed to be a valid input. All the integers in s are in the range [1, 300].
+
+**Examples:** 
+```python3
+s = "3[a]2[bc]" #=> "aaabcbc"
+s = "3[a2[c]]" #=> "accaccacc"
+s = "2[abc]3[cd]ef" #=> "abcabccdcdcdef"
+```
+
+**Hint:** If we see digit, it means that we need to form number, so just do it: multiply already formed number by 10 and add this digit.
+If we see open bracket [, it means, that we just right before finished to form our number: so we put it into our stack. Also we put in our stack empty string.
+If we have close bracket ], it means that we just finished [...] block and what we have in our stack: on the top it is solution for what we have inside bracktes, before we have number of repetitions of this string rep and finally, before we have string built previously: so we concatenate str2 and str1 * rep.
+Finally, if we have some other symbol, that is letter, we add it the the last element of our stack.
+
+```python3
+class Solution:
+    def decodeString(self, s):
+        it, num, stack = 0, 0, [""]
+        while it < len(s):
+            if s[it].isdigit():
+                num = num * 10 + int(s[it])
+            elif s[it] == "[":
+                stack.append(num)
+                num = 0
+                stack.append("")
+            elif s[it] == "]":
+                str1 = stack.pop()
+                rep = stack.pop()
+                str2 = stack.pop()
+                stack.append(str2 + str1 * rep)
+            else:
+                stack[-1] += s[it]              
+            it += 1           
+        return "".join(stack)
+```
+**Time:** O(n)
+**Space:** O(n)
