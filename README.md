@@ -2693,3 +2693,54 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 51. Rotate List (right by k places)
+**Reference:** https://leetcode.com/problems/rotate-list/solutions/22715/share-my-java-solution-with-explanation/
+
+**Description:** Given the head of a linked list, rotate the list to the right by k places.
+
+**Constraints:** 
+The number of nodes in the list is in the range [0, 500].
+-100 <= Node.val <= 100
+0 <= k <= 2 * 10^9
+
+**Examples:** 
+
+```python3
+head = [1,2,3,4,5], k = 2 #=> [4,5,1,2,3]
+```
+![image](https://github.com/will4skill/algo-review/assets/10373005/123dc358-5cad-4bfc-b8a6-9fea4f5c5644)
+
+```python3
+head = [0,1,2], k = 4 #=> [2,0,1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/148d7bc1-cc2b-452d-8b31-759e55eafa6f)
+
+**Hint:** "Since n may be a large number compared to the length of list. So we need to know the length of linked list.After that, move the list after the (l-n%l )th node to the front to finish the rotation."
+
+```python3
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        fast, slow = dummy, dummy
+
+        i = 0
+        while fast.next: # Get the total length 
+            fast = fast.next
+            i += 1
+
+        for j in range(i - k % i): # Get the i-n%i th node
+            slow = slow.next
+
+        fast.next = dummy.next # Do the rotation
+        dummy.next = slow.next
+        slow.next = None
+
+        return dummy.next
+```
+**Time:** O(n)
+**Space:** O(1)
