@@ -2885,3 +2885,35 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 55. Longest Palindrome
+**Reference:** https://leetcode.com/problems/longest-palindrome/submissions/1136019451/
+
+**Description:** Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters. Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
+
+**Constraints:** 
+1 <= s.length <= 2000
+s consists of lowercase and/or uppercase English letters only.
+
+**Examples:** 
+```python3
+s = "abccccdd" #=> 7
+s = "a" #=> 1
+```
+
+**Hint:** Use a hashMap of character frequencies. Iterate over values. If value is even, add it to total. If value is odd, add it - 1 to the total. At the end return total if no odd found and total + 1 if odd found
+
+```python3
+class Solution(object):
+    def longestPalindrome(self, s):
+        hash = set()
+        for c in s:
+            if c not in hash:
+                hash.add(c)
+            else:
+                hash.remove(c)
+        # len(hash) is the number of the odd letters
+        return len(s) - len(hash) + 1 if len(hash) > 0 else len(s)
+```
+**Time:** O(n)
+**Space:** O(1)
