@@ -3065,3 +3065,90 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
+## 59. Longest Palindromic Substring
+**Reference:** https://leetcode.com/problems/longest-palindromic-substring/solutions/2928/Very-simple-clean-java-solution/
+
+**Description:** Given a string s, return the longest palindromic substring in s.
+
+**Constraints:** 
+1 <= s.length <= 1000
+s consist of only digits and English letters.
+
+**Examples:** 
+```python3
+s = "babad" #=> "bab"
+s = "cbbd" #=> "bb"
+```
+
+**Hint:** For each element in array, try to grow left and right from current index (odd) or curr index and curr index + 1 (even)
+
+```python3
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        self.lo, self.maxLen = 0, 0
+
+        if len(s) < 2:
+            return s
+
+        for i in range(len(s) - 1):
+            self.extendPalindrome(s, i, i)  # assume odd length, try to extend Palindrome as possible
+            self.extendPalindrome(s, i, i + 1)  # assume even length
+
+        return s[self.lo:self.lo + self.maxLen]
+
+    def extendPalindrome(self, s: str, j: int, k: int) -> None:
+        while j >= 0 and k < len(s) and s[j] == s[k]:
+            j -= 1
+            k += 1
+        if self.maxLen < k - j - 1:
+            self.lo = j + 1
+            self.maxLen = k - j - 1
+```
+**Time:** O(n^2)
+**Space:** O(n) ??
+
+## 60. Find All Anagrams in a String
+**Reference:** https://leetcode.com/problems/find-all-anagrams-in-a-string/solutions/1737985/python3-sliding-window-hash-table-explained/
+
+**Description:** Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+**Constraints:** 
+1 <= s.length, p.length <= 3 * 10^4
+s and p consist of lowercase English letters.
+
+**Examples:** 
+```python3
+s = "cbaebabacd", p = "abc" #=> [0,6]
+s = "abab", p = "ab" #=> [0,1,2]
+```
+
+**Hint:** "First, we have to create a hash map with letters from p as keys and its frequencies as values. Then, we start sliding the window [0..len(s)] over the s. Every time a letter gets out of the window, we increase the corresponding counter in the hashmap, and when a letter gets in the window - we decrease. As soon as all counters in the hashmap become zeros we encountered an anagram."
+
+```python3
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        hm, res, pL, sL = defaultdict(int), [], len(p), len(s)
+        if pL > sL: return []
+
+        # build hashmap
+        for ch in p: hm[ch] += 1
+
+        # initial full pass over the window
+        for i in range(pL-1):
+            if s[i] in hm: hm[s[i]] -= 1
+            
+        # slide the window with stride 1
+        for i in range(-1, sL-pL+1):
+            if i > -1 and s[i] in hm:
+                hm[s[i]] += 1
+            if i+pL < sL and s[i+pL] in hm: 
+                hm[s[i+pL]] -= 1
+                
+            # check whether we encountered an anagram
+            if all(v == 0 for v in hm.values()): 
+                res.append(i+1)
+                
+        return res        
+```
+**Time:** O(n)
+**Space:** O(1)
