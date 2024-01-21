@@ -2159,3 +2159,284 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
+## 41. Reverse Linked List
+**Reference:** https://www.structy.net/problems/reverse-list
+
+**Description:** Given the head of a singly linked list, reverse the list, and return the reversed list. Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+**Constraints:** The number of nodes in the list is the range [0, 5000]. -5000 <= Node.val <= 5000
+
+**Examples:** 
+```python3
+head = [1,2,3,4,5] #=> [5,4,3,2,1]
+head = [1,2] #=> [2,1]
+head = [] #=> []
+```
+
+**Hint:** You need ptrs to curr prev and next
+
+```python3
+def reverse_list(head):
+  prev = None
+  current = head
+  while current is not None:
+    next = current.next
+    current.next = prev
+    prev = current
+    current = next
+  return prev
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 42. Middle of the Linked List
+**Reference:** https://leetcode.com/problems/middle-of-the-linked-list/solutions/154619/c-java-python-slow-and-fast-pointers/
+
+**Description:** Given the head of a singly linked list, return the middle node of the linked list. If there are two middle nodes, return the second middle node.
+
+**Constraints:** The number of nodes in the list is in the range [1, 100]. 1 <= Node.val <= 100
+
+**Examples:** 
+```python3
+head = [1,2,3,4,5] #=> [3,4,5]
+head = [1,2,3,4,5,6] #=> [4,5,6]
+```
+
+**Hint:** Fast ptr (2x), slow ptr (1x)
+
+```python3
+    def middleNode(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 43. Palindrome Linked List
+**Reference:** https://leetcode.com/problems/palindrome-linked-list/solutions/64501/java-easy-to-understand/
+
+**Description:** Given the head of a singly linked list, return true if it is a palindrome or false otherwise. Follow up: Could you do it in O(n) time and O(1) space?
+
+**Constraints:** The number of nodes in the list is in the range [1, 10^5]. 0 <= Node.val <= 9
+
+**Examples:** 
+```python3
+head = [1,2,2,1] #=> true
+head = [1,2] #=> false
+```
+
+**Hint:** Use fast and slow to get ptrs to the mid and end. Reverse from end to mid, iterate toward middle comparing the chars
+
+```java
+public boolean isPalindrome(ListNode head) {
+    ListNode fast = head, slow = head;
+    while (fast != null && fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    if (fast != null) { // odd nodes: let right half smaller
+        slow = slow.next;
+    }
+    slow = reverse(slow);
+    fast = head;
+    
+    while (slow != null) {
+        if (fast.val != slow.val) {
+            return false;
+        }
+        fast = fast.next;
+        slow = slow.next;
+    }
+    return true;
+}
+
+public ListNode reverse(ListNode head) {
+    ListNode prev = null;
+    while (head != null) {
+        ListNode next = head.next;
+        head.next = prev;
+        prev = head;
+        head = next;
+    }
+    return prev;
+}
+```
+**Time:** O(n)
+**Space:** O(1)
+
+## 44. LRU Cache
+**Reference:** https://leetcode.com/problems/lru-cache/solutions/45911/java-hashtable-double-linked-list-with-a-touch-of-pseudo-nodes/
+
+**Description:** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+
+Implement the LRUCache class:
+1. LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+2. int get(int key) Return the value of the key if the key exists, otherwise return -1.
+3. void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+The functions get and put must each run in O(1) average time complexity.
+
+**Constraints:** 
+1 <= capacity <= 3000
+0 <= key <= 10^4
+0 <= value <= 10^5
+At most 2 * 10^5 calls will be made to get and put.
+
+**Examples:** 
+```python3
+["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]] #=> [null, null, null, 1, null, -1, null, -1, 3, 4]
+```
+
+**Hint:** You can use a hashTable with integer keys and double linked list values
+
+```java
+import java.util.Hashtable;
+
+public class LRUCache {
+
+class DLinkedNode {
+  int key;
+  int value;
+  DLinkedNode pre;
+  DLinkedNode post;
+}
+
+/**
+ * Always add the new node right after head;
+ */
+private void addNode(DLinkedNode node) {
+    
+  node.pre = head;
+  node.post = head.post;
+
+  head.post.pre = node;
+  head.post = node;
+}
+
+/**
+ * Remove an existing node from the linked list.
+ */
+private void removeNode(DLinkedNode node){
+  DLinkedNode pre = node.pre;
+  DLinkedNode post = node.post;
+
+  pre.post = post;
+  post.pre = pre;
+}
+
+/**
+ * Move certain node in between to the head.
+ */
+private void moveToHead(DLinkedNode node){
+  this.removeNode(node);
+  this.addNode(node);
+}
+
+// pop the current tail. 
+private DLinkedNode popTail(){
+  DLinkedNode res = tail.pre;
+  this.removeNode(res);
+  return res;
+}
+
+private Hashtable<Integer, DLinkedNode> 
+  cache = new Hashtable<Integer, DLinkedNode>();
+private int count;
+private int capacity;
+private DLinkedNode head, tail;
+
+public LRUCache(int capacity) {
+  this.count = 0;
+  this.capacity = capacity;
+
+  head = new DLinkedNode();
+  head.pre = null;
+
+  tail = new DLinkedNode();
+  tail.post = null;
+
+  head.post = tail;
+  tail.pre = head;
+}
+
+public int get(int key) {
+
+  DLinkedNode node = cache.get(key);
+  if(node == null){
+    return -1; // should raise exception here.
+  }
+
+  // move the accessed node to the head;
+  this.moveToHead(node);
+
+  return node.value;
+}
+
+
+public void put(int key, int value) {
+  DLinkedNode node = cache.get(key);
+
+  if(node == null){
+
+    DLinkedNode newNode = new DLinkedNode();
+    newNode.key = key;
+    newNode.value = value;
+
+    this.cache.put(key, newNode);
+    this.addNode(newNode);
+
+    ++count;
+
+    if(count > capacity){
+      // pop the tail
+      DLinkedNode tail = this.popTail();
+      this.cache.remove(tail.key);
+      --count;
+    }
+  }else{
+    // update the value.
+    node.value = value;
+    this.moveToHead(node);
+  }
+}
+
+}
+```
+**Time:** O(1)??
+**Space:** O(n)
+
+## 45. Remove Nth Node From End of List
+**Reference:** https://leetcode.com/problems/remove-nth-node-from-end-of-list/solutions/1164542/js-python-java-c-easy-two-pointer-solution-w-explanation/
+
+**Description:** Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+**Constraints:** 
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+
+**Examples:** 
+```python3
+head = [1,2,3,4,5], n = 2 #=> [1,2,3,5]
+head = [1], n = 1 #=> []
+head = [1,2], n = 1 #=> [1]
+```
+
+**Hint:** Use fast and slow pointers: "stagger our two pointers by n nodes by giving the first pointer (fast) a head start before starting the second pointer (slow). Doing this will cause slow to reach the n'th node from the end at the same time that fast reaches the end."
+
+```python3
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        fast, slow = head, head
+        for _ in range(n): fast = fast.next
+        if not fast: return head.next
+        while fast.next: fast, slow = fast.next, slow.next
+        slow.next = slow.next.next
+        return head
+```
+**Time:** O(n)
+**Space:** O(1)
