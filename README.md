@@ -3598,3 +3598,42 @@ int dfsHeight (TreeNode *root) {
 ```
 **Time:** O(n)
 **Space:** O(1)
+
+## 69. Diameter of Binary Tree
+**Reference:** https://leetcode.com/problems/diameter-of-binary-tree/solutions/1102557/diameter-of-binary-tree/
+
+**Description:** Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root. Note: The length of path between two nodes is represented by the number of edges between them.
+
+**Constraints:** 
+???
+
+**Examples:** 
+```python3
+          1
+         / \
+        2   3
+       / \
+      4   5
+#=> 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
+```
+
+**Hint:** Return the longest path between any two nodes. You don't have to pass throught the root. The solution is essentially the same as the height algorithm, except you are updating a global diameter variable each iteration rightHeight + leftHeight is greater than it. Tim note, would this actaully be n^2??
+
+```python3
+class Solution:
+    def diameterOfBinaryTree(self, root):
+        self.diameter = 0
+
+        def howHigh(node):
+            if not node:
+                return 0
+            left = howHigh(node.left)
+            right = howHigh(node.right)
+            self.diameter = max(self.diameter, left + right)
+            return max(left, right) + 1
+
+        howHigh(root)
+        return self.diameter
+```
+**Time:** O(n)
+**Space:** O(n)
