@@ -3812,7 +3812,7 @@ class Solution:
 **Space:** O(height of taller tree)
 
 ## 74. Binary Tree Level Order Traversal
-**Reference:** https://leetcode.com/problems/subtree-of-another-tree/
+**Reference:** https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
 **Description:** Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
 
@@ -3872,6 +3872,65 @@ class Solution:
                 if node.right: queue.append(node.right)
             result.append(level)
         return result
+```
+**Time:** O(n)
+**Space:** O(n)
+
+## 75. Lowest Common Ancestor of a Binary Tree
+**Reference:** https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/152682/python-simple-recursive-solution-with-detailed-explanation/
+
+**Description:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree. According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+**Constraints:** 
+The number of nodes in the tree is in the range [2, 10^5].
+-10^9 <= Node.val <= 10^9
+All Node.val are unique.
+p != q
+p and q will exist in the tree.
+
+**Examples:** 
+
+```python3
+root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1 #=> 3
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/f012ca04-eb47-41d3-b51a-16a9758c5037)
+
+```python3
+root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4 #=> 5
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/e24c2c4a-055d-4b1e-bc7f-87c24a9bda55)
+
+
+```python3
+root = [1,2], p = 1, q = 2 #=> 1
+```
+
+**Hint:** Recursively, find a path to target 1, find a path to target 2. Put those path arrays into a set. Traverse the other array leaf up and return the first intersecting node. 
+See below for an alternative approach:
+
+```python3
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # If looking for me, return myself
+        if root == p or root == q:
+            return root
+        left = right = None
+        # else look in left and right child
+        if root.left:
+            left = self.lowestCommonAncestor(root.left, p, q)
+        if root.right:
+            right = self.lowestCommonAncestor(root.right, p, q)
+        # if both children returned a node, means
+        # both p and q found so parent is LCA
+        if left and right:
+            return root
+        # either one of the chidren returned a node, meaning either p or q found on left or right branch.
+        # Example: assuming 'p' found in left child, right child returned 'None'. This means 'q' is
+        # somewhere below node where 'p' was found we dont need to search all the way, 
+        # because in such scenarios, node where 'p' found is LCA
+        return left or right
 ```
 **Time:** O(n)
 **Space:** O(n)
