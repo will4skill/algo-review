@@ -3810,3 +3810,68 @@ class Solution:
 ```
 **Time:** O(S*T)
 **Space:** O(height of taller tree)
+
+## 74. Binary Tree Level Order Traversal
+**Reference:** https://leetcode.com/problems/subtree-of-another-tree/
+
+**Description:** Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 2000].
+-1000 <= Node.val <= 1000
+
+**Examples:** 
+```python3
+root = [3,9,20,null,null,15,7] #=> [[3],[9,20],[15,7]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d1585565-a7ef-4344-a872-8e4183e8cbc5)
+
+```python3
+root = [1] #=> [[1]]
+```
+
+```python3
+root = [] #=> []
+```
+
+**Hint:** BFS: use a queue that tracks node and level. Maintain a level array. If curre level is in level array add node, else add new level to level array then add node. Traverse while increasing level number
+DFS: Similar logic to above with the level array, remember to increment levelNumber each time you recurse
+
+```python3
+# https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/33550/python-solution-with-detailed-explanation/
+class Solution(object):
+    def levelOrder(self, root):
+        result = []
+        self.helper(root, 0, result)
+        return result
+    
+    def helper(self, root, level, result):
+        if root is None:
+            return
+        if len(result) <= level:
+            result.append([])
+        result[level].append(root.val)
+        self.helper(root.left, level+1, result)
+        self.helper(root.right, level+1, result)
+```
+
+```python3
+# https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/1219538/python-simple-bfs-explained/
+class Solution:
+    def levelOrder(self, root):
+        if not root: return []
+        queue, result = deque([root]), []
+        
+        while queue:
+            level = []
+            for i in range(len(queue)):
+                node = queue.popleft()
+                level.append(node.val)
+                if node.left:  queue.append(node.left)
+                if node.right: queue.append(node.right)
+            result.append(level)
+        return result
+```
+**Time:** O(n)
+**Space:** O(n)
