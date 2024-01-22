@@ -3933,4 +3933,51 @@ class Solution:
         return left or right
 ```
 **Time:** O(n)
-**Space:** O(n)
+**Space:** O(h)
+
+## 76. Binary Tree Right Side View
+**Reference:** https://leetcode.com/problems/binary-tree-right-side-view/solutions/56012/my-simple-accepted-solution-java/
+
+**Description:** Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+
+**Examples:** 
+
+```python3
+root = [1,2,3,null,5,null,4] #=> [1,3,4]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/477bf0e3-4eda-4288-8fa5-b95176e2135e)
+
+
+```python3
+root = [1,null,3] #=> [1,3]
+```
+
+```python3
+root = [] #=> []
+```
+
+**Hint:** This is essentially level order traversal, but you only add to the output array if your current depth equals the size of the result array.
+*the key is to do rightView(curr.right, result, currDepth + 1); first...
+
+```python3
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        result = []
+        self.rightView(root, result, 0)
+        return result
+
+    def rightView(self, curr, result, currDepth):
+        if curr is None:
+            return
+        if currDepth == len(result):
+            result.append(curr.val)
+        self.rightView(curr.right, result, currDepth + 1)
+        self.rightView(curr.left, result, currDepth + 1)
+```
+**Time:** O(n)
+**Space:** O(h)
