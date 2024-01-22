@@ -4104,7 +4104,7 @@ root = [1,3,2,5,null,null,9,6,null,7] #=> 7
 ![image](https://github.com/will4skill/algo-review/assets/10373005/4b8c0c23-8c0e-4eea-be39-72bd1c156d62)
 
 ```python3
-oot = [1,3,2,5] #=> 2
+root = [1,3,2,5] #=> 2
 ```
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/70aa7c95-8bd1-4c83-9712-fc5a9f46eb02)
@@ -4135,6 +4135,54 @@ class Solution:
             max_width = max(max_width, index - level_start + 1)
             
         return max_width
+```
+**Time:** O(n)
+**Space:** O(n)
+
+## 80. Maximum Width of Binary Tree
+**Reference:** https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/solutions/749036/python-clean-bfs-solution-explained/
+
+**Description:** Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 2000].
+-100 <= Node.val <= 100
+
+**Examples:** 
+
+```python3
+root = [3,9,20,null,null,15,7] #=> [[3],[20,9],[15,7]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d9386e51-b9a6-4547-a4c1-1038cadbb409)
+
+```python3
+root = [1] #=> [[1]]
+```
+
+```python3
+root = [] #=> []
+```
+
+**Hint:** Traverse in level order, but track level number (even or odd) and alternate order
+
+```python3
+class Solution:
+    def zigzagLevelOrder(self, root):
+        if not root: return []
+        queue = deque([root])
+        result, direction = [], 1
+        
+        while queue:
+            level = []
+            for i in range(len(queue)):
+                node = queue.popleft()
+                level.append(node.val)
+                if node.left:  queue.append(node.left)
+                if node.right: queue.append(node.right)
+            result.append(level[::direction])
+            direction *= (-1)
+        return result
 ```
 **Time:** O(n)
 **Space:** O(n)
