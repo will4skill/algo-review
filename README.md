@@ -4028,3 +4028,54 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 78. Path Sum II
+**Reference:** https://leetcode.com/problems/path-sum-ii/solutions/2615948/leetcode-the-hard-way-explained-line-by-line/
+
+**Description:** Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
+
+A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 5000].
+-1000 <= Node.val <= 1000
+-1000 <= targetSum <= 1000
+
+**Examples:** 
+
+```python3
+root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22 #=> [[5,4,11,2],[5,8,4,5]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/033f984a-0ce4-4cbd-b500-295a6ee8aa4d)
+
+```python3
+root = [1,2,3], targetSum = 5 #=> []
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/8469565a-3a3d-4c7a-851d-fe6f7ed050aa)
+
+```python3
+root = [1,2], targetSum = 0 #=> []
+```
+
+**Hint:** DFS and backtracking to avoid array copies. At leaf, check if sum == node.val. While you recurse, subract node.val from sum
+
+```python3
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        ans = []
+        self.dfs(root, [], ans, targetSum)
+        return ans
+    def dfs(self, root, path, ans, remainingSum):
+        if not root:
+            return
+        path.append(root.val)
+        if not root.left and not root.right and remainingSum == root.val:
+            ans.append(list(path))
+        self.dfs(root.left, path, ans, remainingSum - root.val)
+        self.dfs(root.right, path, ans, remainingSum - root.val)
+        path.pop() # backtrack 
+```
+**Time:** O(n)
+**Space:** O(height of tree)
