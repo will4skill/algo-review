@@ -3738,7 +3738,6 @@ root = [1,2,2,null,3,null,3] #=> false
 ![image](https://github.com/will4skill/algo-review/assets/10373005/5a5e86c4-3059-415c-8db8-ed03bc28edfa)
 
 
-
 **Hint:** If you take the recursive approach, you need a helper function to compare nodes from left and right branches simultaneously. Remember to compare left.left with right.right and left.right with right.left.
 
 ```python3
@@ -3753,14 +3752,61 @@ class Solution:
             return True
         if left is None or right is None:
             return False
+        if left.val != right.val:
+            return False
 
-        if left.val == right.val:
-            outPair = self.isMirror(left.left, right.right)
-            inPair = self.isMirror(left.right, right.left)
-            return outPair and inPair
-
-        return False
+        outPair = self.isMirror(left.left, right.right)
+        inPair = self.isMirror(left.right, right.left)
+        return outPair and inPair
 ```
 **Time:** O(n)
 **Space:** O(height of tree)
 
+## 73. Subtree of Another Tree
+**Reference:** https://leetcode.com/problems/subtree-of-another-tree/
+
+**Description:** Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise. A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
+
+**Constraints:** 
+The number of nodes in the root tree is in the range [1, 2000].
+The number of nodes in the subRoot tree is in the range [1, 1000].
+-10^4 <= root.val <= 10^4
+-10^4 <= subRoot.val <= 10^4
+
+**Examples:** 
+```python3
+root = [3,4,5,1,2], subRoot = [4,1,2] #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/8a41c663-af13-4fa8-ab78-1e1274debff0)
+
+
+```python3
+root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2] #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/9170b092-9dac-4585-88fe-f42ce84402e5)
+
+
+**Hint:** Recursive. Iterate overtree, calling the isSame method on each node. If same subtree is found, return true. The final statement compares the left and right branches if one or the other has a matching subtree, return true.
+
+```python3
+class Solution:
+    def isEqual(self, rootA, rootB):
+        if rootA == None and rootB != None or rootA != None and rootB == None:
+            return False
+        if rootA == None and rootB == None:
+            return True
+
+        return rootA.val == rootB.val and self.isEqual(rootA.left, rootB.left) and self.isEqual(rootA.right, rootB.right)
+
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        if root == None:
+            return False
+        if self.isEqual(root, subRoot): return True
+
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+```
+**Time:** O(S*T)
+**Space:** O(height of taller tree)
