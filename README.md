@@ -4079,3 +4079,62 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(height of tree)
+
+## 79. Maximum Width of Binary Tree
+**Reference:** https://leetcode.com/problems/maximum-width-of-binary-tree/solutions/3436593/image-explanation-why-long-to-int-c-java-python/
+
+**Description:** Given the root of a binary tree, return the maximum width of the given tree. The maximum width of a tree is the maximum width among all levels. The width of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes that would be present in a complete binary tree extending down to that level are also counted into the length calculation. It is guaranteed that the answer will in the range of a 32-bit signed integer.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [1, 3000].
+-100 <= Node.val <= 100
+
+**Examples:** 
+
+```python3
+root = [1,3,2,5,3,null,9] #=> 4
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/e1d8179e-9b7e-4ba4-b450-2dbf6cc8ef58)
+
+```python3
+root = [1,3,2,5,null,null,9,6,null,7] #=> 7
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4b8c0c23-8c0e-4eea-be39-72bd1c156d62)
+
+```python3
+oot = [1,3,2,5] #=> 2
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/70aa7c95-8bd1-4c83-9712-fc5a9f46eb02)
+
+
+**Hint:** Combine level order BFS with a queue that stores the node and placement in a tuple.
+
+```python3
+class Solution:
+    def widthOfBinaryTree(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        queue = deque([(root, 0)])
+        max_width = 0
+        
+        while queue:
+            level_length = len(queue)
+            level_start = queue[0][1]
+            
+            for i in range(level_length):
+                node, index = queue.popleft() # Destructure
+                
+                if node.left:
+                    queue.append((node.left, 2*index))
+                if node.right:
+                    queue.append((node.right, 2*index+1))
+                    
+            max_width = max(max_width, index - level_start + 1)
+            
+        return max_width
+```
+**Time:** O(n)
+**Space:** O(n)
