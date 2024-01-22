@@ -3981,3 +3981,50 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(h)
+
+## 77. Construct Binary Tree from Preorder and Inorder Traversal
+**Reference:** https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solutions/565412/detailed-python-walkthrough-from-an-o-n-2-solution-to-o-n-faster-than-99-77/
+
+**Description:** Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+**Constraints:** 
+1 <= preorder.length <= 3000
+inorder.length == preorder.length
+-3000 <= preorder[i], inorder[i] <= 3000
+preorder and inorder consist of unique values.
+Each value of inorder also appears in preorder.
+preorder is guaranteed to be the preorder traversal of the tree.
+inorder is guaranteed to be the inorder traversal of the tree.
+
+**Examples:** 
+
+```python3
+preorder = [3,9,20,15,7], inorder = [9,3,15,20,7] #=> [3,9,20,null,null,15,7]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/bd2a041b-e622-4885-8656-e597059fe5ae)
+
+```python3
+preorder = [-1], inorder = [-1] #=> [-1]
+```
+
+**Hint:** To do this in place, maintain a start and end idx for each array. Create a new root with preorder[0]. Find the mid Idx with new root val and inorder array. Just as before, create new left and right children for the new node by splitting the inorder and preorder arrays (idx wise). Return root.
+
+```python3
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        preorder.reverse() # You can also convert to a deque. The point is for O(1) pop operations
+        inorderDict = { v:i for i,v in enumerate(inorder) } # This provides O(1) idx lookups
+        return self.buildTreeHelper(preorder, inorderDict, 0, len(preorder) - 1)
+
+    def buildTreeHelper(self, preorder, inorderDict, beg, end):
+        if beg > end: return None
+        root = TreeNode(preorder.pop())
+        index = inorderDict[root.val]
+        
+        root.left = self.buildTreeHelper(preorder, inorderDict, beg, index - 1)
+        root.right = self.buildTreeHelper(preorder, inorderDict, index + 1, end)
+        return root
+```
+**Time:** O(n)
+**Space:** O(n)
