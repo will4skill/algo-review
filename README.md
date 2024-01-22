@@ -3697,6 +3697,9 @@ p = [1,2], q = [1,null,2] #=> false
 p = [1,2,1], q = [1,1,2] #=> false
 ```
 
+![image](https://github.com/will4skill/algo-review/assets/10373005/e169d27c-ece5-4034-9580-587f5af77a03)
+
+
 **Hint:** Recursive or iterative. If curr.left and curr.right == null that's fine. If One is null, or the values of left and right are not equal return false. Iterate over tree.
 
 ```python3
@@ -3707,6 +3710,56 @@ class Solution:
         if not p or not q:
             return False
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+```
+**Time:** O(n)
+**Space:** O(height of tree)
+
+## 72. Symmetric Tree
+**Reference:** https://leetcode.com/problems/symmetric-tree/solutions/33050/recursively-and-iteratively-solution-in-python/
+
+**Description:** Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center). Follow up: Could you solve it both recursively and iteratively?
+
+**Constraints:** 
+The number of nodes in the tree is in the range [1, 1000].
+-100 <= Node.val <= 100
+
+**Examples:** 
+```python3
+root = [1,2,2,3,4,4,3] #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/2ed6370d-093c-471a-a02b-c8614d17fffc)
+
+
+```python3
+root = [1,2,2,null,3,null,3] #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/5a5e86c4-3059-415c-8db8-ed03bc28edfa)
+
+
+
+**Hint:** If you take the recursive approach, you need a helper function to compare nodes from left and right branches simultaneously. Remember to compare left.left with right.right and left.right with right.left.
+
+```python3
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if root is None:
+            return True
+        return self.isMirror(root.left, root.right)
+
+    def isMirror(self, left, right):
+        if left is None and right is None:
+            return True
+        if left is None or right is None:
+            return False
+
+        if left.val == right.val:
+            outPair = self.isMirror(left.left, right.right)
+            inPair = self.isMirror(left.right, right.left)
+            return outPair and inPair
+
+        return False
 ```
 **Time:** O(n)
 **Space:** O(height of tree)
