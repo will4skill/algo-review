@@ -4865,5 +4865,65 @@ startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
         return dp[-1][1]
 };
 ```
-**Time:** O(log n)
+**Time:** O(nlog n)
+**Space:** O(n)
+
+## 92. Median of Two Sorted Arrays
+**Reference:** https://leetcode.com/problems/maximum-profit-in-job-scheduling/solutions/409009/java-c-python-dp-solution/
+
+**Description:** Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+
+The overall run time complexity should be O(log (m+n)).
+
+**Constraints:** 
+nums1.length == m
+nums2.length == n
+0 <= m <= 1000
+0 <= n <= 1000
+1 <= m + n <= 2000
+-10^6 <= nums1[i], nums2[i] <= 10^6
+
+**Examples:** 
+```python3
+nums1 = [1,3], nums2 = [2] #=> 2.00000
+nums1 = [1,2], nums2 = [3,4] #=> 2.50000
+```
+
+**Hint:** You can't just merge the two sorted arrays (too slow). You need to partition the array into two equal sizes. Try to find the combiined left partition from both arrays. Success if the last element in AL is <= the first element in BR and vice versa (mid is next or average of last and next). 
+
+If the partition is incorrect, the array left pointer of the array who's endpoint is too small becomes mid + 1, then try again. Essentially, you make the too small (value not length) array shrink (move its right ptr back). Out of bounds to left = -infinity, to right = +infinity. p
+
+```python3
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        A, B = nums1, nums2
+        total = len(nums1) + len(nums2)
+        half = total // 2
+
+        if len(B) < len(A):
+            A, B = B, A
+
+        l, r = 0, len(A) - 1
+        while True:
+            i = (l + r) // 2  # A
+            j = half - i - 2  # B
+
+            Aleft = A[i] if i >= 0 else float("-infinity")
+            Aright = A[i + 1] if (i + 1) < len(A) else float("infinity")
+            Bleft = B[j] if j >= 0 else float("-infinity")
+            Bright = B[j + 1] if (j + 1) < len(B) else float("infinity")
+
+            # partition is correct
+            if Aleft <= Bright and Bleft <= Aright:
+                # odd
+                if total % 2:
+                    return min(Aright, Bright)
+                # even
+                return (max(Aleft, Bleft) + min(Aright, Bright)) / 2
+            elif Aleft > Bright:
+                r = i - 1
+            else:
+                l = i + 1
+```
+**Time:** O(log(min(n, m)))
 **Space:** O(n)
