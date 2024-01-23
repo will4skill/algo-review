@@ -4927,3 +4927,74 @@ class Solution:
 ```
 **Time:** O(log(min(n, m)))
 **Space:** O(n)
+
+## 93. flood-fill
+**Reference:** https://leetcode.com/problems/flood-fill/solutions/2669996/dfs-bfs-solutions-explained-iterative-recursive/
+
+**Description:** An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
+
+You are also given three integers sr, sc, and color. You should perform a flood fill on the image starting from the pixel image[sr][sc].
+
+To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same color), and so on. Replace the color of all of the aforementioned pixels with color.
+
+Return the modified image after performing the flood fill.
+
+**Constraints:** 
+m == image.length
+n == image[i].length
+1 <= m, n <= 50
+0 <= image[i][j], color < 2^16
+0 <= sr < m
+0 <= sc < n
+
+**Examples:** 
+```python3
+image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2 #=> [[2,2,2],[2,2,0],[2,0,1]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/759943f0-3562-4d88-83fb-221ebc7722e5)
+
+```python3
+image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0 #=> [[0,0,0],[0,0,0]]
+```
+
+**Hint:** Visited = new color squares. BFS or DFS possible
+
+```python3
+# DFS
+def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+	start_color = image[sr][sc] #keep track of original color
+	if start_color == color: #the color is already this one so do nothing
+		return image
+	m = len(image) #length of image
+	n = len(image[0]) #column length
+
+	def dfs(r, c): #dfs helper method
+		image[r][c] = color #set spot to color
+		for (row, col) in [(r-1, c), (r+1, c), (r, c-1), (r, c+1)]: #look at 4-dimensionally adjacent places
+			if 0 <= row < m and 0 <= col < n and image[row][col] == start_color: #check if in bounds and equal to start_color
+				dfs(row, col) #if so, we must search here
+	dfs(sr, sc) #start searching at (sr,sc)
+	return image
+```
+
+```python3
+# BFS
+def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+	start_color = image[sr][sc] #keep track of original color
+	if start_color == color: #the color is already this one so do nothing
+		return image
+	m = len(image) #length of image
+	n = len(image[0]) #column length
+	
+	stack = [(sr, sc)] #stack to keep track of spots we must search
+	while stack: #while there are places to look at
+		(r, c) = stack.pop() #get the next spot
+		image[r][c] = color #set it to color
+		for (row, col) in [(r-1, c), (r+1, c), (r, c-1), (r, c+1)]: #look at 4-dimensionally adjacent places
+			if 0 <= row < m and 0 <= col < n and image[row][col] == start_color: #check if in bounds and equal to start_color
+				stack.append((row, col)) #if so, we must search here
+	return image
+```
+**Time:** O(n)
+**Space:** O(n)
