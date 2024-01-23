@@ -4186,3 +4186,70 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 81. Path Sum III
+**Reference:** https://leetcode.com/problems/path-sum-iii/solutions/141424/python-step-by-step-walk-through-easy-to-understand-two-solutions-comparison/
+
+**Description:** Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum. The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
+
+**Constraints:** 
+The number of nodes in the tree is in the range [0, 1000].
+-10^9 <= Node.val <= 10^9
+-1000 <= targetSum <= 1000
+
+**Examples:** 
+
+```python3
+root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8 #=> 3
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/50b0d663-6bbd-4455-a6e8-e3fd480bef8a)
+
+
+```python3
+root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22 #=> 3
+```
+
+**Hint:** In order to optimize from the brutal force solution, we will have to think of a clear way to memorize the intermediate result. Namely in the brutal force solution, we did a lot repeated calculation. For example 1->3->5, we calculated: 1, 1+3, 1+3+5, 3, 3+5, 5.
+This is a classical 'space and time tradeoff': we can create a dictionary (named cache) which saves all the path sum (from root to current node) and their frequency.
+Again, we traverse through the tree, at each node, we can get the currPathSum (from root to current node). If within this path, there is a valid solution, then there must be a oldPathSum such that currPathSum - oldPathSum = target.
+We just need to add the frequency of the oldPathSum to the result.
+During the DFS break down, we need to -1 in cache[currPathSum], because this path is not available in later traverse.
+
+```python3
+    def pathSum(self, root, target):
+        # define global result and path
+        self.result = 0
+        
+        self.cache ={}
+        
+        # recursive to get result
+        self.dfs(root, target, 0)
+        
+        # return result
+        return self.result
+    
+    def dfs(self, root, target, curr_sum):
+        if not root:
+            return None
+        
+        curr_sum = curr_sum+root.val
+        
+        if curr_sum == target :
+            self.result+=1
+            
+        if (curr_sum-target) in self.cache:
+            self.result += self.cache[curr_sum-target]
+            
+        if curr_sum in self.cache:
+            self.cache[curr_sum] +=1
+        else:
+            self.cache[curr_sum] = 1
+        
+        self.dfs(root.left, target, curr_sum)
+        self.dfs(root.right, target, curr_sum)
+        # when move to a different branch, the currPathSum is no longer available, hence remove one.
+        self.cache[curr_sum] -=1
+```
+**Time:** O(n)
+**Space:** O(n)
