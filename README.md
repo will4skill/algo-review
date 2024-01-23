@@ -5495,12 +5495,12 @@ class Solution:
         if location in visited or board[location[0]][location[1]] != word[index]:
             return False
 
-        visited.add(location)
+        visited.add(location) # Tim note: 🤯
         result = (self.existHelper(board, word, (location[0] - 1, location[1]), index + 1, visited) or
         self.existHelper(board, word, (location[0] + 1, location[1]), index + 1, visited) or
         self.existHelper(board, word, (location[0], location[1] + 1), index + 1, visited) or
         self.existHelper(board, word, (location[0], location[1] - 1), index + 1, visited))
-        visited.remove(location)
+        visited.remove(location) # Tim note: 🤯
 
         return result
 ```
