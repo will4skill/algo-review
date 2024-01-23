@@ -5000,7 +5000,7 @@ def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> Lis
 **Space:** O(n)
 
 ## 94. 01 Matrix
-**Reference:** https://leetcode.com/problems/maximum-profit-in-job-scheduling/solutions/409009/java-c-python-dp-solution/
+**Reference:** https://leetcode.com/problems/01-matrix/solutions/1369741/c-java-python-bfs-dp-solutions-with-picture-clean-concise-o-1-space/
 
 **Description:** Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell. The distance between two adjacent cells is 1.
 
@@ -5081,3 +5081,73 @@ class Solution:  # 520 ms, faster than 96.50%
 ```
 **Time:** O(M * N), where M is number of rows, N is number of columns in the matrix.
 **Space:** O(1)
+
+## 95. Clone Graph
+**Reference:** https://leetcode.com/problems/clone-graph/solutions/1404781/python-easy-clean-code/
+
+**Description:** Given a reference of a node in a connected undirected graph.
+
+Return a deep copy (clone) of the graph.
+
+Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.
+```java
+class Node {
+    public int val;
+    public List<Node> neighbors;
+}
+``` 
+
+Test case format:
+
+For simplicity, each node's value is the same as the node's index (1-indexed). For example, the first node with val == 1, the second node with val == 2, and so on. The graph is represented in the test case using an adjacency list.
+
+An adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a node in the graph.
+
+The given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.
+
+**Constraints:** 
+The number of nodes in the graph is in the range [0, 100].
+1 <= Node.val <= 100
+Node.val is unique for each node.
+There are no repeated edges and no self-loops in the graph.
+The Graph is connected and all nodes can be visited starting from the given node.
+
+**Examples:** 
+```python3
+adjList = [[2,4],[1,3],[2,4],[1,3]] #=> [[2,4],[1,3],[2,4],[1,3]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/29919501-bcc2-46da-b5b7-7941a81e922b)
+
+adjList = [[]] #=> [[]]
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/cfa5ff05-7b45-4c17-855b-c8a1fb05458a)
+
+adjList = [] #=> []
+
+**Hint:** You can't just merge the two sorted arrays (too slow). You need to partition the array into two equal sizes. Try to find the combiined left partition from both arrays. Success if the last element in AL is <= the first element in BR and vice versa (mid is next or average of last and next). 
+
+If the partition is incorrect, the array left pointer of the array who's endpoint is too small becomes mid + 1, then try again. Essentially, you make the too small (value not length) array shrink (move its right ptr back). Out of bounds to left = -infinity, to right = +infinity. p
+
+```python3
+class Solution:
+    def helper(self, node, visited):
+        if node is None:
+            return None
+        
+        newNode = Node(node.val)
+        visited[node.val] = newNode
+        
+        for adjNode in node.neighbors:
+            if adjNode.val not in visited:
+                newNode.neighbors.append(self.helper(adjNode, visited))
+            else:
+                newNode.neighbors.append(visited[adjNode.val])
+        
+        return newNode
+    
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        return self.helper(node, {})
+```
+**Time:** O(n + m): n = nodes, m = edges
+**Space:** O(n): space in visited
