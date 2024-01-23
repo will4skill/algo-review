@@ -4812,3 +4812,56 @@ class Solution:
 **Time:** O(log(n))
 **Space:** O(1)
 
+## 91. Maximum Profit in Job Scheduling
+**Reference:** https://leetcode.com/problems/maximum-profit-in-job-scheduling/solutions/409009/java-c-python-dp-solution/
+
+**Description:** We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
+
+You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range.
+
+If you choose a job that ends at time X you will be able to start another job that starts at time X.
+
+**Constraints:** 
+1 <= startTime.length == endTime.length == profit.length <= 5 * 10^4
+1 <= startTime[i] < endTime[i] <= 10^9
+1 <= profit[i] <= 10^4
+
+**Examples:** 
+
+```python3
+startTime = [1,2,3,3], endTime = [3,4,5,6], profit = [50,10,40,70] #=> 120
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d91a37ac-e8f7-4f39-94b7-0fedb9ef09e5)
+
+```python3
+startTime = [1,2,3,4,6], endTime = [3,5,10,6,9], profit = [20,20,100,70,60] #=> 150
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/b4542813-9f7d-4b94-bd6c-d532275e9780)
+
+startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d483ac47-d253-4a13-a6d8-02d8e8655d2d)
+
+**Hint:** Binary search and DP. 
+1. Sort jobs by endTime
+2. Use dp list to memoize dp[time] => maxprofit
+3. Choice is similar to knapsack:
+   a. Skip the job
+   b. Take the job and binary search the dp to find the largest profit we can make before start time s
+4. Compare the max current profit with the last element in dp. If curr profit is better, add new pair [e, cur] to back of dp
+
+```python3
+    def jobScheduling(self, startTime, endTime, profit):
+        jobs = sorted(zip(startTime, endTime, profit), key=lambda v: v[1])
+        dp = [[0, 0]]
+        for s, e, p in jobs:
+            i = bisect.bisect(dp, [s + 1]) - 1
+            if dp[i][1] + p > dp[-1][1]:
+                dp.append([e, dp[i][1] + p])
+        return dp[-1][1]
+};
+```
+**Time:** O(log n)
+**Space:** O(n)
