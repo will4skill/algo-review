@@ -4587,3 +4587,51 @@ class Solution:
 ```
 **Time:** O(log(n))
 **Space:** O(1)
+
+## 88. Time Based Key-Value Store
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0981-time-based-key-value-store.py
+
+**Description:** You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
+
+You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
+
+**Constraints:** 
+1 <= bad <= n <= 2^31 - 1
+
+**Examples:** 
+
+```python3
+n = 5, bad = 4 #=> 4
+n = 1, bad = 1 #=> 1
+```
+
+**Hint:** 
+1. set(): push (time stamp, value) for key
+2. get(): find time <= timestamp using binary search. If no results, => empty string
+
+```python3
+class TimeMap:
+    def __init__(self):
+        self.keyStore = {}  # key : list of [val, timestamp]
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        if key not in self.keyStore:
+            self.keyStore[key] = []
+        self.keyStore[key].append([value, timestamp])
+
+    def get(self, key: str, timestamp: int) -> str:
+        res, values = "", self.keyStore.get(key, [])
+        l, r = 0, len(values) - 1
+        while l <= r:
+            m = (l + r) // 2
+            if values[m][1] <= timestamp:
+                res = values[m][0]
+                l = m + 1
+            else:
+                r = m - 1
+        return res
+```
+**Time:** O(n), O(log n)
+**Space:** O(n), O(1)
