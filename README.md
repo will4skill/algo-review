@@ -5180,11 +5180,6 @@ numCourses = 2, prerequisites = [[1,0],[0,1]] #=> false
 ```python3
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
-        """
-        :type numCourses: int
-        :type prerequisites: List[List[int]]
-        :rtype: bool
-        """
         graph = [[] for _ in range(numCourses)]
         visited = [0 for _ in range(numCourses)]
         # create graph
