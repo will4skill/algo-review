@@ -5211,3 +5211,73 @@ class Solution(object):
 ```
 **Time:** O(n + p) p = # prereqs n = # courses
 **Space:** O(n)
+
+## 96. Number of Islands
+**Reference:** https://www.structy.net/problems/island-count
+
+**Description:** Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+**Constraints:** 
+m == grid.length
+n == grid[i].length
+1 <= m, n <= 300
+grid[i][j] is '0' or '1'.
+
+**Examples:** 
+```python3
+grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+#=> 1
+
+grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+#=> 3
+```
+
+**Hint:** See 37. Attempt to enter each grid[i][j]. If you can explore, count++. Make sure water "w" is a base case => False
+Note: you could make space O(1) by using grid as visited set.
+
+```python3
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m,n = len(grid),len(grid[0])
+        visited = set()
+        count = 0
+        for r in range(m):
+            for c in range(n):
+                if self.explore(grid, r, c, visited) == True:
+                    count += 1
+        return count
+
+    def explore(self, grid, r, c, visited):
+        row_inbounds = 0 <= r < len(grid)
+        col_inbounds = 0 <= c < len(grid[0])
+        if not row_inbounds or not col_inbounds:
+            return False
+        
+        if grid[r][c] == '0':
+            return False
+        
+        pos = (r, c)
+        if pos in visited:
+            return False
+        visited.add(pos)
+        
+        self.explore(grid, r - 1, c, visited)
+        self.explore(grid, r + 1, c, visited)  
+        self.explore(grid, r, c - 1, visited)
+        self.explore(grid, r, c + 1, visited)
+        
+        return True
+```
+**Time:** Time: O(rc) r = number of rows c = number of columns
+**Space:** O(rc)
