@@ -4591,20 +4591,25 @@ class Solution:
 ## 88. Time Based Key-Value Store
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0981-time-based-key-value-store.py
 
-**Description:** You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+**Description:** Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
 
-Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
-
-You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
+Implement the TimeMap class:
+1. TimeMap() Initializes the object of the data structure.
+2. void set(String key, String value, int timestamp) Stores the key key with the value value at the given time timestamp.
+3. String get(String key, int timestamp) Returns a value such that set was called previously, with timestamp_prev <= timestamp. If there are multiple such values, it returns the value associated with the largest timestamp_prev. If there are no values, it returns "".
 
 **Constraints:** 
-1 <= bad <= n <= 2^31 - 1
+1 <= key.length, value.length <= 100
+key and value consist of lowercase English letters and digits.
+1 <= timestamp <= 10^7
+All the timestamps timestamp of set are strictly increasing.
+At most 2 * 10^5 calls will be made to set and get.
 
 **Examples:** 
 
 ```python3
-n = 5, bad = 4 #=> 4
-n = 1, bad = 1 #=> 1
+["TimeMap", "set", "get", "get", "set", "get", "get"]
+[[], ["foo", "bar", 1], ["foo", 1], ["foo", 3], ["foo", "bar2", 4], ["foo", 4], ["foo", 5]] #=> [null, null, "bar", "bar", null, "bar2", "bar2"]
 ```
 
 **Hint:** 
