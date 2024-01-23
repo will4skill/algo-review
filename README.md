@@ -4869,7 +4869,7 @@ startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
 **Space:** O(n)
 
 ## 92. Median of Two Sorted Arrays
-**Reference:** https://leetcode.com/problems/maximum-profit-in-job-scheduling/solutions/409009/java-c-python-dp-solution/
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0004-median-of-two-sorted-arrays.py
 
 **Description:** Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
 
