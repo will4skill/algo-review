@@ -4513,3 +4513,77 @@ class Solution:
 ```
 **Time:** O(log(n))
 **Space:** O(1)
+
+## 87. Search in Rotated Sorted Array
+**Reference:** https://leetcode.com/problems/search-in-rotated-sorted-array/solutions/1786973/JavaScript-Solution/
+
+**Description:** There is an integer array nums sorted in ascending order (with distinct values).
+
+Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be rotated at pivot index 3 and become [4,5,6,7,0,1,2].
+
+Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+**Constraints:** 
+1 <= nums.length <= 5000
+-10^4 <= nums[i] <= 10^4
+All values of nums are unique.
+nums is an ascending array that is possibly rotated.
+-10^4 <= target <= 10^4
+
+**Examples:** 
+
+```python3
+nums = [4,5,6,7,0,1,2], target = 0 #=> 4
+nums = [4,5,6,7,0,1,2], target = 3 #=> -1
+nums = [1], target = 0 #=> -1
+```
+
+**Hint:** Use binary search. Find lowest number (modified binary search with if and else only). Determine which side of min target is on. Use normal binary search on appropriate side of array. Reurn target idx or -1.
+
+```python3
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        # O(log n) Time Complexity
+        # Use modified binary search to find lowest number index
+        # Then, use regular binary search either to left or right of min depending on certain conditions
+
+        if len(nums) == 0 or not nums:
+            return -1
+
+        left = 0
+        right = len(nums) - 1
+
+        # Modified binary search to find lowest num. While loop breaks out once left = right, smallest num is found
+        while left < right:
+            middle = (left + right) // 2
+            if nums[middle] > nums[right]:
+                left = middle + 1
+            else:
+                right = middle
+
+        min_index = left
+        left = 0
+        right = len(nums) - 1
+
+        # Now decide whether to search to left or right of min
+        if target >= nums[min_index] and target <= nums[right]:
+            left = min_index
+        else:
+            right = min_index - 1
+
+        # Regular binary search
+        while left <= right:
+            middle = (left + right) // 2
+            if target == nums[middle]:
+                return middle
+            elif target > nums[middle]:
+                left = middle + 1
+            else:
+                right = middle - 1
+
+        return -1
+```
+**Time:** O(log(n))
+**Space:** O(1)
