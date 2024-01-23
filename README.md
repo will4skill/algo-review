@@ -5212,7 +5212,7 @@ class Solution(object):
 **Time:** O(n + p) p = # prereqs n = # courses
 **Space:** O(n)
 
-## 96. Number of Islands
+## 97. Number of Islands
 **Reference:** https://www.structy.net/problems/island-count
 
 **Description:** Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
