@@ -5119,15 +5119,17 @@ adjList = [[2,4],[1,3],[2,4],[1,3]] #=> [[2,4],[1,3],[2,4],[1,3]]
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/29919501-bcc2-46da-b5b7-7941a81e922b)
 
+```python3
 adjList = [[]] #=> [[]]
+```
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/cfa5ff05-7b45-4c17-855b-c8a1fb05458a)
 
+```python3
 adjList = [] #=> []
+```
 
-**Hint:** You can't just merge the two sorted arrays (too slow). You need to partition the array into two equal sizes. Try to find the combiined left partition from both arrays. Success if the last element in AL is <= the first element in BR and vice versa (mid is next or average of last and next). 
-
-If the partition is incorrect, the array left pointer of the array who's endpoint is too small becomes mid + 1, then try again. Essentially, you make the too small (value not length) array shrink (move its right ptr back). Out of bounds to left = -infinity, to right = +infinity. p
+**Hint:** Visited = hashMap where node => newNode. Create new neighbors of clone as you iterate.
 
 ```python3
 class Solution:
