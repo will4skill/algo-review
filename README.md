@@ -5434,3 +5434,75 @@ class Solution(object):
 ```
 **Time:** O(n*logn)
 **Space:** O(n) ??
+
+## 100. Word Search
+**Reference:** https://leetcode.com/problems/word-search/solutions/27660/python-dfs-solution-with-comments/
+
+**Description:** Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+Follow up: Could you use search pruning to make your solution faster with a larger board?
+
+**Constraints:** 
+m == board.length
+n = board[i].length
+1 <= m, n <= 6
+1 <= word.length <= 15
+board and word consists of only lowercase and uppercase English letters.
+
+**Examples:** 
+```python3
+board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED" #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/86b824c0-bcad-4f6f-bf10-a91ceccb0dcb)
+
+```python3
+board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE" #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/67ab7282-1f10-46fe-8e52-7164e700d631)
+
+
+```python3
+board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB" #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/2eaf6c98-df03-4527-a27b-733aef27ba9c)
+
+
+**Hint:** Standard DFS starting at each character and trying to complete word. Similar to sum problems, remove found character and then recurse until False or len(word) == 0
+
+```python3
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        height, width = len(board), len(board[0])
+        visited = set()
+        if height < 1 or width < 1: return False
+        for i in range(height):
+            for j in range(width):
+                if self.existHelper(board, word, (i, j), 0, visited) == True:
+                    return True
+        return False
+
+    def existHelper(self, board, word, location, index, visited):
+        if index == len(word): 
+            return True
+        height, width = len(board), len(board[0])
+        if location[0] < 0 or location[1] < 0 or location[0] >= height or location[1] >= width:
+            return False
+        if location in visited or board[location[0]][location[1]] != word[index]:
+            return False
+
+        visited.add(location)
+        result = (self.existHelper(board, word, (location[0] - 1, location[1]), index + 1, visited) or
+        self.existHelper(board, word, (location[0] + 1, location[1]), index + 1, visited) or
+        self.existHelper(board, word, (location[0], location[1] + 1), index + 1, visited) or
+        self.existHelper(board, word, (location[0], location[1] - 1), index + 1, visited))
+        visited.remove(location)
+
+        return result
+```
+**Time:** O(m*n4^s) where m=# of rows, n=# of cols and s=len of the word.
+**Space:** ???
