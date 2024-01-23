@@ -5175,7 +5175,7 @@ numCourses = 2, prerequisites = [[1,0]] #=> true
 numCourses = 2, prerequisites = [[1,0],[0,1]] #=> false
 ```
 
-**Hint:** See 44. prereqs possible. Same as cycle detect, but you have to create adj list. Cycles result in a false return.
+**Hint:** Topological sort. See 44. prereqs possible. Same as cycle detect, but you have to create adj list. Cycles result in a false return.
 
 ```python3
 class Solution(object):
