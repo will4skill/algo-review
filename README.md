@@ -4863,7 +4863,6 @@ startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
             if dp[i][1] + p > dp[-1][1]:
                 dp.append([e, dp[i][1] + p])
         return dp[-1][1]
-};
 ```
 **Time:** O(nlog n)
 **Space:** O(n)
@@ -5153,3 +5152,67 @@ class Solution:
 ```
 **Time:** O(n + m): n = nodes, m = edges
 **Space:** O(n): space in visited
+
+## 96. Course Schedule
+**Reference:** https://leetcode.com/problems/course-schedule/solutions/58586/python-20-lines-dfs-solution-sharing-with-explanation/
+
+**Description:** There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.
+
+**Constraints:** 
+1 <= numCourses <= 2000
+0 <= prerequisites.length <= 5000
+prerequisites[i].length == 2
+0 <= ai, bi < numCourses
+All the pairs prerequisites[i] are unique.
+
+**Examples:** 
+
+```python3
+numCourses = 2, prerequisites = [[1,0]] #=> true
+numCourses = 2, prerequisites = [[1,0],[0,1]] #=> false
+```
+
+**Hint:** See 44. prereqs possible. Same as cycle detect, but you have to create adj list. Cycles result in a false return.
+
+```python3
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        graph = [[] for _ in range(numCourses)]
+        visited = [0 for _ in range(numCourses)]
+        # create graph
+        for pair in prerequisites:
+            x, y = pair
+            graph[x].append(y)
+        # visit each node
+        for i in range(numCourses):
+            if not self.dfs(graph, visited, i):
+                return False
+        return True
+    
+    def dfs(self, graph, visited, i):
+        # if ith node is marked as being visited, then a cycle is found
+        if visited[i] == -1:
+            return False
+        # if it is done visted, then do not visit again
+        if visited[i] == 1:
+            return True
+        # mark as being visited
+        visited[i] = -1
+        # visit all the neighbours
+        for j in graph[i]:
+            if not self.dfs(graph, visited, j):
+                return False
+        # after visit all the neighbours, mark it as done visited
+        visited[i] = 1
+        return True
+```
+**Time:** O(n + p) p = # prereqs n = # courses
+**Space:** O(n)
