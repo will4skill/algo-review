@@ -4840,7 +4840,9 @@ startTime = [1,2,3,4,6], endTime = [3,5,10,6,9], profit = [20,20,100,70,60] #=> 
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/b4542813-9f7d-4b94-bd6c-d532275e9780)
 
+```python3
 startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
+```
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/d483ac47-d253-4a13-a6d8-02d8e8655d2d)
 
