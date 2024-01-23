@@ -5373,3 +5373,64 @@ class Solution:
 ```
 **Time:** O(rows * cols)
 **Space:** O(rows * cols)
+
+## 99. Accounts Merge
+**Reference:** https://leetcode.com/problems/accounts-merge/solutions/109161/python-simple-dfs-with-explanation/
+
+**Description:** Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
+
+Now, we would like to merge these accounts. Two accounts definitely belong to the same person if there is some common email to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name.
+
+After merging the accounts, return the accounts in the following format: the first element of each account is the name, and the rest of the elements are emails in sorted order. The accounts themselves can be returned in any order.
+
+**Constraints:** 
+1 <= accounts.length <= 1000
+2 <= accounts[i].length <= 10
+1 <= accounts[i][j].length <= 30
+accounts[i][0] consists of English letters.
+accounts[i][j] (for j > 0) is a valid email.
+
+**Examples:** 
+```python3
+accounts = [["John","johnsmith@mail.com","john_newyork@mail.com"],["John","johnsmith@mail.com","john00@mail.com"],["Mary","mary@mail.com"],["John","johnnybravo@mail.com"]]
+#=> [["John","john00@mail.com","john_newyork@mail.com","johnsmith@mail.com"],["Mary","mary@mail.com"],["John","johnnybravo@mail.com"]]
+
+accounts = [["Gabe","Gabe0@m.co","Gabe3@m.co","Gabe1@m.co"],["Kevin","Kevin3@m.co","Kevin5@m.co","Kevin0@m.co"],["Ethan","Ethan5@m.co","Ethan4@m.co","Ethan0@m.co"],["Hanzo","Hanzo3@m.co","Hanzo1@m.co","Hanzo0@m.co"],["Fern","Fern5@m.co","Fern1@m.co","Fern0@m.co"]]
+#=> [["Ethan","Ethan0@m.co","Ethan4@m.co","Ethan5@m.co"],["Gabe","Gabe0@m.co","Gabe1@m.co","Gabe3@m.co"],["Hanzo","Hanzo0@m.co","Hanzo1@m.co","Hanzo3@m.co"],["Kevin","Kevin0@m.co","Kevin3@m.co","Kevin5@m.co"],["Fern","Fern0@m.co","Fern1@m.co","Fern5@m.co"]]
+```
+
+**Hint:** DFS. Create a map where key is the email and value is a list of accounts you can find it in. This is our graph. Perform DFS on each account in the list while using the ma to tell us which accounts are linked to that particular account via common emails. This will make sure we visit each account only once. Collect the emails as you visit them. Sort the resulting collection.
+
+```python3
+class Solution(object):
+    def accountsMerge(self, accounts):
+        from collections import defaultdict
+        visited_accounts = [False] * len(accounts)
+        emails_accounts_map = defaultdict(list)
+        res = []
+        # Build up the graph.
+        for i, account in enumerate(accounts):
+            for j in range(1, len(account)):
+                email = account[j]
+                emails_accounts_map[email].append(i)
+        # DFS code for traversing accounts.
+        def dfs(i, emails):
+            if visited_accounts[i]:
+                return
+            visited_accounts[i] = True
+            for j in range(1, len(accounts[i])):
+                email = accounts[i][j]
+                emails.add(email)
+                for neighbor in emails_accounts_map[email]:
+                    dfs(neighbor, emails)
+        # Perform DFS for accounts and add to results.
+        for i, account in enumerate(accounts):
+            if visited_accounts[i]:
+                continue
+            name, emails = account[0], set()
+            dfs(i, emails)
+            res.append([name] + sorted(emails))
+        return res
+```
+**Time:** O(n*logn)
+**Space:** O(n) ??
