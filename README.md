@@ -4477,3 +4477,39 @@ class Solution:
 ```
 **Time:** O(log(n))
 **Space:** O(1)
+
+## 86. First Bad Version
+**Reference:** https://leetcode.com/problems/first-bad-version/solutions/1591935/python-solution-easy-to-understand-binary-search-with-detailed-explanation/
+
+**Description:** You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
+
+You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
+
+**Constraints:** 
+1 <= bad <= n <= 2^31 - 1
+
+**Examples:** 
+
+```python3
+n = 5, bad = 4 #=> 4
+n = 1, bad = 1 #=> 1
+```
+
+**Hint:** Pretty generic binary search
+
+```python3
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        start, end = 1, n
+        while start < end:
+            mid = start + (end - start) // 2
+            if isBadVersion(mid):
+                end = mid
+            if not isBadVersion(mid):
+                start = mid + 1
+        return start
+```
+**Time:** O(log(n))
+**Space:** O(1)
