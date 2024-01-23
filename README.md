@@ -4640,3 +4640,61 @@ class TimeMap:
 ```
 **Time:** O(n), O(log n)
 **Space:** O(n), O(1)
+
+## 89. Search a 2D Matrix (rows are sorted)
+**Reference:** https://leetcode.com/problems/search-a-2d-matrix/solutions/274992/search-in-2d-matrix/
+
+**Description:** You are given an m x n integer matrix matrix with the following two properties:
+
+Each row is sorted in non-decreasing order.
+The first integer of each row is greater than the last integer of the previous row.
+Given an integer target, return true if target is in matrix or false otherwise.
+
+You must write a solution in O(log(m * n)) time complexity.
+
+**Constraints:** 
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 100
+-10^4 <= matrix[i][j], target <= 10^4
+
+**Examples:** 
+
+```python3
+matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3 #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/55a7746d-f475-4cfe-a9f0-8b89ed14bdc3)
+
+```python3
+matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13 #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/5297b3ba-df5a-444c-885e-3b91e8785bd9)
+
+**Hint:** Sorted like an S. Use normal binary search except: midValue = Matrix[Math.floor(midIdx/cols)][midIdx%cols]
+
+```javascript
+const searchMatrix = (matrix, target) => {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+
+  // Binary Search
+  let startIdx = 0, endIdx = rows*cols - 1;
+  let midIdx, midValue;
+
+  while (startIdx <= endIdx) {
+    midIdx = startIdx + Math.floor((endIdx - startIdx)/2);
+    midValue = matrix[Math.floor(midIdx / cols)][midIdx % cols];
+    if (target === midValue)
+      return true
+    else if (target < midValue)
+      endIdx = midIdx - 1;
+    else
+      startIdx = midIdx + 1;
+  }
+  return false;
+};
+```
+**Time:** O(log(m*n))
+**Space:** O(1)
