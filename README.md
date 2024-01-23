@@ -5399,7 +5399,7 @@ accounts = [["Gabe","Gabe0@m.co","Gabe3@m.co","Gabe1@m.co"],["Kevin","Kevin3@m.c
 #=> [["Ethan","Ethan0@m.co","Ethan4@m.co","Ethan5@m.co"],["Gabe","Gabe0@m.co","Gabe1@m.co","Gabe3@m.co"],["Hanzo","Hanzo0@m.co","Hanzo1@m.co","Hanzo3@m.co"],["Kevin","Kevin0@m.co","Kevin3@m.co","Kevin5@m.co"],["Fern","Fern0@m.co","Fern1@m.co","Fern5@m.co"]]
 ```
 
-**Hint:** DFS. Create a map where key is the email and value is a list of accounts you can find it in. This is our graph. Perform DFS on each account in the list while using the ma to tell us which accounts are linked to that particular account via common emails. This will make sure we visit each account only once. Collect the emails as you visit them. Sort the resulting collection.
+**Hint:** DFS. Create a map where key is the email and value is a list of accounts you can find it in. This is our graph. Perform DFS on each account in the list while using the map to tell us which accounts are linked to that particular account via common emails. This will make sure we visit each account only once. Collect the emails as you visit them. Sort the resulting collection.
 
 ```python3
 class Solution(object):
