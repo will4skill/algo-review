@@ -4987,13 +4987,13 @@ def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> Lis
 	m = len(image) #length of image
 	n = len(image[0]) #column length
 	
-	stack = [(sr, sc)] #stack to keep track of spots we must search
-	while stack: #while there are places to look at
-		(r, c) = stack.pop() #get the next spot
+	queue = collections.deque([(sr, sc)]) #queue to keep track of spaces we need to look at
+	while queue: #while there are places to look at
+		(r, c) = queue.popleft() #get the next spot
 		image[r][c] = color #set it to color
 		for (row, col) in [(r-1, c), (r+1, c), (r, c-1), (r, c+1)]: #look at 4-dimensionally adjacent places
 			if 0 <= row < m and 0 <= col < n and image[row][col] == start_color: #check if in bounds and equal to start_color
-				stack.append((row, col)) #if so, we must search here
+				queue.append((row, col)) #if so, we must search this place too
 	return image
 ```
 **Time:** O(n)
