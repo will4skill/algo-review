@@ -4392,3 +4392,46 @@ class Codec:
 **Time:** O(n)
 **Space:** O(n)
 
+## 84. Binary Tree Maximum Path Sum
+**Reference:** https://leetcode.com/problems/binary-tree-maximum-path-sum/solutions/419793/python-recursive-solution-beats-98-in-time-and-75-in-memory/
+
+**Description:** A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+
+The path sum of a path is the sum of the node's values in the path.
+
+Given the root of a binary tree, return the maximum path sum of any non-empty path.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [1, 3 * 10^4].
+-1000 <= Node.val <= 1000
+
+**Examples:** 
+
+```python3
+root = [1,2,3] #=> 6
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/472d99f9-5cac-4b00-bece-8da7ee8cddf4)
+
+```python3
+root = [-10,9,20,null,null,15,7] #=> 42
+```
+
+**Hint:** Similar to diameter, but when you calculated left and right max, if they are < 0, return 0. When updating global, include current node's value.
+
+```python3
+class Solution:
+    def maxPathSum(self, root):
+        self.res = float('-inf')
+        self.helper(root)
+        return self.res 
+        
+    def helper(self, root):
+        if not root:
+            return 0
+        left, right = self.helper(root.left), self.helper(root.right)
+        self.res = max(self.res, root.val + left + right)
+        return max(root.val + max(left, right), 0)
+```
+**Time:** O(n)
+**Space:** O(n)
