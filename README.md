@@ -4253,3 +4253,77 @@ During the DFS break down, we need to -1 in cache[currPathSum], because this pat
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 82. All Nodes Distance K in Binary Tree
+**Reference:** https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/solutions/3747860/python-java-c-simple-solution-easy-to-understand/
+
+**Description:** Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node. You can return the answer in any order.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [1, 500].
+0 <= Node.val <= 500
+All the values Node.val are unique.
+target is the value of one of the nodes in the tree.
+0 <= k <= 1000
+
+**Examples:** 
+
+```python3
+root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 2 #=> [7,4,1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/fff42e72-d1d7-48f3-a7c8-a85618be33a1)
+
+```python3
+root = [1], target = 1, k = 3 #=> []
+```
+
+
+**Hint:**
+1. Build adjacency list representation of the binary tree
+2. Perform level order BFS on the graph, keeping track of distance
+3. Capture nodes that are distance K from target
+
+```python3
+class Solution:
+    def distanceK(self, root, target, K):
+        # Step 1: Build adjacency list graph
+        graph = {}
+        self.buildGraph(root, None, graph)
+
+        # Step 2: Perform BFS from the target node
+        queue = [(target, 0)]
+        visited = set([target])
+        result = []
+        
+        while queue:
+            node, distance = queue.pop(0)
+            
+            if distance == K:
+                result.append(node.val)
+                
+            if distance > K:
+                break
+            
+            for neighbor in graph[node]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append((neighbor, distance + 1))
+        return result
+    
+    def buildGraph(self, node, parent, graph):
+        if not node:
+            return
+        
+        if node not in graph:
+            graph[node] = []
+            
+        if parent:
+            graph[node].append(parent)
+            graph[parent].append(node)
+            
+        self.buildGraph(node.left, node, graph)
+        self.buildGraph(node.right, node, graph)
+```
+**Time:** O(n)
+**Space:** O(n)
