@@ -4702,33 +4702,30 @@ const searchMatrix = (matrix, target) => {
 ## 90. Find Minimum in Rotated Sorted Array
 **Reference:** https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/solutions/158940/beat-100-very-simple-python-very-detailed-explanation/
 
-**Description:** You are given an m x n integer matrix matrix with the following two properties:
+**Description:** Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
 
-Each row is sorted in non-decreasing order.
-The first integer of each row is greater than the last integer of the previous row.
-Given an integer target, return true if target is in matrix or false otherwise.
+1. [4,5,6,7,0,1,2] if it was rotated 4 times.
+2. [0,1,2,4,5,6,7] if it was rotated 7 times.
+Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
 
-You must write a solution in O(log(m * n)) time complexity.
+Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+
+You must write an algorithm that runs in O(log n) time.
 
 **Constraints:** 
-m == matrix.length
-n == matrix[i].length
-1 <= m, n <= 100
--10^4 <= matrix[i][j], target <= 10^4
+n == nums.length
+1 <= n <= 5000
+-5000 <= nums[i] <= 5000
+All the integers of nums are unique.
+nums is sorted and rotated between 1 and n times.
 
 **Examples:** 
 
 ```python3
-matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3 #=> true
+nums = [3,4,5,1,2] #=> 1
+nums = [4,5,6,7,0,1,2] #=> 0
+nums = [11,13,15,17] #=> 11
 ```
-
-![image](https://github.com/will4skill/algo-review/assets/10373005/55a7746d-f475-4cfe-a9f0-8b89ed14bdc3)
-
-```python3
-matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13 #=> false
-```
-
-![image](https://github.com/will4skill/algo-review/assets/10373005/5297b3ba-df5a-444c-885e-3b91e8785bd9)
 
 **Hint:** Use modified binary search.
 
