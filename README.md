@@ -6476,3 +6476,57 @@ class Solution:
 
 **Time:** O(height)
 **Space:** O(1)
+
+## 115. Convert Sorted Array to Binary Search Tree
+**Reference:** https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/submissions/1139608527/
+
+**Description:** Given an integer array nums where the elements are sorted in ascending order, convert it to a 
+height-balanced binary search tree.
+
+**Constraints:** 
+1 <= nums.length <= 10^4
+-10^4 <= nums[i] <= 10^4
+nums is sorted in a strictly increasing order.
+
+**Examples:** 
+```python3
+nums = [-10,-3,0,5,9] #=> [0,-3,9,-10,null,5] or [0,-10,5,null,-3,null,9] 
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/f1ca1bcb-c778-45b4-9be4-5918ba339111)
+
+or 
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/5e060ac1-9fd4-4150-a5b1-abc61db3c72c)
+
+```python3
+nums = [1,3] #=> [3,1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/74904945-b0d6-4f05-b177-3e49331ef022)
+
+
+**Hint:** Recursively find the middle element (//2) and create a new tree. The left and right branches are recursive calls
+
+```python3
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if len(nums) == 0:
+            return None
+        if len(nums) == 1:
+            return TreeNode(nums[0])
+
+        start = 0
+        end = len(nums) - 1
+        mid = start + (end - start) // 2
+        left = nums[0:mid]
+        right = nums[mid + 1:]
+
+        head = TreeNode(nums[mid])
+        head.left = self.sortedArrayToBST(left)
+        head.right = self.sortedArrayToBST(right)
+        return head
+```
+
+**Time:** O(n log n)
+**Space:** O(n)
