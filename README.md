@@ -6362,7 +6362,8 @@ const alienOrder = (words) => {
 **Space:** O(1) O(U + min U^2, N), N be the total number of strings in the input list, U be the total number of unique letters in the alien alphabet.
 
 ## 113. Bus Routes
-**Reference:**  https://leetcode.com/problems/alien-dictionary/discuss/763913/Javascript-Graph-Topological-Sort
+**Reference:**  https://leetcode.com/problems/bus-routes/solutions/122771/c-java-python-bfs-solution/
+ax2
 
 **Description:** You are given an array routes representing bus routes where routes[i] is a bus route that the ith bus repeats forever.
 
