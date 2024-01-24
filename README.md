@@ -6025,19 +6025,12 @@ n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0 #=> 50
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/fed2e1ad-5cc8-4312-8312-a598c41c5b99)
 
-**Hint:** 
-Simular to Dijkstra's algorithm. https://www.programiz.com/dsa/dijkstra-algorithm
-
-Start with unvisited weighted graph. Assign 0 path value to starting node and infinity to all others. For the current node, consider all of its unvisited neighbors and calculate their tentative distances through the current node. Compare the newly calculated tentative distance to the one currently assigned to the neighbor and assign it the smaller one. When we are done considering all of the unvisited neighbors of the current node, mark the current node as visited and remove it from the unvisited set. If the destination node has been marked visited return. 
-
-Tim note: seems like BFS with a priority queue
+**Hint:** The Neetcode solution is a modified Bellman Ford algorithm, where you consider all edges in every loop and use a temp array to avoid checking beyond the current level.
 
 ```python3
 # Structy Solution. Note: you have to create an adjacency matrix first
 class Solution:
-    def findCheapestPrice(
-        self, n: int, flights: List[List[int]], src: int, dst: int, k: int
-    ) -> int:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         prices = [float("inf")] * n
         prices[src] = 0
 
@@ -6053,5 +6046,5 @@ class Solution:
         return -1 if prices[dst] == float("inf") else prices[dst]
 ```
 
-**Time:** Time Complexity of Dijkstra's Algorithm is O ( V 2 ) but with min-priority queue it drops down to O ( V + E l o g V )
+**Time:** O(E*V)
 **Space:** ???
