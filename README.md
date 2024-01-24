@@ -5936,3 +5936,52 @@ def build_graph(edges):
 
 **Time:** O(e) n = number of nodes e = number edges
 **Space:** O(n)
+
+## 107. Minimum Knight Moves
+**Reference:** https://leetcode.ca/2019-03-11-1197-Minimum-Knight-Moves/
+
+**Description:** In an infinite chess board with coordinates from -infinity to +infinity, you have a knight at square [0, 0].
+
+A knight has 8 possible moves it can make, as illustrated below. Each move is two squares in a cardinal direction, then one square in an orthogonal direction.
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/2af1b994-0ee5-49f3-882d-83475edaf597)
+
+Return the minimum number of steps needed to move the knight to the square [x, y]. It is guaranteed the answer exists.
+
+**Constraints:** 
+-300 <= x, y <= 300
+0 <= |x| + |y| <= 300
+
+**Examples:** 
+```python3
+x = 2, y = 1 #=> 1
+x = 5, y = 5 #=> 4
+```
+
+**Hint:** 
+Use BFS over the grid with the additional constraint of having to move in the 8 knight Ls.
+
+```python3
+# Structy Solution. Note: you have to create an adjacency matrix first
+class Solution:
+    def minKnightMoves(self, x: int, y: int) -> int:
+        q = deque([(0, 0)])
+        ans = 0
+        vis = {(0, 0)}
+        dirs = ((-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1))
+        while q:
+            for _ in range(len(q)):
+                i, j = q.popleft()
+                if (i, j) == (x, y):
+                    return ans
+                for a, b in dirs:
+                    c, d = i + a, j + b
+                    if (c, d) not in vis:
+                        vis.add((c, d))
+                        q.append((c, d))
+            ans += 1
+        return -1
+```
+
+**Time:** O(n^2)
+**Space:** O(n^2)
