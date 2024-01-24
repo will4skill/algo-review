@@ -6361,3 +6361,61 @@ const alienOrder = (words) => {
 **Time:** O(C), C = total length of all the words
 **Space:** O(1) O(U + min U^2, N), N be the total number of strings in the input list, U be the total number of unique letters in the alien alphabet.
 
+## 113. Bus Routes
+**Reference:**  https://leetcode.com/problems/alien-dictionary/discuss/763913/Javascript-Graph-Topological-Sort
+
+**Description:** You are given an array routes representing bus routes where routes[i] is a bus route that the ith bus repeats forever.
+
+1. For example, if routes[0] = [1, 5, 7], this means that the 0th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... forever.
+You will start at the bus stop source (You are not on any bus initially), and you want to go to the bus stop target. You can travel between bus stops by buses only.
+
+Return the least number of buses you must take to travel from source to target. Return -1 if it is not possible.
+
+**Constraints:** 
+1 <= routes.length <= 500.
+1 <= routes[i].length <= 10^5
+All the values of routes[i] are unique.
+sum(routes[i].length) <= 10^5
+0 <= routes[i][j] < 10^6
+0 <= source, target < 10^6
+
+**Examples:** 
+```python3
+routes = [[1,2,7],[3,6,7]], source = 1, target = 6 #=> 2
+routes = [[7,12],[4,5,15],[6],[15,19],[9,12,13]], source = 15, target = 12 #=> -1
+```
+
+**Hint:** BFS
+1 First create an adjacencyList with the routes
+2. Use visited to avoid loops
+3. Traverse until you reach end
+
+```python3
+class Solution:
+    def numBusesToDestination(self, routes, S, T):
+        stopToRoute = collections.defaultdict(set)
+        
+        for i, stops in enumerate(routes):
+            for stop in stops: 
+                stopToRoute[stop].add(i)
+                
+        bfs = [(S,0)]
+        seenStops = {S}
+        seenRoutes = set()
+        
+        for stop, count in bfs:
+            if stop == T: 
+                return count
+            
+            for routeIndex in stopToRoute[stop]:
+                if routeIndex not in seenRoutes:
+                    seenRoutes.add(routeIndex)
+                    for next_stop in routes[routeIndex]:
+                        if next_stop not in seenStops:
+                            seenStops.add(next_stop)
+                            bfs.append((next_stop, count+1))
+        return -1
+```
+
+**Time:** O(m+n) n = edges, m = nodes
+**Space:** O(1)
