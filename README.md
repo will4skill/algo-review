@@ -5506,3 +5506,62 @@ class Solution:
 ```
 **Time:** O(m*n4^s) where m=# of rows, n=# of cols and s=len of the word.
 **Space:** ???
+
+## 101. Minimum Height Trees
+**Reference:** https://leetcode.com/problems/minimum-height-trees/solutions/76055/share-some-thoughts/
+
+**Description:** A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
+
+Given a tree of n nodes labelled from 0 to n - 1, and an array of n - 1 edges where edges[i] = [ai, bi] indicates that there is an undirected edge between the two nodes ai and bi in the tree, you can choose any node of the tree as the root. When you select a node x as the root, the result tree has height h. Among all possible rooted trees, those with minimum height (i.e. min(h))  are called minimum height trees (MHTs).
+
+Return a list of all MHTs' root labels. You can return the answer in any order.
+
+The height of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
+
+**Constraints:** 
+1 <= n <= 2 * 10^4
+edges.length == n - 1
+0 <= ai, bi < n
+ai != bi
+All the pairs (ai, bi) are distinct.
+The given input is guaranteed to be a tree and there will be no repeated edges.
+
+**Examples:** 
+
+```python3
+n = 4, edges = [[1,0],[1,2],[1,3]] #=> [1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/e51c4d75-187a-4ee2-b4e6-6812e18b0ec1)
+
+```python3
+n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]] #=> [3,4]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/81aa38e9-6eec-47a3-ac7b-86946bf14858)
+
+**Hint:** Convert edge list to adj matrix. Select all the leaves. While more than two nodes are left in graph, remove current layer of leaves. Return remaining 1 or 2 nodes.
+
+```python3
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        if n == 1: return [0] 
+        adj = [set() for _ in range(n)]
+        for i, j in edges:
+            adj[i].add(j)
+            adj[j].add(i)
+
+        leaves = [i for i in range(n) if len(adj[i]) == 1]
+
+        while n > 2:
+            n -= len(leaves)
+            newLeaves = []
+            for i in leaves:
+                j = adj[i].pop()
+                adj[j].remove(i)
+                if len(adj[j]) == 1: newLeaves.append(j)
+            leaves = newLeaves
+        return leaves   
+```
+**Time:** O(n)
+**Space:** O(n)
