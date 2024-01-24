@@ -5565,3 +5565,67 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+
+## 102. Pacific Atlantic Water Flow
+**Reference:** https://leetcode.com/problems/pacific-atlantic-water-flow/solutions/1126938/short-easy-w-explanation-diagrams-simple-graph-traversals-dfs-bfs/
+
+**Description:** There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.
+
+The island is partitioned into a grid of square cells. You are given an m x n integer matrix heights where heights[r][c] represents the height above sea level of the cell at coordinate (r, c).
+
+The island receives a lot of rain, and the rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Water can flow from any cell adjacent to an ocean into the ocean.
+
+Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
+
+**Constraints:** 
+m == heights.length
+n == heights[r].length
+1 <= m, n <= 200
+0 <= heights[r][c] <= 10^5
+
+**Examples:** 
+
+```python3
+heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]] #=> [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/93f98937-f9a3-4324-955a-fb10ffab4fe8)
+
+```python3
+heights = [[1]] #=> [[0,0]]
+```
+
+**Hint:** BFS: start with all cells adjacent to one of the oceans (A). Visited neighbors that are greater than or equal to the starting nodes until you reach a subset of cells adjacent to the other ocean (B). Do the same from B to A. The final answer we get will be the intersection of sets A and B (A ∩ B). 
+
+```cpp
+class Solution {
+public:
+    int m, n;
+    vector<vector<int> > ans;
+    vector<vector<bool> > atlantic, pacific;
+    queue<pair<int, int> > q;
+    vector<vector<int> > pacificAtlantic(vector<vector<int>>& mat) {
+        if(!size(mat)) return ans;
+        m = size(mat), n = size(mat[0]);
+        atlantic = pacific = vector<vector<bool> >(m, vector<bool>(n, false));
+        for(int i = 0; i < m; i++) bfs(mat, pacific, i, 0), bfs(mat, atlantic, i, n - 1);
+        for(int i = 0; i < n; i++) bfs(mat, pacific, 0, i), bfs(mat, atlantic, m - 1, i);             
+        return ans;
+    }
+    void bfs(vector<vector<int> >& mat, vector<vector<bool> >& visited, int i, int j){        
+        q.push({i, j});
+        while(!q.empty()){
+            tie(i, j) = q.front(); q.pop();
+            if(visited[i][j]) continue;
+            visited[i][j] = true;
+            if(atlantic[i][j] && pacific[i][j]) ans.push_back(vector<int>{i, j});
+            if(i + 1 <  m && mat[i + 1][j] >= mat[i][j]) q.push({i + 1, j});
+            if(i - 1 >= 0 && mat[i - 1][j] >= mat[i][j]) q.push({i - 1, j});
+            if(j + 1 <  n && mat[i][j + 1] >= mat[i][j]) q.push({i, j + 1});
+            if(j - 1 >= 0 && mat[i][j - 1] >= mat[i][j]) q.push({i, j - 1});
+        }
+    }
+};
+```
+**Time:** O(M*N)
+**Space:** O(M*N)
