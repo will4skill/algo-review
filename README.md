@@ -5801,3 +5801,70 @@ class Solution:
 ```
 **Time:** O(n^2)
 **Space:** O(n)
+
+## 105. Course Schedule II
+**Reference:** https://leetcode.com/problems/course-schedule-ii/submissions/1155573265/ 
+vsharda1
+
+**Description:** There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+
+**Constraints:** 
+1 <= numCourses <= 2000
+0 <= prerequisites.length <= numCourses * (numCourses - 1)
+prerequisites[i].length == 2
+0 <= ai, bi < numCourses
+ai != bi
+All the pairs [ai, bi] are distinct.
+
+**Examples:** 
+
+```python3
+numCourses = 2, prerequisites = [[1,0]] #=> [0,1]
+numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]] #=> [0,2,1,3]
+numCourses = 1, prerequisites = [] #=> [0]
+```
+
+**Hint:** 
+See structy, topological order. Convert the edges to an adjacency list. 
+1. Use a map to track the number of parents each node has numParent[node] => #
+2. Make a list of all source nodes (i.e., they don't have parents)
+3. Use modified DFS to explore the source nodes whle adding new source nodes as their parents are removed
+
+```python3
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        sortedorder = []
+        if numCourses <= 0:
+            return False
+        inDegree = {i : 0 for i in range(numCourses)}
+        graph = {i : [] for i in range(numCourses)}
+        
+        for child, parent in prerequisites:
+            graph[parent].append(child)
+            inDegree[child] += 1
+
+        sources = deque()
+        
+        for key in inDegree:
+            if inDegree[key] == 0:
+                sources.append(key)
+        #visited = 0       
+        while sources:
+            vertex = sources.popleft()
+            #visited += 1
+            sortedorder.append(vertex)
+            for child in graph[vertex]:
+                inDegree[child] -= 1
+                if inDegree[child] == 0:
+                    sources.append(child)
+        
+        if len(sortedorder) != numCourses:
+            return []
+        return sortedorder
+```
+
+**Time:** O(e + n) e = number of edges n = number of nodes
+**Space:** O(n)
