@@ -6096,3 +6096,66 @@ class Solution(object):
 **Time:** O(N*26*(L^2))
 **Space:** O(n)
 
+## 110. Longest Increasing Path in a Matrix
+**Reference:**  https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/1195189/Javascript-Dynamic-Programming
+
+**Description:** Given an m x n integers matrix, return the length of the longest increasing path in matrix.
+
+From each cell, you can either move in four directions: left, right, up, or down. You may not move diagonally or move outside the boundary (i.e., wrap-around is not allowed).
+
+Given two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.
+
+**Constraints:** 
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 200
+0 <= matrix[i][j] <= 2^31 - 1
+
+**Examples:** 
+```python3
+matrix = [[9,9,4],[6,6,8],[2,1,1]] #=> 4
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/e9e6c6f9-9fba-47e1-a31e-55f80de7ba38)
+
+```python3
+matrix = [[3,4,5],[3,2,6],[2,2,1]] #=> 4
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/7f947e6c-4162-48c7-9301-1a4c7d3f6450)
+
+```python3
+matrix = [[1]] #=> 1
+```
+
+**Hint:** DFS + memoization. Very similar to structy longest path, except you track prev and check if curr > prev before continuing
+
+```javascript
+const longestIncreasingPath = (matrix) => {
+  const memo = {};
+  let max = 0;
+  for(let r = 0; r < matrix.length; r++)
+    for(let c = 0; c < matrix[0].length; c++)
+      max = Math.max(max, dfs(matrix, r, c, memo, -1 )); // Try each starting point
+  return max
+};
+
+function dfs(matrix, r, c, memo, prev){
+  if(r >= matrix.length || r < 0 || c >= matrix[0].length || c < 0 ||
+    matrix[r][c] <= prev)
+    return 0;
+
+  const key = r + "," + c;
+  if (key in memo) return memo[key];
+
+  const up = dfs(matrix, r - 1, c, memo, matrix[r][c]);
+  const down = dfs(matrix, r + 1, c, memo, matrix[r][c]);
+  const left = dfs(matrix, r, c - 1, memo, matrix[r][c]);
+  const right = dfs(matrix, r, c + 1, memo, matrix[r][c]);
+
+  return memo[key] = 1 + Math.max(up, down, left, right);
+}
+```
+
+**Time:** O(mn)
+**Space:** O(mn)
