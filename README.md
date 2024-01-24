@@ -5868,3 +5868,71 @@ class Solution:
 
 **Time:** O(e + n) e = number of edges n = number of nodes
 **Space:** O(n)
+
+## 106. Number of Connected Components in an Undirected Graph
+**Reference:** https://leetcode.ca/all/323.html
+
+**Description:** Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to find the number of connected components in an undirected graph.
+
+**Constraints:** 
+You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
+
+**Examples:** 
+
+```python3
+n = 5 and edges = [[0, 1], [1, 2], [3, 4]] #=> 2
+     0          3
+     |          |
+     1 --- 2    4
+
+n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]] #=> 1
+     0           4
+     |           |
+     1 --- 2 --- 3
+```
+
+**Hint:** 
+Create adjacency matrix. Explore each node, keeping a global visited. When you complete a new component, count += 1
+
+```python3
+# Structy Solution. Note: you have to create an adjacency matrix first
+def connected_components_count(graph):
+  visited = set()
+  count = 0
+  
+  for node in graph:
+    if explore(graph, node, visited) == True:
+      count += 1
+      
+  return count
+
+def explore(graph, current, visited):
+  if current in visited:
+    return False
+  
+  visited.add(current)
+  
+  for neighbor in graph[current]:
+    explore(graph, neighbor, visited)
+  
+  return True
+
+def build_graph(edges):
+  graph = {}
+  
+  for edge in edges:
+    a, b = edge
+    
+    if a not in graph:
+      graph[a] = []
+    if b not in graph:
+      graph[b] = []
+      
+    graph[a].append(b)
+    graph[b].append(a)
+    
+  return graph
+```
+
+**Time:** O(e) n = number of nodes e = number edges
+**Space:** O(n)
