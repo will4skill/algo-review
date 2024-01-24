@@ -5726,3 +5726,78 @@ class Solution {
 ```
 **Time:** O(rc) r = number of rows c = number of columns
 **Space:** O(rc)
+
+## 104. Graph Valid Tree
+**Reference:** https://algomonster.medium.com/leetcode-261-graph-valid-tree-f27c212c1db1
+
+**Description:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
+
+**Constraints:** 
+Note: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0,1] is the same as [1,0] and thus will not appear together in edges.
+
+**Examples:** 
+
+```python3
+n = 5, and edges = [[0,1], [0,2], [0,3], [1,4]] #=> true
+n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]] #=> false
+```
+
+**Hint:** A tree is a special undirected graph. It satisfies two properties: 
+1. It is connected
+2. It has no cycle.
+
+Try Iterate over entire graph with dfs. If you visit all nodes, it is connected. See structy, visited/visiting for cycle check: 1 use two sets, visited and visiting (behaves like normal visited). 2. Test each node in the graph. 3. After all explored, remove from visiting, add to visited, and return False
+
+```python3
+# Standard Solution
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        from collections import defaultdict
+        graph = defaultdict(list)
+        
+        # build the graph
+        for src, dest in edges:
+            graph[src].append(dest)
+            graph[dest].append(src)
+            
+        visited = set()
+        def dfs(root, parent): # returns true if graph has no cycle
+            visited.add(root)
+            for node in graph[root]:
+                if node == parent: # trivial cycle, skip
+                    continue
+                if node in visited:
+                    return False
+            
+                if not dfs(node, root):
+                    return False
+            return True
+        
+        return dfs(0, -1) and len(visited) == n
+```
+
+```python3
+# Simplified Solution (no cycle if # of nodes == # of edges + 1)
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        from collections import defaultdict
+        graph = defaultdict(list)
+        
+        # build the graph
+        for src, dest in edges:
+            graph[src].append(dest)
+            graph[dest].append(src)
+            
+        visited = set()f
+        def dfs(root):
+            visited.add(root)
+            for node in graph[root]:
+                if node in visited:
+                    continue
+                dfs(node)
+            
+        dfs(0)
+        return len(visited) == n and len(edges) == n - 1
+```
+**Time:** O(n^2)
+**Space:** O(n)
