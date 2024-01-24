@@ -6263,3 +6263,101 @@ class Solution:
 
 **Time:** O((ROWS * COLS) * (4 * (3 ^ (WORDS - 1))))
 **Space:** O(N)
+
+## 112. Alien Dictionary
+**Reference:**  https://leetcode.com/problems/alien-dictionary/discuss/763913/Javascript-Graph-Topological-Sort
+
+**Description:** There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
+
+**Constraints:** 
+1. You may assume all letters are in lowercase.
+2. You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+3. If the order is invalid, return an empty string.
+4. There may be multiple valid order of letters, return any one of them is fine.
+
+**Examples:** 
+```python3
+[
+  "wrt",
+  "wrf",
+  "er",
+  "ett",
+  "rftt"
+]
+#=> "wertf"
+
+[
+  "z",
+  "x"
+]
+#=> "zx"
+
+[
+  "z",
+  "x",
+  "z"
+]
+#=> ""
+```
+
+**Hint:**
+1 Convert the word list into an adjacencyList. To do this, compare each pair of words and use the first differing letter to determine the relative order of edges.
+2. Topologically sort your graph
+
+```javascript
+const alienOrder = (words) => {
+    // Step 0: Create data structures and find all unique letters.
+    const adjList = {};
+    const numParents = {};
+    for (let word of words) {
+        for (let c of word) {
+            numParents[c] = 0; // intialize parents of each node to zero
+            adjList[c] = []; // create empty adjList
+        }
+    }
+
+    // Step 1: Find all edges.
+    for (let i = 0; i < words.length - 1; ++i) {
+        const word1 = words[i];
+        const word2 = words[i + 1];
+        // Check that word2 is not a prefix of word1.
+        if (word1.length > word2.length && word1.startsWith(word2)) return "";
+
+        // Find the first non match and insert the corresponding relation.
+        for (let j = 0; j < Math.min(word1.length, word2.length); j++) {
+            if (word1[j] !== word2[j]) {
+                adjList[word1[j]].push(word2[j]);
+                numParents[word2[j]]++
+                break;
+            }
+        }
+    }
+
+    // Step 2: Breadth-first search.
+    // TIM NOTE: this seems like topological sort
+    let outputString = "";
+    const queue = [];
+    for (let c in numParents)
+        if (numParents[c] === 0)
+          queue.push(c);
+
+    while (queue.length) {
+        const curr = queue.shift();
+        outputString += curr;
+        for (let next of adjList[curr]) {
+            numParents[next]--;
+            if (numParents[next] === 0)
+                queue.push(next);
+        }
+    }
+
+    if (outputString.length < Object.keys(numParents).length)
+        return "";
+
+    return outputString;
+}
+```
+
+**Time:** O(C), C = total length of all the words
+**Space:** O(1) O(U + min U^2, N), N be the total number of strings in the input list, U be the total number of unique letters in the alien alphabet.
+
