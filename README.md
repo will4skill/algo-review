@@ -5629,3 +5629,100 @@ public:
 ```
 **Time:** O(M*N)
 **Space:** O(M*N)
+
+## 103. Shortest Path to Get Food
+**Reference:** https://www.cnblogs.com/cnoodle/p/15645191.html
+
+**Description:** You are starving and you want to eat food as quickly as possible. You want to find the shortest path to arrive at any food cell.
+
+You are given an m x n character matrix, grid, of these different types of cells:
+
+'*' is your location. There is exactly one '*' cell.
+'#' is a food cell. There may be multiple food cells.
+'O' is free space, and you can travel through these cells.
+'X' is an obstacle, and you cannot travel through these cells.
+You can travel to any adjacent cell north, east, south, or west of your current location if there is not an obstacle.
+
+Return the length of the shortest path for you to reach any food cell. If there is no path for you to reach food, return -1.
+
+**Constraints:** 
+m == grid.length
+n == grid[i].length
+1 <= m, n <= 200
+grid[row][col] is '*', 'X', 'O', or '#'.
+The grid contains exactly one '*'.
+
+**Examples:** 
+
+```python3
+grid = [["X","X","X","X","X","X"],["X","*","O","O","O","X"],["X","O","O","#","O","X"],["X","X","X","X","X","X"]] #=> [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]] #=> 3
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/53520692-5cd8-4bfb-91a7-b498f12abf4d)
+
+
+```python3
+grid = [["X","X","X","X","X"],["X","*","X","O","X"],["X","O","X","#","X"],["X","X","X","X","X"]] #=> -1
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/2c257507-4d12-4f1a-92d2-0a9653186200)
+
+
+```python3
+grid = [["X","X","X","X","X","X","X","X"],["X","*","O","X","O","#","O","X"],["X","O","O","X","O","O","X","X"],["X","O","O","O","O","#","O","X"],["X","X","X","X","X","X","X","X"]] #=> 6
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/6743b25b-fb5b-4235-a481-2be37fe5afc2)
+
+```python3
+grid = [["O","*"],["#","O"]] #=> 2
+grid = [["X","*"],["#","X"]] #=> -1
+```
+
+**Hint:** See 39. Closest carrot. Essentially, grid graph shortest path. BFS (+= 1 for each new layer)
+
+```java
+class Solution {
+    int[][] DIRS = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
+
+    public int getFood(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '*') {
+                    queue.offer(new int[] { i, j });
+                    break;
+                }
+            }
+        }
+        boolean[][] visited = new boolean[m][n];
+
+        int step = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int[] cur = queue.poll();
+                int x = cur[0];
+                int y = cur[1];
+                if (grid[x][y] == '#') {
+                    return step;
+                }
+                for (int[] dir : DIRS) {
+                    int r = x + dir[0];
+                    int c = y + dir[1];
+                    if (r >= 0 && r < m && c >= 0 && c < n && grid[r][c] != 'X' && !visited[r][c]) {
+                        visited[r][c] = true;
+                        queue.offer(new int[] { r, c });
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+}
+```
+**Time:** O(rc) r = number of rows c = number of columns
+**Space:** O(rc)
