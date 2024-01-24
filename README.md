@@ -5985,3 +5985,73 @@ class Solution:
 
 **Time:** O(n^2)
 **Space:** O(n^2)
+
+## 108. Cheapest Flights Within K Stops
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0787-cheapest-flights-within-k-stops.py
+
+**Description:** There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
+
+You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+
+**Constraints:** 
+1 <= n <= 100
+0 <= flights.length <= (n * (n - 1) / 2)
+flights[i].length == 3
+0 <= fromi, toi < n
+fromi != toi
+1 <= pricei <= 104
+There will not be any multiple flights between two cities.
+0 <= src, dst, k < n
+src != dst
+
+**Examples:** 
+```python3
+n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1 #=> 700
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4f6965d5-b79b-421f-923e-98e3666ac4e9)
+
+
+```python3
+n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1 #=> 200
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4a52714d-0d39-4c08-a937-b1b3a5a17257)
+
+
+```python3
+n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0 #=> 500
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/fed2e1ad-5cc8-4312-8312-a598c41c5b99)
+
+**Hint:** 
+Simular to Dijkstra's algorithm. https://www.programiz.com/dsa/dijkstra-algorithm
+
+Start with unvisited weighted graph. Assign 0 path value to starting node and infinity to all others. For the current node, consider all of its unvisited neighbors and calculate their tentative distances through the current node. Compare the newly calculated tentative distance to the one currently assigned to the neighbor and assign it the smaller one. When we are done considering all of the unvisited neighbors of the current node, mark the current node as visited and remove it from the unvisited set. If the destination node has been marked visited return. 
+
+Tim note: seems like BFS with a priority queue
+
+```python3
+# Structy Solution. Note: you have to create an adjacency matrix first
+class Solution:
+    def findCheapestPrice(
+        self, n: int, flights: List[List[int]], src: int, dst: int, k: int
+    ) -> int:
+        prices = [float("inf")] * n
+        prices[src] = 0
+
+        for i in range(k + 1):
+            tmpPrices = prices.copy()
+
+            for s, d, p in flights:  # s=source, d=dest, p=price
+                if prices[s] == float("inf"):
+                    continue
+                if prices[s] + p < tmpPrices[d]:
+                    tmpPrices[d] = prices[s] + p
+            prices = tmpPrices
+        return -1 if prices[dst] == float("inf") else prices[dst]
+```
+
+**Time:** Time Complexity of Dijkstra's Algorithm is O ( V 2 ) but with min-priority queue it drops down to O ( V + E l o g V )
+**Space:** ???
