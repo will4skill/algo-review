@@ -6500,7 +6500,7 @@ or
 ![image](https://github.com/will4skill/algo-review/assets/10373005/5e060ac1-9fd4-4150-a5b1-abc61db3c72c)
 
 ```python3
-nums = [1,3] #=> [3,1]
+nums = [1,3] #=> [3,1] or [1,null,3]
 ```
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/74904945-b0d6-4f05-b177-3e49331ef022)
