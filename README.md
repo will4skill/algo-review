@@ -6420,3 +6420,59 @@ class Solution:
 
 **Time:** O(m+n) n = edges, m = nodes
 **Space:** O(1)
+
+## 114. Lowest Common Ancestor of a Binary Search Tree
+**Reference:**  https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/solutions/1347857/c-java-python-iterate-in-bst-picture-explain-time-o-h-space-o-1/
+
+**Description:** Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+**Constraints:** 
+The number of nodes in the tree is in the range [2, 10^5].
+-10^9 <= Node.val <= 10^9
+All Node.val are unique.
+p != q
+p and q will exist in the BST.
+
+**Examples:** 
+```python3
+root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8 #=> 6
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d97889f1-4a56-491c-ad0e-81a23ac48367)
+
+```python3
+root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4 #=> 2
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/9014c215-2e98-44f3-85c0-3d8f80d739c2)
+
+```python3
+root = [2,1], p = 2, q = 1 #=> 2
+```
+
+**Hint:** BFS
+Note, there is a more general solution for non BSTs. 
+1. Let large = max(p.val, q.val), small = min(p.val, q.val)
+2. If root.val > large then both node p and q belong to the left subtree, go to left by root = root.left.
+3. If root.val < small then both node p and q belong to the right subtree, go to right by root = root.right.
+4. Now, small <= root.val <= large the current root is the LCA between q and p.
+
+```python3
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        small = min(p.val, q.val)
+        large = max(p.val, q.val)
+        while root:
+            if root.val > large:  # p, q belong to the left subtree
+                root = root.left
+            elif root.val < small:  # p, q belong to the right subtree
+                root = root.right
+            else:  # Now, small <= root.val <= large -> This is the LCA between p and q
+                return root
+        return None
+```
+
+**Time:** O(height)
+**Space:** O(1)
