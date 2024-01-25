@@ -6676,6 +6676,49 @@ class Solution(object):
         else:
             return inorder_successor(root.right, succ, x)
         return succ
+```
 
 **Time:** O(height)
 **Space:** O(height)
+
+## 119. Ransom Note
+**Reference:** https://leetcode.com/problems/ransom-note/submissions/1135825421/
+
+**Description:** Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise. Each letter in magazine can only be used once in ransomNote.
+
+**Constraints:** 
+1. 1 <= ransomNote.length, magazine.length <= 10^5
+2. ransomNote and magazine consist of lowercase English letters.
+
+**Examples:** 
+```python3
+ransomNote = "a", magazine = "b" #=> false
+ransomNote = "aa", magazine = "ab" #=> false
+ransomNote = "aa", magazine = "aab" #=> true
+```
+
+**Hint:** Create a hashMap counting the letters in magazine. Iterate over ransomeNote subtracting letters from the hm. If you run out, return false. 
+
+```python3
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        if len(ransomNote) > len(magazine): return False
+        charMap = {}
+
+        for char in magazine:
+            if charMap.get(char):
+                charMap[char] += 1
+            else: 
+                charMap[char] = 1
+        
+        for char in ransomNote:
+            if charMap.get(char, 0) > 0:
+                charMap[char] -= 1
+            else:
+                return False
+        
+        return True
+```
+
+**Time:** O(n)
+**Space:** O(n)
