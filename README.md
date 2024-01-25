@@ -6623,3 +6623,59 @@ class Solution(object):
 **Time:** O(n)
 **Space:** O(n)
 
+## 118. Inorder Successor in BST
+**Reference:** https://www.enjoyalgorithms.com/blog/inorder-successor-in-binary-search-tree
+
+**Description:** Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
+The successor of a node p is the node with the smallest key greater than p.val.
+
+**Constraints:** 
+1. If the given node has no in-order successor in the tree, return null.
+2. It's guaranteed that the values of the tree are unique.
+
+
+**Examples:** 
+```python3
+root = [2,1,3], p = 1 #=> 2
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/c8ab780d-b161-4d8a-95e5-d34d2bc983b0)
+
+
+```python3
+root = [5,3,6,2,4,null,null,1], p = 6 #=> null
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/60d2d944-f9e9-447b-97d9-a9444c796026)
+
+
+**Hint:** Create a method to recurively find minimum value in BST. 
+
+1. Case 1: if the right child of the target node is present, then the success is the minimum value in the right subtree
+2. Case 2. if the right child is not present, traverse upward to find the successor
+   a. if root.val > target.val, let succPtr = root, recurse on left subtree (root.left)
+   b. if root.val < target.val, recurse on right subtree (root.right)
+
+```python3
+class Solution(object):
+    def bst_minimum(root):
+        while root.left is not None:
+            root = root.left
+        return root
+
+    def inorder_successor(root, succ, x):
+        if root is None:
+            return succ
+
+        if x.key == root.key:
+            if x.right is not None:
+                return bst_minimum(x.right)
+        elif x.key < root.key:
+            succ = root
+            return inorder_successor(root.left, succ, x)
+        else:
+            return inorder_successor(root.right, succ, x)
+        return succ
+
+**Time:** O(height)
+**Space:** O(height)
