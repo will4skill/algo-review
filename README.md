@@ -6984,4 +6984,76 @@ class Solution:
 **Time:** O(a*c) a = amount c = # coins
 **Space:** O(a)
 
+## 125. Partition Equal Subset Sum
+**Reference:** https://techsauce.medium.com/solving-partition-equal-subset-sum-problem-knapsack-problem-2b47ad13733b
+
+**Description:** Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+
+**Constraints:** 
+1 <= nums.length <= 200
+1 <= nums[i] <= 100
+
+**Examples:** 
+```python3
+nums = [1,5,11,5] #=> true
+nums = [1,2,3,5] #=> false
+```
+
+**Hint:** Dynamic Programming.
+Knapsack type problem. You can use DFS and memoization
+
+first, target = sum(nums) / 2
+if sum(nums) is odd return false
+
+Memo key: (target,idx)
+
+Base cases:
+1. if target == 0: return True
+2. if target is negtive or index is past nums.length - 1 return False
+3. If there is already a value for the target at the current idx pull it from the memo 
+
+Branches: 
+1. Include curr num (target - nums[idx]), increment idx 
+2. Skip curr num (target is unchanged), increment idx 
+
+Final Return: memoize (target, idx) = result
+return result
+
+```python3
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        # Calculate the total sum of all numbers in the array
+        total = 0
+        for i in nums:
+            total += i
+        # If the total sum is odd, it's not possible to partition the array into two subsets of equal sums
+        if total % 2 != 0:
+            return False
+        self.memo = {}
+        # Start the recursion from the first number (index 0) and current sum 0
+        return self.canPartitionFrom(nums, 0, 0, total // 2)
+
+    def canPartitionFrom(self, nums, index, sum, target):
+        # If the current sum equals the target sum, we've found a valid subset
+        if sum == target:
+            return True
+        # If the current sum exceeds the target, or we've tried all numbers, stop the recursion
+        if sum > target or index >= len(nums):
+            return False
+        # If we've already computed the result for this state (index, sum), return it from memo
+        if self.memo.get((index,sum)) is not None:
+            return self.memo.get((index,sum))
+        # Otherwise, compute the result:
+        # Try to include the current number in the subset (and add it to the sum) OR
+        # try to exclude the current number (and leave the sum as it is)
+        result = self.canPartitionFrom(nums, index + 1, sum, target) or self.canPartitionFrom(nums, index + 1, sum + nums[index], target)
+
+        # Store the result in the dp table for future reference
+        self.memo[(index,sum)] = result
+
+        return result
+```
+
+**Time:** O(N*sum)
+**Space:** O(N*sum)
 
