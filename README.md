@@ -7196,3 +7196,97 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(n)
+
+## 129. Longest Increasing Subsequence (*!= contiguous)
+**Reference:** https://leetcode.com/problems/longest-increasing-subsequence/solutions/1326552/optimization-from-brute-force-to-dynamic-programming-explained/
+
+Follow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?
+
+**Description:** Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+**Constraints:** 
+1 <= nums.length <= 2500
+-10^4 <= nums[i] <= 10^4
+
+**Examples:** 
+```python3
+nums = [10,9,2,5,3,7,101,18] #=> 4
+nums = [0,1,0,3,2,3] #=> 4
+nums = [7,7,7,7,7,7,7] #=> 1
+```
+
+**Hint:** Dynamic Programming.
+You can use DFS and memoization
+
+Memo key: idx,previousNumber
+
+Base cases:
+1. If key in memo return memo[key]
+2. If idx >= nums.length return 0 // Fail
+
+Branches: 
+1. skip the current number recurse with idx + 1, and pass in previous
+2. include the current number (add 1 to result) recurse with idx + 1 and pass in current
+
+Return: memoize Max of braches above
+return memo
+
+```python3
+# Correct But TLE... 
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        return self.helper(nums, 0, -1, {})
+
+    def helper(self, nums, idx, prevIdx, memo):
+        key = (idx, prevIdx + 1)
+        if idx >= len(nums): return 0
+        if key in memo: return memo[key]
+
+        take = 0
+        dontTake = self.helper(nums, idx + 1, prevIdx, memo)
+        if prevIdx == -1 or nums[idx] > nums[prevIdx]:
+            # try picking current element if no previous element 
+            # is chosen or current > nums[prevIdx]
+            take = 1 + self.helper(nums, idx + 1, idx, memo)
+        memo[key] = max(take, dontTake)
+        return memo[key]
+```
+
+**Time:** O(n^2)
+**Space:** O(N)
+
+```python3
+# Bottom up is faster
+class Solution:
+    def lengthOfLIS(self, nums):
+        ans = 1
+        n = len(nums)
+        dp = [1] * n
+        for i in range(n):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+                    ans = max(ans, dp[i])
+        return ans
+```
+
+**Time:** O(n^2)
+**Space:** O(N)
+
+```python3
+class Solution:
+    def lengthOfLIS(self, A):
+        len = 0
+        for cur in A:
+            if len == 0 or A[len-1] < cur:
+                A[len] = cur  # extend
+                len += 1
+            else:
+                # replace
+                from bisect import bisect_left
+                A[bisect_left(A, cur, 0, len)] = cur
+        return len
+```
+
+**Time:** O(nlog n)
+**Space:** O(1)
