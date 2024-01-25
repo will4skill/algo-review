@@ -7157,3 +7157,42 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(n)
+
+## 128. Maximum Product Subarray (*contiguous)
+**Reference:** https://leetcode.com/problems/maximum-product-subarray/solutions/48302/2-passes-scan-beats-99/
+
+**Description:** Given an integer array nums, find a subarray that has the largest product, and return the product. The test cases are generated so that the answer will fit in a 32-bit integer.
+
+**Constraints:** 
+1 <= nums.length <= 2 * 10^4
+-10 <= nums[i] <= 10
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+**Examples:** 
+```python3
+nums = [2,3,-2,4] #=> 6
+nums = [-2,0,-1] #=> 0
+```
+
+**Hint:** Dynamic Programming.
+Similar to max sum subarray, you have a global max and a local max. At each item in the array, the new local max will either be the new item by itself or the new item * the currentLocal max. If a zero is encountered, After updating the localMax, update the globalMax if possible. reset the localMax to 0. To account for negative numbers, you have to repeat this process from right to left as well. 
+
+```python3
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        maxNum, product, length = float('-inf'), 1, len(nums)
+        for idx in range(length):
+            product *= nums[idx]
+            maxNum = max(product, maxNum)
+            if nums[idx] == 0: product = 1
+        product = 1
+        for idx in range(length-1, -1, -1):
+            product *= nums[idx]
+            maxNum = max(product, maxNum)
+            if nums[idx] == 0: product = 1
+        
+        return maxNum
+```
+
+**Time:** O(n)
+**Space:** O(n)
