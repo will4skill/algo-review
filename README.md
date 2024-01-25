@@ -6809,3 +6809,45 @@ class RandomizedSet:
 **Time:** O(1)
 **Space:** O(n)
 
+## 121. First Missing Positive
+**Reference:** https://leetcode.com/problems/first-missing-positive/solutions/17080/python-o-1-space-o-n-time-solution-with-explanation/
+@ivalue
+
+**Description:** Given an unsorted integer array nums, return the smallest missing positive integer. You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.
+
+**Constraints:** 
+1. 1 <= nums.length <= 10^5
+2. -2^31 <= nums[i] <= 2^31 - 1
+
+**Examples:** 
+```python3
+nums = [1,2,0] #=> 3
+nums = [3,4,-1,1] #=> 2
+nums = [7,8,9,11,12] #=> 1
+```
+
+**Hint:** 
+https://leetcode.com/problems/first-missing-positive/solutions/17080/python-o-1-space-o-n-time-solution-with-explanation/   
+ 1. for any array whose length is l, the first missing positive must be in range [1,...,l+1], 
+        so we only have to care about those elements in this range and remove the rest.
+2. we can use the array index as the hash to restore the frequency of each number within 
+         the range [1,...,l+1] 
+
+```python3
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        nums = list(set(nums)) + [0]
+        n = len(nums)
+        for i in range(len(nums)):  # delete those useless elements
+            if nums[i] < 0 or nums[i] >= n:
+                nums[i] = 0
+        for i in range(len(nums)):  # use the index as the hash to record the frequency of each number
+            nums[nums[i] % n] += n
+        for i in range(1, len(nums)):
+            if nums[i] // n == 0:
+                return i
+        return n
+```
+
+**Time:** O(n)
+**Space:** O(1)
