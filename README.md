@@ -6530,3 +6530,48 @@ class Solution:
 
 **Time:** O(n log n)
 **Space:** O(n)
+
+## 116. Validate Binary Search Tree
+**Reference:** https://leetcode.com/problems/validate-binary-search-tree/solutions/32178/clean-python-solution/
+wz2326
+
+**Description:** Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+1. The left subtree of a node contains only nodes with keys less than the node's key.
+2. The right subtree of a node contains only nodes with keys greater than the node's key.
+3. Both the left and right subtrees must also be binary search trees.
+
+**Constraints:** 
+The number of nodes in the tree is in the range [1, 10^4].
+-2^31 <= Node.val <= 2^31 - 1
+
+**Examples:** 
+```python3
+root = [2,1,3] #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d7d467a9-25be-4b48-8b9f-a15730232b5f)
+
+
+```python3
+root = [5,1,4,null,null,3,6] #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/33b6bf34-b7cb-4e12-8597-c1330ba3d37a)
+
+**Hint:** See structy. Traverse tree in order, check if values from traversal are sorted. If sorted, return true.
+
+```python3
+class Solution(object):
+    def isValidBST(self, root, floor=float('-inf'), ceiling=float('inf')):
+        if not root: 
+            return True
+        if root.val <= floor or root.val >= ceiling:
+            return False
+        # in the left branch, root is the new ceiling; contrarily root is the new floor in right branch
+        return self.isValidBST(root.left, floor, root.val) and self.isValidBST(root.right, root.val, ceiling)
+```
+
+**Time:** O(n)
+**Space:** O(n)
