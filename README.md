@@ -6575,3 +6575,51 @@ class Solution(object):
 
 **Time:** O(n)
 **Space:** O(n)
+
+## 117. Kth Smallest Element in a BST
+**Reference:** https://leetcode.com/problems/kth-smallest-element-in-a-bst/solutions/1960046/recursion-vector-solutions-with-complexity-analysis-c-java-python/
+
+**Description:** Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+
+Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and you need to find the kth smallest frequently, how would you optimize?
+
+**Constraints:** 
+The number of nodes in the tree is n.
+1 <= k <= n <= 10^4
+0 <= Node.val <= 10^4
+
+
+**Examples:** 
+```python3
+root = [3,1,4,null,2], k = 1 #=> 1
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/fe7adb67-2aa3-4b30-a647-741c68c35758)
+
+
+```python3
+root = [5,3,6,2,4,null,null,1], k = 3 #=> 3
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/c87fecaf-a65b-4998-a704-0548bc3a1d7c)
+
+**Hint:** Traverse the BST in order and save the results in an array. Return inorder[k-1]
+
+```python3
+class Solution(object):
+    def kthSmallest(self, root, k):
+        values = []
+        self.inorder(root, values)
+        return values[k - 1]
+
+    def inorder(self, root, values):
+        if root is None:
+            return
+        self.inorder(root.left, values)
+        values.append(root.val)
+        self.inorder(root.right, values)
+```
+
+**Time:** O(n)
+**Space:** O(n)
+
