@@ -6979,7 +6979,6 @@ class Solution:
             
         memo[amount] = min_coins + 1
         return memo[amount]
-};
 ```
 
 **Time:** O(a*c) a = amount c = # coins
