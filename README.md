@@ -7029,11 +7029,11 @@ class Solution:
         # If the total sum is odd, it's not possible to partition the array into two subsets of equal sums
         if total % 2 != 0:
             return False
-        self.memo = {}
         # Start the recursion from the first number (index 0) and current sum 0
-        return self.canPartitionFrom(nums, 0, 0, total // 2)
+        return self.canPartitionFrom(nums, 0, 0, total // 2, memo = {})
 
-    def canPartitionFrom(self, nums, index, sum, target):
+    def canPartitionFrom(self, nums, index, sum, target, memo):
+        key = (index, sum)
         # If the current sum equals the target sum, we've found a valid subset
         if sum == target:
             return True
@@ -7041,15 +7041,16 @@ class Solution:
         if sum > target or index >= len(nums):
             return False
         # If we've already computed the result for this state (index, sum), return it from memo
-        if self.memo.get((index,sum)) is not None:
-            return self.memo.get((index,sum))
+        if key in memo:
+            return memo[key]
         # Otherwise, compute the result:
         # Try to include the current number in the subset (and add it to the sum) OR
         # try to exclude the current number (and leave the sum as it is)
-        result = self.canPartitionFrom(nums, index + 1, sum, target) or self.canPartitionFrom(nums, index + 1, sum + nums[index], target)
+        result = (self.canPartitionFrom(nums, index + 1, sum, target, memo) or 
+        self.canPartitionFrom(nums, index + 1, sum + nums[index], target, memo))
 
         # Store the result in the dp table for future reference
-        self.memo[(index,sum)] = result
+        memo[key] = result
 
         return result
 ```
