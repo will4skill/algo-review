@@ -6851,3 +6851,38 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 122. Climbing Stairs
+**Reference:** https://leetcode.com/problems/climbing-stairs/solutions/3708750/4-method-s-beat-s-100-c-java-python-beginner-friendly/
+
+**Description:** You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+**Constraints:** 
+1 <= n <= 45
+
+**Examples:** 
+```python3
+n = 2 #=> 2
+n = 3 #=> 3
+```
+
+**Hint:** Dynamic Programming.
+Just fibonacci. You can memoize, because you don't need specific paths, just the counts. Take either one step or two until steps remaing are 0 or negative
+
+```python3
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        memo = {}
+        return self.helper(n, memo)
+    
+    def helper(self, n: int, memo: dict[int, int]) -> int:
+        if n == 0 or n == 1:
+            return 1
+        if n not in memo:
+            memo[n] = self.helper(n-1, memo) + self.helper(n-2, memo)
+        return memo[n]
+```
+
+**Time:** O(n)
+**Space:** O(n)
+
