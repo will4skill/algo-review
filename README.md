@@ -6925,21 +6925,24 @@ const maxSubArray = nums => {
 **Space:** O(1)
 
 ## 124. Coin Change
-**Reference:** https://leetcode.com/problems/coin-change-ii/submissions/798432763/ 
+**Reference:** https://www.structy.net/problems/min-change
 
-**Description:** Given an integer array nums, find the subarray with the largest sum, and return its sum.
+**Description:** You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
 
-Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+You may assume that you have an infinite number of each kind of coin.
 
 **Constraints:** 
-1 <= nums.length <= 10^5
--10^4 <= nums[i] <= 10^4
+1 <= coins.length <= 12
+1 <= coins[i] <= 2^31 - 1
+0 <= amount <= 10^4
 
 **Examples:** 
 ```python3
-nums = [-2,1,-3,4,-1,2,1,-5,4] #=> 6 *[4,-1,2,1]*
-nums = [1] #=> 1
-nums = [5,4,-1,7,8] #=> 23 *[5,4,-1,7,8]*
+coins = [1,2,5], amount = 11 #=> 3
+coins = [2], amount = 3 #=> -1
+coins = [1], amount = 0 #=> 0
 ```
 
 **Hint:** Dynamic Programming.
@@ -6954,29 +6957,35 @@ Base cases:
 Branches: 
 1. Each branch is a different coin being used once
 2. When you recurse remember to subtract that coin from the target
+3. Track the minimum recursive branch result
 
 Final return: 1 for current coin + memo[target]
 
-```javascript
-var change = function(amount, coins) {
-	// there is only 1 way to make 0
-    if(amount === 0) return 1;
-	// if no coins, we can't make any amount
-    if(coins === 0) return 0;
+```python3
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        ans = self.helper(amount, coins, {})
+        if ans == float('inf'):
+            return -1
+        else:
+            return ans
     
-    // initialise  dp array to 0
-    const dp = Array(amount + 1).fill(0);
-    
-    // start at 1 - there is always only 1 way to make zero
-    dp[0] = 1;
-    
-    for(let i = 0; i < coins.length; i++) {
-        const coin = coins[i];
-        for(let j = coins[i]; j <= amount; j++) {
-            dp[j] = dp[j-coin] + dp[j];
-        }
-    }
-    return dp[amount];
+    def helper(self, amount, coins, memo):
+        if amount in memo:
+            return memo[amount]
+        
+        if amount == 0:
+            return 0
+        
+        if amount < 0:
+            return float('inf')
+        
+        min_coins = float('inf')
+        for coin in coins:
+            min_coins = min(min_coins, self.helper(amount - coin, coins, memo))
+            
+        memo[amount] = min_coins + 1
+        return memo[amount]
 };
 ```
 
