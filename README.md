@@ -6804,6 +6804,7 @@ class RandomizedSet:
         # if running outside of leetcode, you need to `import random`.
         # random.choice will randomly select an element from the list of data.
         return random.choice(self.data)
+```
 
 **Time:** O(1)
 **Space:** O(n)
