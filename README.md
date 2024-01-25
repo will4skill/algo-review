@@ -7111,3 +7111,49 @@ class Solution:
 
 **Time:** O(nm)
 **Space:** O(nm)
+
+## 127. House Robber
+**Reference:** https://leetcode.com/problems/unique-paths/solutions/1670399/js-dp-memo-and-tabulation/
+
+**Description:** You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+**Constraints:** 
+1 <= nums.length <= 100
+0 <= nums[i] <= 400
+
+**Examples:** 
+```python3
+nums = [1,2,3,1] #=> 4
+nums = [2,7,9,3,1] #=> 12
+```
+
+**Hint:** Dynamic Programming.
+You can use DFS and memoization
+
+Memo key: idx // because order doesn't matter
+
+Base cases:
+1. If key in memo return memo[key]
+2. If idx >= nums.length return 0 // Fail
+
+Branches: 
+1. currHouse + dfs(idx + 2), dfs(idx + 1)
+
+Return: memoise Max of braches above
+return memo
+
+```python3
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        return self.helper(nums, len(nums) - 1, {})
+    def helper(self, nums, idx, memo):
+        if idx < 0: return 0
+        if idx in memo: return memo[idx]
+        memo[idx] = max(self.helper(nums, idx - 2, memo) + nums[idx], self.helper(nums, idx - 1, memo))
+        return memo[idx]
+```
+
+**Time:** O(n)
+**Space:** O(n)
