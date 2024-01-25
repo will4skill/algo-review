@@ -6884,5 +6884,44 @@ class Solution:
 ```
 
 **Time:** O(n)
-**Space:** O(n)
+**Space:** O(n) Note: O(1) space possible, if you just use two previous values
+
+## 123. Maximum Subarray
+**Reference:** https://leetcode.com/problems/maximum-subarray
+
+**Description:** Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+
+**Constraints:** 
+1 <= nums.length <= 10^5
+-10^4 <= nums[i] <= 10^4
+
+**Examples:** 
+```python3
+nums = [-2,1,-3,4,-1,2,1,-5,4] #=> 6 *[4,-1,2,1]*
+nums = [1] #=> 1
+nums = [5,4,-1,7,8] #=> 23 *[5,4,-1,7,8]*
+```
+
+**Hint:** Dynamic Programming.
+Extend (in one direction) or start again. At each element in the array you have two choices: append current sum with new element or start over with new element. Pick whichever gives the highest value. Since your local max might be wiped out by negative numbers, also maintain a global max so that you can return the global max value at the end.
+
+```javascript
+const maxSubArray = nums => {
+  let localMaxSum = nums[0];
+  let globalMaxSum = nums[0];
+
+  for (let i = 1; i < nums.length; ++i) {
+      let num = nums[i];
+    localMaxSum = Math.max(num, localMaxSum + num);
+    globalMaxSum = Math.max(globalMaxSum, localMaxSum);
+  }
+  return globalMaxSum;
+}
+```
+
+**Time:** O(n)
+**Space:** O(1)
+
 
