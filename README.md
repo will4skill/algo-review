@@ -6924,4 +6924,63 @@ const maxSubArray = nums => {
 **Time:** O(n)
 **Space:** O(1)
 
+## 124. Coin Change
+**Reference:** https://leetcode.com/problems/coin-change-ii/submissions/798432763/ 
+
+**Description:** Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+
+**Constraints:** 
+1 <= nums.length <= 10^5
+-10^4 <= nums[i] <= 10^4
+
+**Examples:** 
+```python3
+nums = [-2,1,-3,4,-1,2,1,-5,4] #=> 6 *[4,-1,2,1]*
+nums = [1] #=> 1
+nums = [5,4,-1,7,8] #=> 23 *[5,4,-1,7,8]*
+```
+
+**Hint:** Dynamic Programming.
+DFS + memoization:
+MemoKey: target => # of coins
+
+Base cases: 
+1. if target is negative => Infinity (don't follow that path)
+2. if target == 0 => return 0 (success)
+3. if target in memo => return memo[target]
+
+Branches: 
+1. Each branch is a different coin being used once
+2. When you recurse remember to subtract that coin from the target
+
+Final return: 1 for current coin + memo[target]
+
+```javascript
+var change = function(amount, coins) {
+	// there is only 1 way to make 0
+    if(amount === 0) return 1;
+	// if no coins, we can't make any amount
+    if(coins === 0) return 0;
+    
+    // initialise  dp array to 0
+    const dp = Array(amount + 1).fill(0);
+    
+    // start at 1 - there is always only 1 way to make zero
+    dp[0] = 1;
+    
+    for(let i = 0; i < coins.length; i++) {
+        const coin = coins[i];
+        for(let j = coins[i]; j <= amount; j++) {
+            dp[j] = dp[j-coin] + dp[j];
+        }
+    }
+    return dp[amount];
+};
+```
+
+**Time:** O(a*c) a = amount c = # coins
+**Space:** O(a)
+
 
