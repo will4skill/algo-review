@@ -6965,20 +6965,13 @@ Final return: 1 for current coin + memo[target]
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         ans = self.helper(amount, coins, {})
-        if ans == float('inf'):
-            return -1
-        else:
-            return ans
+        if ans == float('inf'): return -1
+        else: return ans
     
     def helper(self, amount, coins, memo):
-        if amount in memo:
-            return memo[amount]
-        
-        if amount == 0:
-            return 0
-        
-        if amount < 0:
-            return float('inf')
+        if amount in memo: return memo[amount]
+        if amount == 0: return 0
+        if amount < 0: return float('inf')
         
         min_coins = float('inf')
         for coin in coins:
