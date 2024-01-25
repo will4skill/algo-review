@@ -7290,3 +7290,108 @@ class Solution:
 
 **Time:** O(nlog n)
 **Space:** O(1)
+
+## 130. Jump Game
+**Reference:** https://leetcode.com/problems/jump-game/solutions/2375320/interview-scenario-recursion-memoization-dp-greedy/
+
+**Description:** You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+
+Return true if you can reach the last index, or false otherwise.
+
+**Constraints:** 
+1 <= nums.length <= 10^4
+0 <= nums[i] <= 10^5
+
+**Examples:** 
+```python3
+nums = [2,3,1,1,4] #=> true
+nums = [3,2,1,0,4] #=> false
+```
+
+**Hint:** Dynamic Programming.
+Simplest: iterate over array once, updating the max distance you can travel until you care capable of reaching the end or finish iterating without being capable.
+
+DFS with memo (O(n^2) time, O(n) + O(n) stack space and memo space)
+
+Memo key: idx 
+
+Base cases:
+1. If key in memo return memo[key]
+2. If idx == nums.length - 1 return true
+3. if nums[idx] == 0 return false
+
+Branches: 
+1. try every jump size from 1 to maximum (nums[idx]). If dfs returns true memoize it and return memo
+
+Return: if you reach the outside of the for loop, memoize result
+return memo
+
+```python3
+# Correct But TLE... 
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        return self.helper(nums, 0, {})
+
+    def helper(self, nums, idx, memo):
+        if idx == len(nums) - 1: return True
+        if nums[idx] == 0: return False
+        if idx in memo: return memo[idx]
+
+        reach = idx + nums[idx]
+        for jump in range(idx + 1, reach + 1):
+            if jump < len(nums) and self.helper(nums, jump, memo):
+                memo[idx] = True  # memoizing for a particular index
+                return memo[idx]
+
+        memo[idx] = False
+        return memo[idx]
+```
+
+**Time:** O(N* N) -> for each index, I can have at max N jumps, hence O(N* N).
+**Space:** O(N) + O(N) -> stack space plus dp array size.
+
+```python3
+# Bottom Up 
+class Solution:
+    def canJump(self, nums):
+        n = len(nums)
+        dp = [-1] * n
+        dp[n - 1] = 1  # base case
+
+        for idx in range(n - 2, -1, -1):
+            if nums[idx] == 0:
+                dp[idx] = False
+                continue
+
+            flag = 0
+            reach = idx + nums[idx]
+            for jump in range(idx + 1, reach + 1):
+                if jump < n and dp[jump]:
+                    dp[idx] = True
+                    flag = 1
+                    break
+            if flag == 1:
+                continue
+
+            dp[idx] = False
+
+        return dp[0]
+```
+
+**Time:** O(N* N)
+**Space:** O(N) -> dp array size
+
+```python3
+# Kadane
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        reach = 0
+        for idx in range(len(nums)):
+            if reach < idx:
+                return False
+            reach = max(reach, idx + nums[idx])
+        return True
+```
+
+**Time:** O(n)
+**Space:** O(1)
