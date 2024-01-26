@@ -7395,3 +7395,109 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 131. Maximal Square
+**Reference:** https://leetcode.com/problems/maximal-square/solutions/473270/all-four-approaches-in-c-brute-force-recursive-dp-memoization-tabulation/
+
+**Description:** Given an m x n binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+
+**Constraints:** 
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 300
+matrix[i][j] is '0' or '1'.
+
+**Examples:** 
+```python3
+matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]] #=> 4
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/f132a81a-7bad-4f33-afe4-2ca82208b1e7)
+
+```python3
+matrix = [["0","1"],["1","0"]] #=> 1
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/f132a81a-7bad-4f33-afe4-2ca82208b1e7)
+
+```python3
+matrix = [["0"]] #=> 0
+```
+
+**Hint:** Dynamic Programming.
+Memo Version:
+Memo key: (i,j)
+
+Base cases:
+1. If key in memo return memo[key]
+2. If i or j out of bounds, return 0
+3. if matrix[i][j] = 0
+
+Branches: 
+1. try to brach to lower, right, and lower right cells record the results.
+
+Return: store smallest branch in memo
+return memo
+
+Bottom Up Version: https://leetcode.com/problems/maximal-square/solutions/600149/python-thinking-process-diagrams-dp-approach/
+You can either create a grid the same size as the matrix or use the matrix itself. Iterate from the top left down to the bottom right. 
+
+For each cell check the surrounding three cells and update current (matrix[i][j] to the minimum neighbor + 1). Update the global max if current cell is greater than the global max value.
+
+Return the global max.
+
+"The key is noticing that a square of size 3 is made up of 4 overlapping squares of size 2. This holds as the square size increases, and is why the min(1, 1, 1) + 1 part of the equation works and helps you build up the memo table."
+
+```python3
+# Memo: https://leetcode.com/problems/maximal-square/solutions/473270/all-four-approaches-in-c-brute-force-recursive-dp-memoization-tabulation/
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix:
+            return 0
+        memo = {}
+        res = 0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                res = max(res, self.solve(matrix, i, j, memo))
+        return res * res
+
+    def solve(self, matrix, i, j, memo):
+        key = (i,j)
+        if i >= len(matrix) or j >= len(matrix[0]): return 0
+        if key in memo:
+            return memo[key]
+        if matrix[i][j] == '0':
+            memo[key] = 0
+            return 0
+        
+        memo[key] = min(
+            self.solve(matrix, i + 1, j, memo), 
+            self.solve(matrix, i, j + 1, memo),
+            self.solve(matrix, i + 1, j + 1, memo)
+        ) + 1
+        return memo[key]
+```
+
+**Time:** O(mn)
+**Space:** O(mn)??
+
+```python3
+# https://leetcode.com/problems/maximal-square/solutions/817156/python-easy-going-from-brute-force-to-dp-solution/
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        if not matrix:
+            return 0
+        maxRows = len(matrix)
+        maxCols = len(matrix[0])
+        maxLength = 0
+        dp = [[0 for _ in range(maxCols + 1)] for _ in range(maxRows + 1)]
+        for row in range(1, maxRows + 1):
+            for col in range(1, maxCols + 1):
+                if matrix[row-1][col-1] == '1':
+                    dp[row][col] = min(dp[row-1][col-1], dp[row-1][col], dp[row][col-1]) + 1
+                    maxLength = max(maxLength, dp[row][col])
+        return maxLength**2
+```
+
+**Time:** O(mn)
+**Space:** O(1)
