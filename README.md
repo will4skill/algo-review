@@ -7505,7 +7505,7 @@ class Solution:
 **Time:** O(mn)
 **Space:** O(1)
 
-## 132.Decode Ways
+## 132. Decode Ways
 **Reference:** https://leetcode.com/problems/decode-ways/solutions/4454173/recursive-top-down-bottom-up-clean-and-commented-code-dynamic-programming/
 
 **Description:** A message containing letters from A-Z can be encoded into numbers using the following mapping:
@@ -7594,7 +7594,7 @@ class Solution(object):
 **Time:** O(n)
 **Space:** O(n) due to the 1D array.
 
-## 133.Combination Sum IV
+## 133. Combination Sum IV
 **Reference:** https://leetcode.com/problems/combination-sum-iv/solutions/1166177/short-easy-w-explanation-optimization-from-brute-force-to-dp-solution/
 
 **Description:** Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target. The test cases are generated so that the answer can fit in a 32-bit integer.
@@ -7665,7 +7665,7 @@ class Solution:
 **Time:** O(N * T)
 **Space:** O(T)
 
-## 134.Add Binary
+## 134. Add Binary
 **Reference:** https://leetcode.com/problems/add-binary/submissions/1136649211/
 
 **Description:** Given two binary strings a and b, return their sum as a binary string.
@@ -7726,7 +7726,7 @@ class Solution:
 **Time:** O(max(M, N)
 **Space:** O(max(M, N)
 
-## 135.Counting Bits
+## 135. Counting Bits
 **Reference:** https://leetcode.com/problems/add-binary/submissions/1136649211/
 
 **Description:** Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
@@ -7763,3 +7763,39 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(n)
+
+## 137. Number of 1 Bits
+**Reference:** https://leetcode.com/problems/counting-bits/solutions/3986178/97-97-dp-bit-manipulation-offset/
+
+**Description:** Write a function that takes the binary representation of an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
+
+Note:
+1. Note that in some languages, such as Java, there is no unsigned integer type. In this case, the input will be given as a signed integer type. It should not affect your implementation, as the integer's internal binary representation is the same, whether it is signed or unsigned.
+2. In Java, the compiler represents the signed integers using 2's complement notation. Therefore, in Example 3, the input represents the signed integer. -3.
+
+Follow up: If this function is called many times, how would you optimize it?
+
+**Constraints:** 
+The input must be a binary string of length 32.
+
+**Examples:** 
+```python3
+n = 00000000000000000000000000001011 #=> 3
+n = 00000000000000000000000010000000 #=> 1
+n = 11111111111111111111111111111101 #=> 31
+```
+
+**Hint:** Do this: n=n&(n-1). Change the first set bit from right to 0 until n == 0
+
+```python3
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        cnt = 0  # count of set bit
+        while n > 0:  # iterate until all bits are traversed
+            cnt += 1
+            n = n & (n - 1)  # change the first set bit from right to 0
+        return cnt
+```
+
+**Time:** O(logn)
+**Space:** O(1)
