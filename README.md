@@ -7593,3 +7593,74 @@ class Solution(object):
 
 **Time:** O(n)
 **Space:** O(n) due to the 1D array.
+
+## 133.Combination Sum IV
+**Reference:** https://leetcode.com/problems/combination-sum-iv/solutions/1166177/short-easy-w-explanation-optimization-from-brute-force-to-dp-solution/
+
+**Description:** Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target. The test cases are generated so that the answer can fit in a 32-bit integer.
+
+Follow up: What if negative numbers are allowed in the given array? How does it change the problem? What limitation we need to add to the question to allow negative numbers?
+
+**Constraints:** 
+1 <= nums.length <= 200
+1 <= nums[i] <= 1000
+All the elements of nums are unique.
+1 <= target <= 1000
+
+**Examples:** 
+```python3
+nums = [1,2,3], target = 4 #=> 7
+nums = [9], target = 3 #=> 0
+```
+
+**Hint:** Dynamic Programming.
+Memo key: target
+Memo value: number of combinations 
+
+Base cases:
+1. If key in memo return memo[key]
+2. target == 0 return 1
+3. target < 0 return 0
+
+Branches: 
+1. for each num in nums dfs(target - num)
+
+Return: memoize curr target => sum of all ways
+return memo
+
+```python3
+class Solution:
+    def combinationSum4(self, nums, target):
+        return self.helper(nums, target, {})
+
+    def helper(self, nums, target, memo):
+        if target == 0: return 1  # base condition
+        if target in memo: return memo[target]  # if already computed for this value
+
+        count = 0
+        # check for every element of nums. An element can only be taken if it is less than target.
+        # If an element is chosen, recurse for the remaining value.
+        for num in nums:
+            if num <= target:
+                count += self.helper(nums, target - num, memo)
+        memo[target] = count
+        return memo[target]
+```
+
+**Time:** O(N * T), N = number of elements in nums, T = target value
+**Space:** O(T)
+
+```python3
+class Solution:
+    def combinationSum4(self, nums, target):
+        dp = [0] * (target + 1)
+        dp[0] = 1
+        for curTarget in range(1, target + 1):
+            for num in nums:
+                if num <= curTarget:
+                    dp[curTarget] += dp[curTarget - num]
+        return dp[target]
+```
+
+**Time:** O(N * T)
+**Space:** O(T)
