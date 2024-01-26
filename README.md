@@ -7664,3 +7664,64 @@ class Solution:
 
 **Time:** O(N * T)
 **Space:** O(T)
+
+## 134.Add Binary
+**Reference:** https://leetcode.com/problems/add-binary/submissions/1136649211/
+
+**Description:** Given two binary strings a and b, return their sum as a binary string.
+
+**Constraints:** 
+1 <= a.length, b.length <= 10^4
+a and b consist only of '0' or '1' characters.
+Each string does not contain leading zeros except for the zero itself.
+
+**Examples:** 
+```python3
+a = "11", b = "1" #=> "100"
+a = "1010", b = "1011" #=> "10101"
+```
+
+**Hint:** Start at far right and iterate backward and continue will either string is >= 0 or carry bit is 1. If one string runs out of characters early, don't add it, or make its current char 0
+
+```python3
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        aIdx = len(a) - 1
+        bIdx = len(b) - 1
+        carry = 0
+        output = ""
+
+        while aIdx >= 0 or  bIdx >= 0 or carry == 1:
+            if aIdx < 0:
+                aChar = 0
+            else:
+                aChar = a[aIdx]
+
+            if bIdx < 0:
+                bChar = 0
+            else:
+                bChar = b[bIdx]
+
+            combo = int(aChar) + int(bChar) + carry
+            if combo == 3:
+                output = "1" + output
+                carry = 1
+            elif combo == 2:
+                output = "0" + output
+                carry = 1
+            elif combo == 1:
+                output = "1" + output
+                carry = 0
+            elif combo == 0:
+                output = "0" + output
+                carry = 0
+
+            aIdx -= 1
+            bIdx -= 1
+    
+
+        return output
+```
+
+**Time:** O(max(M, N)
+**Space:** O(max(M, N)
