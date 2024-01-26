@@ -7424,6 +7424,9 @@ matrix = [["0","1"],["1","0"]] #=> 1
 matrix = [["0"]] #=> 0
 ```
 
+![image](https://github.com/will4skill/algo-review/assets/10373005/be88b138-e5da-4ee2-ad95-aa46b76e2017)
+
+
 **Hint:** Dynamic Programming.
 Memo Version:
 Memo key: (i,j)
