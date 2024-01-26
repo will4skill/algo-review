@@ -7975,3 +7975,56 @@ class Solution:
 **Time:** O(n log(n))
 **Space:** O(1)
 
+## 141. Roman to Integer
+**Reference:** https://leetcode.com/problems/roman-to-integer/solutions/6537/my-straightforward-python-solution/
+
+**Description:** Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
+
+I can be placed before V (5) and X (10) to make 4 and 9. 
+X can be placed before L (50) and C (100) to make 40 and 90. 
+C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
+
+**Constraints:** 
+1. 1 <= s.length <= 15
+2. s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
+3. It is guaranteed that s is a valid roman numeral in the range [1, 3999].
+
+**Examples:** 
+```python3
+s = "III" #=> 3
+s = "LVIII" #=> 58
+s = "MCMXCIV" #=> 1994
+```
+
+**Hint:** 
+Create a map between characters and values. 
+Iterate over the input string keeping track of the curr and next character. If next is less than or equal to current, add hashMap[curr] to output total. Else (next is > curr) subtract curr from output value
+
+```python3
+class Solution:
+    def romanToInt(self, s):
+        roman = {'M': 1000,'D': 500 ,'C': 100,'L': 50,'X': 10,'V': 5,'I': 1}
+        z = 0
+        for i in range(0, len(s) - 1):
+            if roman[s[i]] < roman[s[i+1]]:
+                z -= roman[s[i]]
+            else:
+                z += roman[s[i]]
+        return z + roman[s[-1]]
+```
+
+**Time:** O(n)
+**Space:** O(1)
