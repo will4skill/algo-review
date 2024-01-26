@@ -7834,3 +7834,43 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 139. Missing Number
+**Reference:** https://leetcode.com/problems/missing-number/solutions/69791/4-line-simple-java-bit-manipulate-solution-with-explaination/ 
+shank1499
+
+**Description:** Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
+
+**Constraints:** 
+n == nums.length
+1 <= n <= 10^4
+0 <= nums[i] <= n
+All the numbers of nums are unique.
+
+**Examples:** 
+```python3
+nums = [3,0,1] #=> 2
+nums = [0,1] #=> 2
+nums = [9,6,4,2,3,5,7,0,1] #=> 8
+```
+
+**Hint:** Two xor operations with the same number will eliminate the number and reveal the original number.
+
+a^b^b = a
+
+Apply XOR operation to both the index and value of the array. In a complete array with no missing numbers, the index and value should be perfectly corresponding(nums[index] = index), so in a missing array, what left finally is the missing number.
+
+```python3
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        result = len(nums)
+        for idx in range(len(nums)):
+            result = result ^ idx ^ nums[idx] # a^b^b = a
+        return result
+```
+
+**Time:** O(n)
+**Space:** O(1)
+
