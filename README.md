@@ -7725,3 +7725,41 @@ class Solution:
 
 **Time:** O(max(M, N)
 **Space:** O(max(M, N)
+
+## 135.Counting Bits
+**Reference:** https://leetcode.com/problems/add-binary/submissions/1136649211/
+
+**Description:** Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
+
+It is very easy to come up with a solution with a runtime of O(n log n). Can you do it in linear time O(n) and possibly in a single pass?
+Can you do it without using any built-in function (i.e., like __builtin_popcount in C++)?
+
+**Constraints:** 
+0 <= n <= 10^5
+
+**Examples:** 
+```python3
+n = 2 #=> [0,1,1]
+n = 5 #=> [0,1,1,2,1,2]
+```
+
+**Hint:** Dynamic Programming with Bit Manipulation
+
+shifting a number to the right by one bit (i.e., dividing by 2) removes the last bit. So, the number of 1's in the binary representation of i is the same as i/2 i plus the last bit of i
+
+We use bitwise shift and AND operations. Bitwise right shifting i >> 1 essentially removes the last bit, and i & 1 extracts the last bit. This helps us compute the result for i using previously computed results.
+
+Initialization: Create an array ans of length n + 1, initialized with zeros.
+Main Algorithm: Iterate from 1 to n, and for each i, set ans[i] = ans[i >> 1] + (i & 1).
+
+```python3
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        ans = [0] * (n + 1)
+        for i in range(1, n + 1):
+            ans[i] = ans[i >> 1] + (i & 1)
+        return ans
+```
+
+**Time:** O(n)
+**Space:** O(n)
