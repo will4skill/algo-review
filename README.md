@@ -7803,18 +7803,18 @@ class Solution:
 ## 138. Single Number
 **Reference:** https://leetcode.com/problems/counting-bits/solutions/3986178/97-97-dp-bit-manipulation-offset/
 
-**Description:** Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
-
-You must implement a solution with a linear runtime complexity and use only constant extra space.
+**Description:** Given a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space.
 
 **Constraints:** 
-The input must be a binary string of length 32.
-
-**Examples:** 
-```python3
 1 <= nums.length <= 3 * 10^4
 -3 * 10^4 <= nums[i] <= 3 * 10^4
 Each element in the array appears twice except for one element which appears only once.
+
+**Examples:** 
+```python3
+nums = [2,2,1] #=> 1
+nums = [4,1,2,1,2] #=> 4
+nums = [1] #=> 1
 ```
 
 **Hint:** If you XOR a number with itself, 0 is returned. 
