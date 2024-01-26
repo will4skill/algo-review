@@ -7764,7 +7764,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 137. Number of 1 Bits
+## 136. Number of 1 Bits
 **Reference:** https://leetcode.com/problems/counting-bits/solutions/3986178/97-97-dp-bit-manipulation-offset/
 
 **Description:** Write a function that takes the binary representation of an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
@@ -7800,7 +7800,7 @@ class Solution:
 **Time:** O(logn)
 **Space:** O(1)
 
-## 138. Single Number
+## 137. Single Number
 **Reference:** https://leetcode.com/problems/counting-bits/solutions/3986178/97-97-dp-bit-manipulation-offset/
 
 **Description:** Given a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space.
@@ -7835,7 +7835,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 139. Missing Number
+## 138. Missing Number
 **Reference:** https://leetcode.com/problems/missing-number/solutions/69791/4-line-simple-java-bit-manipulate-solution-with-explaination/ 
 shank1499
 
@@ -7874,7 +7874,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 140. Reverse Bits
+## 139. Reverse Bits
 **Reference:** https://leetcode.com/problems/reverse-bits/solutions/3218837/190-solution-step-by-step-explanation/
 
 **Description:** Reverse bits of a given 32 bits unsigned integer.
@@ -7916,3 +7916,62 @@ class Solution:
 
 **Time:** O(1)
 **Space:** O(1)
+
+## 140. Find the Duplicate Number
+**Reference:** https://leetcode.com/problems/find-the-duplicate-number/solutions/1893098/bit-manipulation-explained/
+
+**Description:** Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+
+There is only one repeated number in nums, return this repeated number.
+
+You must solve the problem without modifying the array nums and uses only constant extra space.
+
+How can we prove that at least one duplicate number must exist in nums?
+
+Can you solve the problem in linear runtime complexity?
+
+**Constraints:** 
+1 <= n <= 10^5
+nums.length == n + 1
+1 <= nums[i] <= n
+All the integers in nums appear only once except for precisely one integer which appears two or more times.
+
+**Examples:** 
+```python3
+nums = [1,3,4,2,2] #=> 2
+nums = [3,1,3,4,2] #=> 3
+```
+
+**Hint:** 
+For each possible bit used in the numbers in [1,n] we will count how many of the numbers in nums use that bit, and compare that with the count we would get looking only at the numbers from in [1,n] only once. If the difference of the counts is positive, we add that bit to our answer.
+
+```python3
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        n = len(nums) - 1
+		# gives the maximum binary length of a number in [1,n]
+        max_length = n.bit_length()
+        ans = 0
+        
+        for j in range(max_length):
+			# moves the bits in 1 j positons to the left
+			# thus mask has a 1 in the j-th position and 0s everywhere else
+            mask = 1 << j
+            count = 0
+            for i in range(n + 1):
+				# if nums[i] has a 1 in the j-th position
+                if nums[i] & mask > 0:
+                    count += 1
+				# if i has a 1 in the j-th position
+                if i & mask > 0:
+                    count -= 1
+			#if we found extra 1s in the j-th position add that bit to ans
+            if count > 0:
+                ans |= mask
+                    
+        return ans
+```
+
+**Time:** O(n log(n))
+**Space:** O(1)
+
