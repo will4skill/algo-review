@@ -9049,3 +9049,69 @@ class Solution:
 
 **Time:** ~O(n * n!)
 **Space:** ~O(n * n!)
+
+## 160. Subsets
+**Reference:** https://leetcode.com/problems/permutations/solutions/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)/
+ 
+**Description:** Given an integer array nums of unique elements, return all possible subsets(the power set). The solution set must not contain duplicate subsets. Return the solution in any order.
+
+**Constraints:** 
+1 <= nums.length <= 10
+-10 <= nums[i] <= 10
+All the numbers of nums are unique.
+   
+**Examples:** 
+nums = [1,2,3] #=> [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+nums = [0] #=> [[],[0]]
+```
+
+**Hint:** 
+Use backtracking
+
+1. Start with an empty array for the output
+2. Base case: none, always push copy of subset to output
+3. Branches: iterate over nums arr
+Either include the curr idx or skip it. Never start the loop over
+
+*Tim note: you don't really need a foor loop if you check the idx as a base case 
+
+```python3
+# Standard
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        output = []
+        self.backtrack(nums, 0, [], output)
+        return output
+
+    def backtrack(self, nums, start, subset, output):
+        output.append(subset.copy())  # Late copy
+        for i in range(start, len(nums)):
+            subset.append(nums[i])  # Choose idx i
+            self.backtrack(nums, i + 1, subset, output)
+            subset.pop()  # Undo choice
+```
+
+**Time:** O(n * 2^n)
+**Space:** O(n * 2^n)
+
+```python3
+# With Dup
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        nums.sort()
+        self.backtrack(result, [], nums, 0)
+        return result
+
+    def backtrack(self, result, temp_list, nums, start):
+        result.append(temp_list[:])  # Late copy
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i - 1]:
+                continue  # Skip duplicates
+            temp_list.append(nums[i])
+            self.backtrack(result, temp_list, nums, i + 1)
+            temp_list.pop()  # Undo choice
+```
+
+**Time:** O(n * 2^n)
+**Space:** O(2^n) ??
