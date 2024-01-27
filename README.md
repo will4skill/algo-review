@@ -8028,3 +8028,43 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 141. Palindrome Number
+**Reference:** https://leetcode.com/problems/palindrome-number/solutions/785314/python-3-1-solution-is-89-20-faster-2nd-is-99-14-faster-explanation-added/
+
+**Description:** Given an integer x, return true if x is a palindrome, and false otherwise.
+
+Follow up: Could you solve it without converting the integer to a string?
+
+**Constraints:** 
+-2^31 <= x <= 2^31 - 1
+
+**Examples:** 
+```python3
+x = 121 #=> true
+x = -121 #=> false
+x = 10 #=> false
+```
+
+**Hint:** 
+if input number is negative or last digit is 10 return False
+
+while input number is > 0
+1. Build the reversed number digit by digit. Use newNum *= 10 to account for digit shifting. Add inputNum % 10 to get current digit. 
+2. Use inputNum = inputNum // 10 to remove least significant bit
+After the loop compare the newNum with the inputNum.
+
+```python3
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0: return False
+        inputNum = x
+        newNum = 0
+        while x > 0:
+            newNum = newNum * 10 + x % 10
+            x = x // 10
+        return newNum == inputNum
+```
+
+**Time:** O(n)
+**Space:** O(1)
