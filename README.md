@@ -8171,3 +8171,72 @@ class Solution:
 
 **Time:** O(logn)
 **Space:** O(1)
+
+## 145. Reverse Integer
+**Reference:** https://leetcode.com/problems/reverse-integer/description/
+ 
+**Description:** Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+**Constraints:** 
+-2^31 <= x <= 2^31 - 1
+
+**Examples:** 
+```python3
+x = 123 #=> 321
+x = -123 #=> -321
+x = 120 #=> 21
+```
+
+**Hint:** 
+The basic idea is while the input number > 0, add the digit with rev= rev*10 + x % 10 and decrement with x = x // 10.  
+
+You can check for overflow confirming that previous number != currentNumber: (rev - x % 10) / 10 != prevNum
+
+```python3
+class Solution:
+# https://leetcode.com/problems/reverse-integer/solutions/408697/two-python-solutions-and-explanation-of-python-modulo-and-int-division-differences-from-c-java/
+    def reverse(self, x: int) -> int:
+        reverse = 0
+        max_int = pow(2, 31)-1
+        min_int = pow(-2, 31)
+        while x != 0:   
+            # Python modulo does not work the same as c or java. It always returns the same
+            # sign as the divisor and rounds towards negative infinit. Also // rounds towards negative infinity not 0 as in C so this also
+            # behaves differently. Python 3.7 added a math.remainder(), but leet code is
+            # running a python version prior to this (at least at the time of writing). Since the C 'remainder' behavior is desirable for
+            # this problem, the following code emulates it. 
+            #
+            # See https://stackoverflow.com/questions/1907565/c-and-python-different-behaviour-of-the-modulo-operation and
+			# http://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
+            pop = x % 10 if x >= 0 else (abs(x) % 10)*-1
+            x = x // 10 if x >=0 else math.ceil(x / 10)
+            if (reverse > max_int//10) or (reverse == max_int // 10 and pop > 7):
+                return 0
+            if (reverse < math.ceil(min_int / 10)) or (reverse == math.ceil(min_int / 10) and pop < -8):
+                return 0
+            reverse = reverse * 10 + pop
+        return reverse
+```
+**Time:** O(n)
+**Space:** O(1)
+
+```java
+// https://leetcode.com/problems/reverse-integer/solutions/4056/very-short-7-lines-and-elegant-solution/
+  public int reverse(int x) {
+        int prevRev = 0 , rev= 0;
+        while( x != 0){
+            rev= rev*10 + x % 10;
+            if((rev - x % 10) / 10 != prevRev){
+                return 0;
+            }
+            prevRev = rev;
+            x= x/10;
+        }
+        return rev;
+    }
+```
+
+**Time:** O(n)
+**Space:** O(1)
