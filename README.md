@@ -9074,7 +9074,7 @@ Use backtracking
 3. Branches: iterate over nums arr
 Either include the curr idx or skip it. Never start the loop over
 
-Tim note: you don't really need a foor loop if you check the idx as a base case 
+*Tim note: you don't really need a foor loop if you check the idx as a base case 
 
 ```python3
 # Standard
