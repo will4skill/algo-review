@@ -8698,3 +8698,82 @@ class Trie:
 **Time:** insert: O(n), search: O(n), startsWith: O(n)
 **Space:** insert: O(n), search: O(1), startsWith: O(1)
 
+## 155. Word Break
+**Reference:** https://leetcode.com/problems/implement-trie-prefix-tree/solutions/58989/my-python-solution/
+ 
+**Description:** Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+**Constraints:** 
+1. 1 <= s.length <= 300
+2. 1 <= wordDict.length <= 1000
+3. 1 <= wordDict[i].length <= 20
+4. s and wordDict[i] consist of only lowercase English letters.
+5. All the strings of wordDict are unique.
+   
+**Examples:** 
+```python3
+s = "leetcode", wordDict = ["leet","code"] #=> true
+s = "applepenapple", wordDict = ["apple","pen"] #=> true
+s = "catsandog", wordDict = ["cats","dog","sand","and","cat"] #=> false
+```
+
+**Hint:** 
+DFS + memoization:
+MemoKey: string => boolean value
+
+Base cases: 
+if string.length == 0 return true // Completed tring
+if string in memo => return memo[string]
+
+Branches: 
+1. Iterate over dictictionary words. If a word is a prefix in the string, remove the word from the string and recurse with the remaining characters.
+2. If dfs with that those remaining characters returns true, add the string to the memo and return true (because you know the prefix and suffix are valid).
+
+Final return: memo[string] = false
+return meo[string]
+
+
+```python3
+ # Top Down https://leetcode.com/problems/word-break/solutions/3766655/a-general-template-solution-for-dp-memoization/
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        return self.helper(s, wordDict, {})
+    
+    def helper(self, s, wordDict, memo):
+        if s in memo:
+            return memo[s]
+        if len(s) == 0:
+            return True
+
+        for word in wordDict:
+            if s.startswith(word):
+                if self.helper(s[len(word):], wordDict, memo):
+                    memo[s] = True
+                    return True
+        memo[s] = False
+        return memo[s]
+```
+
+**Time:** O(n^3)
+**Space:** O(n)
+
+```python3
+# Bottom Up https://leetcode.com/problems/word-break/solutions/748479/python3-solution-with-a-detailed-explanation-word-break/
+class Solution:
+    def wordBreak(self, s, wordDict):
+        dp = [False]*(len(s)+1)
+        dp[0] = True
+        
+        for i in range(1, len(s)+1):
+            for j in range(i):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
+                    break
+                    
+        return dp[-1]
+```
+
+**Time:** O(n^3)
+**Space:** O(n)
