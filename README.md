@@ -8843,7 +8843,7 @@ class WordDictionary:
 **Space:** O(M), where M is sum of lengths of all words in our Trie.
 
 ## 157. Design In-Memory File System
-**Reference:** https://leetcode.com/problems/design-add-and-search-words-data-structure/solutions/774530/python-trie-solution-with-dfs-explained/
+**Reference:** https://algo.monster/liteproblems/588
  
 **Description:** Design an in-memory file system to simulate the following functions:
 
@@ -8964,3 +8964,88 @@ class FileSystem:
 6. readContentFromFile: O(m + k) // k is the total length of the content.
 **Space:** Trie class: O(mn), m: paths are of length m, n: number of unique paths, For content storage: O(t), t: he total length of the content across all files
 
+## 159. Permutations
+**Reference:** https://leetcode.com/problems/permutations/solutions/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)/
+ 
+**Description:** Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+**Constraints:** 
+1 <= nums.length <= 6
+-10 <= nums[i] <= 10
+All the integers of nums are unique.
+   
+**Examples:** 
+```python3
+nums = [1,2,3] #=> [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+nums = [0,1] #=> [[0,1],[1,0]]
+nums = [1] #=> [[1]]
+```
+
+**Hint:** 
+Use backtracking and a visited set (you use visited set to avoid revisiting nums because forloop starts at beginning
+
+1. Start with an empty array for the output
+2. Base case: if curr permutation.length == nums.length, copy current permutation to output
+3. Branches: iterate over nums arr. Only branch if number is not in visited set.
+add curr idx to visited Either include the value at curr idx or skip it. Remove curr idx from visited. 
+
+```python3
+# Standard
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        output = []
+        visited = set()
+        self.backtrack(output, nums, [], visited)
+        return output
+
+    def backtrack(self, output, nums, permutation, visited):
+        if len(permutation) == len(nums):
+            output.append(permutation.copy())
+            return
+
+        for i in range(len(nums)):
+            if i not in visited:
+                # make a choice
+                visited.add(i)
+                permutation.append(nums[i])
+                self.backtrack(output, nums, permutation, visited)
+                # undo choice
+                visited.remove(i)
+                permutation.pop()
+```
+
+**Time:** ~O(n!)
+**Space:** ~O(n!)
+
+```python3
+# With Dup
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        output = []
+        visited = set()
+        nums.sort()
+        self.backtrack(output, nums, [], visited)
+        return output
+
+    def backtrack(self, output, nums, permutation, visited):
+        if len(permutation) == len(nums):  # goal is reached
+            output.append(permutation.copy())
+            return
+
+        for i in range(len(nums)):
+            if i in visited:
+                continue  # Because starting from the beginning
+            if i > 0 and nums[i] == nums[i - 1] and (i - 1) not in visited:
+                continue  # Duplicate and you did not add the previous (may work because visited from higher level)
+
+            # make a choice
+            visited.add(i)
+            permutation.append(nums[i])
+            self.backtrack(output, nums, permutation, visited)
+            # undo choice
+            visited.remove(i)
+            permutation.pop()
+```
+
+**Time:** ~O(n * n!)
+**Space:** ~O(n * n!)
