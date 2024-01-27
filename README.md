@@ -8491,3 +8491,73 @@ class Solution(object):
 
 **Time:** O(logN + k)
 **Space:** O(k)
+
+## 150. Kth Largest Element in an Array
+**Reference:** https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+ 
+**Description:** Given an integer array nums and an integer k, return the kth largest element in the array.
+
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Can you solve it without sorting?
+
+**Constraints:** 
+1 <= k <= nums.length <= 10^5
+-10^4 <= nums[i] <= 10^4
+
+**Examples:** 
+```python3
+nums = [3,2,1,5,6,4], k = 2 #=> 5
+nums = [3,2,3,1,2,4,5,5,6], k = 4 #=> 4
+```
+
+**Hint:** 
+Iterate over all the elemets, inserting into a min heap. If the size reaches k, push then pop the next value to maintain size k.
+Return min value.
+
+Note: the preferred solution seems to be quick select O(n) avg O(n^2) worst case with space O(1)
+
+```python3
+# https://leetcode.com/problems/kth-largest-element-in-an-array/solutions/60294/solution-explained/
+class Solution:
+    def findKthLargest(self, nums, k):
+        min_heap = []
+        for num in nums:
+            heapq.heappush(min_heap, num)
+            if len(min_heap) > k:
+                heapq.heappop(min_heap)
+        return min_heap[0]
+```
+
+**Time:** O(N lg K)
+**Space:** O(K)
+
+```python3
+# https://leetcode.com/problems/kth-largest-element-in-an-array/solutions/3906260/100-3-approaches-video-heap-quickselect-sorting/
+class Solution:
+    def findKthLargest(self, nums, k):
+        left, right = 0, len(nums) - 1
+        while True:
+            pivot_index = random.randint(left, right)
+            new_pivot_index = self.partition(nums, left, right, pivot_index)
+            if new_pivot_index == len(nums) - k:
+                return nums[new_pivot_index]
+            elif new_pivot_index > len(nums) - k:
+                right = new_pivot_index - 1
+            else:
+                left = new_pivot_index + 1
+
+    def partition(self, nums, left, right, pivot_index):
+        pivot = nums[pivot_index]
+        nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
+        stored_index = left
+        for i in range(left, right):
+            if nums[i] < pivot:
+                nums[i], nums[stored_index] = nums[stored_index], nums[i]
+                stored_index += 1
+        nums[right], nums[stored_index] = nums[stored_index], nums[right]
+        return stored_index
+```
+
+**Time:** O(N) avg, O(N^2) worst case 
+**Space:** O(1)
