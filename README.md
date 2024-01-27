@@ -8802,6 +8802,8 @@ Implement the WordDictionary class:
 ```
 
 **Hint:** 
+Use A trie
+
 1. addWord: we add the word char by char and set the isWord flag to true at the end
 2. search: to account for the wildcard (".") use dfs to check all options. If we run out of letters we return True if isWord is true at curr node and false otherwise. Also return false if you can't search deeper but still have letters.
 
@@ -8839,4 +8841,126 @@ class WordDictionary:
 
 **Time:** The worst time complexity is also O(M), potentially we can visit all our Trie, if we have pattern like ...... For words without ., time complexity will be O(h), where h is height of Trie. For words with several letters and several ., we have something in the middle.
 **Space:** O(M), where M is sum of lengths of all words in our Trie.
+
+## 157. Design In-Memory File System
+**Reference:** https://leetcode.com/problems/design-add-and-search-words-data-structure/solutions/774530/python-trie-solution-with-dfs-explained/
+ 
+**Description:** Design an in-memory file system to simulate the following functions:
+
+ls: Given a path in string format. If it is a file path, return a list that only contains this file's name. If it is a directory path, return the list of file and directory names in this directory. Your output (file and directory names together) should in lexicographic order.
+
+mkdir: Given a directory path that does not exist, you should make a new directory according to the path. If the middle directories in the path don't exist either, you should create them as well. This function has void return type.
+
+addContentToFile: Given a file path and file content in string format. If the file doesn't exist, you need to create that file containing given content. If the file already exists, you need to append given content to original content. This function has void return type.
+
+readContentFromFile: Given a file path, return its content in string format.
+
+**Constraints:** 
+1. You can assume all file or directory paths are absolute paths which begin with / and do not end with / except that the path is just "/".
+2. You can assume that all operations will be passed valid parameters and users will not attempt to retrieve file content or list a directory or file that does not exist.
+3. You can assume that all directory names and file names only contain lower-case letters, and same names won't exist in the same directory
+   
+**Examples:** 
+```python3
+["FileSystem","ls","mkdir","addContentToFile","ls","readContentFromFile"]
+[[],["/"],["/a/b/c"],["/a/b/c/d","hello"],["/"],["/a/b/c/d"]] #=> [null,[],null,null,["a"],"hello"]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/108fe777-b163-46d0-bdaf-cb23458ed540)
+
+
+**Hint:** 
+Use a trie
+
+Each trie node includes:
+1. name: name of file/dir
+2. isFile: boolean
+3. content: content of files
+4. children: map
+
+1. Insert(): insert dir or files. Split the given path and traverse existing nodes or create new nodes. For files, set isFile to true and save the filename
+2. Search(): spits the path and searches the nodes 
+3. FileSystem(): initializes an empty Trie node as the root
+4. ls(): uses search to find a node based on the given path and then returns either a list with the file's name or a list of sorted children nodes if it is a directory
+5. mkdir(): uses insert with a path and false for the isFile parameters so that directories are only created if they don't exist.
+6. addContentToFile(): uses insert to either find the existing file node or create a new one with the path, and appends the content to the file's content list.
+7. readContentFromFile(): uses search to fetch the file node and then returns the node's concatenated content list as a string.
+
+```python3
+from typing import List
+
+class TrieNode:
+    def __init__(self):
+        # Initialize a Trie node with the appropriate attributes
+        self.name = None
+        self.is_file = False
+        self.content = []
+        self.children = {}
+  
+    def insert(self, path: str, is_file: bool) -> 'TrieNode':
+        # Insert a path into the Trie and return the final node
+        node = self
+        parts = path.split('/')
+        for part in parts[1:]:  # Skip empty root part
+            if part not in node.children:
+                node.children[part] = TrieNode()
+            node = node.children[part]
+        node.is_file = is_file
+        if is_file:
+            node.name = parts[-1]
+        return node
+  
+    def search(self, path: str) -> 'TrieNode':
+        # Search for a node given a path in the Trie
+        node = self
+        if path == '/':
+            return node
+        parts = path.split('/')
+        for part in parts[1:]: # Skip empty root part
+            if part not in node.children:
+                return None
+            node = node.children[part]
+        return node
+
+
+class FileSystem:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def ls(self, path: str) -> List[str]:
+        # List directory or file
+        node = self.root.search(path)
+        if node is None:
+            return []
+        if node.is_file:
+            # If it's a file, return a list with its name
+            return [node.name]
+        # If it's a directory, return the sorted list of children's names
+        return sorted(node.children.keys())
+
+    def mkdir(self, path: str) -> None:
+        # Create a directory given a path
+        self.root.insert(path, False)
+
+    def addContentToFile(self, filePath: str, content: str) -> None:
+        # Add content to a file, creating the file if it doesn't exist
+        node = self.root.insert(filePath, True)
+        node.content.append(content)
+
+    def readContentFromFile(self, filePath: str) -> str:
+        # Read content from a file
+        node = self.root.search(filePath)
+        if node is None or not node.is_file:
+            raise FileNotFoundError(f"File not found: {filePath}")
+        return ''.join(node.content)
+```
+
+**Time:** 
+1. insert: O(m) // m is the path length (number of directories in the path)
+2. search: O(m)
+3. ls: O(m + nlogn) // n is the number of entries (files and directories) in the final directory
+4. mkdir: O(m)
+5. addContentToFile: O(m)
+6. readContentFromFile: O(m + k) // k is the total length of the content.
+**Space:** Trie class: O(mn), m: paths are of length m, n: number of unique paths, For content storage: O(t), t: he total length of the content across all files
 
