@@ -8126,3 +8126,48 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(n)
+
+## 144. Pow(x, n)
+**Reference:** https://leetcode.com/problems/powx-n/solutions/19560/shortest-python-guaranteed/
+ 
+**Description:** Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).
+
+**Constraints:** 
+1. -100.0 < x < 100.0
+2. -2^31 <= n <= 2^31-1
+3. n is an integer.
+4. Either x is not zero or n > 0.
+5. -10^4 <= x^n <= 10^4
+
+**Examples:** 
+```python3
+x = 2.00000, n = 10 #=> 1024.00000
+x = 2.10000, n = 3 #=> 9.26100
+x = 2.00000, n = -2 #=> 0.25000
+```
+
+**Hint:** 
+Recursive approach is probably easiet to understand
+
+Base case: if exponent == 0, return 1
+
+if exponent is negative return 1 / positive version: x^-1 = 1/x
+
+if exponent is odd return number * positive version - 1: 3^3 = 3 * 3^2
+
+if exponent is even, return positive version / 2: 3^2 = 3*3^1
+
+```python3
+class Solution:
+    def myPow(self, x, n):
+        if not n:
+            return 1
+        if n < 0:
+            return 1 / self.myPow(x, -n)
+        if n % 2:
+            return x * self.myPow(x, n-1)
+        return self.myPow(x*x, n/2)
+```
+
+**Time:** O(logn)
+**Space:** O(1)
