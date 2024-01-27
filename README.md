@@ -9061,6 +9061,7 @@ class Solution:
 All the numbers of nums are unique.
    
 **Examples:** 
+```python3
 nums = [1,2,3] #=> [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 nums = [0] #=> [[],[0]]
 ```
