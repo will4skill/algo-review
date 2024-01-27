@@ -8413,3 +8413,81 @@ class Solution(object):
 **Time:** O(nlogk)
 **Space:** O(n)
 
+## 149. Find K Closest Elements
+**Reference:** https://leetcode.com/problems/find-k-closest-elements/description/
+ 
+**Description:** Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order.
+
+An integer a is closer to x than an integer b if:
+1. |a - x| < |b - x|, or
+2. |a - x| == |b - x| and a < b
+
+**Constraints:** 
+1. 1 <= k <= arr.length
+2. 1 <= arr.length <= 10^4
+3. arr is sorted in ascending order.
+4. -10^4 <= arr[i], x <= 10^4
+
+**Examples:** 
+```python3
+arr = [1,2,3,4,5], k = 4, x = 3 #=> [1,2,3,4]
+arr = [1,2,3,4,5], k = 4, x = -1 #=> [1,2,3,4]
+```
+
+**Hint:** 
+You can use a priority queue O(nlog(k)) but the preferred solution is binary search
+
+PQ version: 
+1. iterate over arr, filling min heap
+2. if a remaining element is closer than the min element, pop and replace with remaining element
+3. Pop all elements from pq and return
+
+bin search version: the key is to find the starting element
+1. Return [start, start+k]
+2. let hi = len(arr)-k and lo = 0
+3. Check: if distance from mid to x is greater than distance from mid+k to x, disgard the lower half (lo = mid + 1)
+
+```python3
+# https://leetcode.com/problems/find-k-closest-elements/solutions/2636647/java-explained-in-detail-binary-search-two-pointers-priority-queue/
+import heapq
+class Solution(object):
+    # Approach:
+    # Using a min heap priority queue, add all the smallest integers up to k integers.
+    # Then, traverse the 'arr' array will replacing the priority queue with integer closer to x.
+    def findClosestElements(self, arr, k, x):
+        min_heap = []
+        for num in arr:
+            if len(min_heap) < k: # Fill heap 
+                heapq.heappush(min_heap, num)
+            else: # replace the min if you find a better option in the remaining elements
+                if abs(min_heap[0] - x)> abs(num - x):
+                    heapq.heappop(min_heap)
+                    heapq.heappush(min_heap, num)
+        
+        ans = []
+        while min_heap: # pop everything. the heap will maintain ascending order
+            ans.append(heapq.heappop(min_heap))
+        
+        return ans
+```
+
+**Time:** O(nlogk)
+**Space:** O(k)
+
+```python3
+# https://leetcode.com/problems/find-k-closest-elements/solutions/133604/clean-o-logn-solution-in-python/
+import heapq
+class Solution(object):
+    def findClosestElements(self, arr, k, x):
+        lo, hi = 0, len(arr)-k
+        while lo<hi:
+            mid = (lo + hi)//2
+            if x-arr[mid]>arr[mid+k]-x:
+                lo = mid + 1
+            else:
+                hi = mid
+        return arr[lo:lo+k]
+```
+
+**Time:** O(logN + k)
+**Space:** O(k)
