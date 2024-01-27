@@ -8719,3 +8719,81 @@ class Solution:
 
 **Time:** O(n * log(m)) Heapifying m elements takes O(log(m)) time, n is the total number of elements in all lists, m is the total number of lists
 **Space:** O(m)
+
+## 154. Implement Trie (Prefix Tree)
+**Reference:** https://leetcode.com/problems/implement-trie-prefix-tree/solutions/58989/my-python-solution/
+ 
+**Description:** A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
+
+Implement the Trie class:
+1. Trie() Initializes the trie object.
+2. void insert(String word) Inserts the string word into the trie.
+3. boolean search(String word) Returns true if the string word is in the trie (i.e., was inserted before), and false otherwise.
+4. boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.
+
+**Constraints:** 
+1. 1 <= word.length, prefix.length <= 2000
+2. word and prefix consist only of lowercase English letters.
+3. At most 3 * 10^4 calls in total will be made to insert, search, and startsWith.
+   
+**Examples:** 
+```python3
+["Trie", "insert", "search", "search", "startsWith", "insert", "search"]
+[[], ["apple"], ["apple"], ["app"], ["app"], ["app"], ["app"]] #=> [null, null, true, false, true, null, true]
+```
+
+**Hint:** 
+1. The nodes just need properties of: a map of children, isWord boolean
+2. insert: for each char in word, if the current node's children do not include the curr char, insert it as a new Node. Either way, increment: node = node.children[char]. At the end, set isWord to true
+3. search: for each char in word, if the current node's children do not include the char return false. Either way, increment as above. At the end, return isWord
+4. startsWith: for each char in word, if the current node's children do not include the char return false. Either way, increment as above. At the end, return true.
+
+```python3
+class TrieNode:
+    # Initialize your data structure here.
+    def __init__(self):
+        self.word=False
+        self.children={}
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    # @param {string} word
+    # @return {void}
+    # Inserts a word into the trie.
+    def insert(self, word: str) -> None:
+        node=self.root
+        for i in word:
+            if i not in node.children:
+                node.children[i]=TrieNode()
+            node=node.children[i]
+        node.word=True       
+
+    # @param {string} word
+    # @return {boolean}
+    # Returns if the word is in the trie.
+    def search(self, word: str) -> bool:
+        node=self.root
+        for i in word:
+            if i not in node.children:
+                return False
+            node=node.children[i]
+        return node.word
+
+    # @param {string} prefix
+    # @return {boolean}
+    # Returns if there is any word in the trie
+    # that starts with the given prefix.
+    def startsWith(self, prefix: str) -> bool:
+        node=self.root
+        for i in prefix:
+            if i not in node.children:
+                return False
+            node=node.children[i]
+        return True   
+```
+
+**Time:** insert: O(n), search: O(n), startsWith: O(n)
+**Space:** insert: O(n), search: O(1), startsWith: O(1)
+
