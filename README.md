@@ -8664,3 +8664,58 @@ class Solution:
 
 **Time:** O(N log k)
 **Space:** O(N)
+
+## 153. Smallest Range Covering Elements from K Lists
+**Reference:** https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/solutions/104893/java-code-using-priorityqueue-similar-to-merge-k-array/
+ 
+**Description:** You have k lists of sorted integers in non-decreasing order. Find the smallest range that includes at least one number from each of the k lists.
+
+We define the range [a, b] is smaller than range [c, d] if b - a < d - c or a < c if b - a == d - c.
+
+**Constraints:** 
+1. nums.length == k
+2. 1 <= k <= 3500
+3. 1 <= nums[i].length <= 50
+4. -10^5 <= nums[i][j] <= 10^5
+5. nums[i] is sorted in non-decreasing order.
+   
+**Examples:** 
+```python3
+nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]] #=> [20,24]
+nums = [[1,2,3],[1,2,3],[1,2,3]] #=> [1,1]
+```
+
+**Hint:** 
+1. Create a min heap
+2. Insert the minimum value from each list into the heap and note the largest of those min values as maxVal. Let range be a large value. 
+3. While the size of the heap is the number of different lists, poll the minimum value as curr.
+4. If the maxVal - curr (current min) improves the range. Update the range to maxVal - curr. Update start to curr.val and update end to maxVal.
+5. if curr.idx + 1 < is a valid list element (the next element is not out of bounds), insert the next element in the curr list input the heap and update the max if that new value is greater than the existing max.
+6. Return the range
+
+```python3
+class Solution:
+    def smallestRange(self, nums):
+        pq = []
+        max_val = float('-inf')
+        for i, row in enumerate(nums):
+            if row:
+                val = row.pop(0)
+                heapq.heappush(pq, (val, i))
+                max_val = max(max_val, val)
+        
+        start, end = float('-inf'), float('inf')
+        while len(pq) == len(nums):
+            val, i = heapq.heappop(pq)
+            if max_val - val < end - start:
+                start, end = val, max_val
+            if nums[i]:
+                new_val = nums[i].pop(0)
+                heapq.heappush(pq, (new_val, i))
+                max_val = max(max_val, new_val)
+        
+        return [start, end]
+```
+
+**Time:** O(n * log(m)) Heapifying m elements takes O(log(m)) time, n is the total number of elements in all lists, m is the total number of lists
+**Space:** O(m)
