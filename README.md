@@ -8355,3 +8355,61 @@ class Solution(object):
 
 **Time:** O(Ntotal), where Ntotal is the number of tasks to complete
 **Space:** O(1) to keep array of 26 elements
+
+## 148. Top K Frequent Words
+**Reference:** https://leetcode.com/problems/top-k-frequent-words/solutions/108346/my-simple-java-solution-using-hashmap-priorityqueue-o-nlogk-time-o-n-space/
+ 
+**Description:** Given an array of strings words and an integer k, return the k most frequent strings.
+
+Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+Follow-up: Could you solve it in O(n log(k)) time and O(n) extra space?
+
+**Constraints:** 
+1. 1 <= words.length <= 500
+2. 1 <= words[i].length <= 10
+3. words[i] consists of lowercase English letters.
+4. k is in the range [1, The number of unique words[i]]
+
+**Examples:** 
+```python3
+words = ["i","love","leetcode","i","love","coding"], k = 2 #=> ["i","love"]
+```
+
+```python3
+words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4 #=> ["the","is","sunny","day"]
+```
+
+**Hint:** 
+Use a hash map to store the count of each word
+
+Insert the word into your custom priority queue. If the counts of two words are equal, string compare the keys
+
+```python3
+class Solution(object):
+    def topKFrequent(self, words, k):
+        if k == 0: return []
+        
+        word_count = {}
+        # for word in words:
+        #     if word in word_count:
+        #         word_count[word] += 1
+        #     else:
+        #         word_count[word] = 1
+        for word in words:
+            word_count[word] = word_count.get(word, 1) + 1
+        
+        import heapq
+        heap = [(-freq, word) for word, freq in word_count.items()]
+        heapq.heapify(heap)
+        
+        result = []
+        for _ in range(k):
+            result.append(heapq.heappop(heap)[1])
+        
+        return result
+```
+
+**Time:** O(nlogk)
+**Space:** O(n)
+
