@@ -8616,3 +8616,51 @@ class MedianFinder:
 
 **Time:** O(log n) add, O(1) find
 **Space:** O(n)
+
+## 152. Merge k Sorted Lists
+**Reference:** https://leetcode.com/problems/merge-k-sorted-lists/solutions/354814/Java-Heap-Solution/
+ 
+**Description:** You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
+
+**Constraints:** 
+1. k == lists.length
+2. 0 <= k <= 10^4
+3. 0 <= lists[i].length <= 500
+4. -10^4 <= lists[i][j] <= 10^4
+5. lists[i] is sorted in ascending order.
+6. The sum of lists[i].length will not exceed 10^4.
+
+**Examples:** 
+```python3
+lists = [[1,4,5],[1,3,4],[2,6]] #=> [1,1,2,3,4,4,5,6]
+lists = [] #=> []
+lists = [[]] #=> []
+```
+
+**Hint:** 
+1. Create a custom comparator to compare list node.val
+2. Add all of your list nodes to your heap
+3. Create a new sentenel list node
+4. Poll entire heap while creating a LL chain 
+5. Return sentinel.next 
+
+```python3
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        heap = []
+        for linked_list in lists:
+            while linked_list:
+                heapq.heappush(heap, linked_list.val)
+                linked_list = linked_list.next
+        
+        sentinel = ListNode(-1)
+        cur = sentinel
+        while heap:
+            cur.next = ListNode(heapq.heappop(heap))
+            cur = cur.next
+        
+        return sentinel.next
+```
+
+**Time:** O(N log k)
+**Space:** O(N)
