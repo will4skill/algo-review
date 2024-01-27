@@ -8029,7 +8029,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 141. Palindrome Number
+## 142. Palindrome Number
 **Reference:** https://leetcode.com/problems/palindrome-number/solutions/785314/python-3-1-solution-is-89-20-faster-2nd-is-99-14-faster-explanation-added/
 
 **Description:** Given an integer x, return true if x is a palindrome, and false otherwise.
@@ -8068,3 +8068,61 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 143. Random Pick with Weight
+**Reference:** 
+https://www.educative.io/answers/what-is-the-weighted-random-selection-algorithm
+https://leetcode.com/problems/random-pick-with-weight/solutions/884261/array-binary-search-faster-than-97/
+ 
+**Description:** You are given a 0-indexed array of positive integers w where w[i] describes the weight of the ith index.
+
+You need to implement the function pickIndex(), which randomly picks an index in the range [0, w.length - 1] (inclusive) and returns it. The probability of picking an index i is w[i] / sum(w).
+
+For example, if w = [1, 3], the probability of picking index 0 is 1 / (1 + 3) = 0.25 (i.e., 25%), and the probability of picking index 1 is 3 / (1 + 3) = 0.75 (i.e., 75%).
+
+**Constraints:** 
+1 <= w.length <= 10^4
+1 <= w[i] <= 10^5
+pickIndex will be called at most 10^4 times.
+
+**Examples:** 
+```python3
+["Solution","pickIndex"]
+[[[1]],[]] #=> [null,0]
+
+["Solution","pickIndex","pickIndex","pickIndex","pickIndex","pickIndex"]
+[[[1,3]],[],[],[],[],[]] #=> [null,1,1,1,1,0]
+```
+
+**Hint:** 
+1. Use the input array to create an array of prefix sums (e.g., running total of input array)
+
+input = [1,2,3]
+prefix sums = [1,3,6]
+
+2. generate a random number between 0 and sum(nums) - 1
+3. Find the smallest index of nums that corresponds to the prefix array that is greater than the random number (use binary search) O(logn)
+
+```python3
+class Solution:
+    def __init__(self, w):
+        self.weights = []
+        self.sum = 0
+        for weight in w:
+            self.sum += weight
+            self.weights.append(self.sum)
+
+    def pickIndex(self):
+        index = random.randint(0, self.sum - 1)
+        left, right = 0, len(self.weights) - 1
+        while left < right:
+            mid = left + (right - left) // 2
+            if self.weights[mid] <= index:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+```
+
+**Time:** O(n)
+**Space:** O(n)
