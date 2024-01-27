@@ -8699,7 +8699,7 @@ class Trie:
 **Space:** insert: O(n), search: O(1), startsWith: O(1)
 
 ## 155. Word Break
-**Reference:** https://leetcode.com/problems/implement-trie-prefix-tree/solutions/58989/my-python-solution/
+**Reference:** https://leetcode.com/problems/word-break/description/
  
 **Description:** Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
 
@@ -8777,3 +8777,66 @@ class Solution:
 
 **Time:** O(n^3)
 **Space:** O(n)
+
+## 156. Design Add and Search Words Data Structure
+**Reference:** https://leetcode.com/problems/design-add-and-search-words-data-structure/solutions/774530/python-trie-solution-with-dfs-explained/
+ 
+**Description:** Design a data structure that supports adding new words and finding if a string matches any previously added string.
+
+Implement the WordDictionary class:
+1. WordDictionary() Initializes the object.
+2. void addWord(word) Adds word to the data structure, it can be matched later.
+3. bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise. word may contain dots '.' where dots can be matched with any letter.
+
+**Constraints:** 
+1. 1 <= word.length <= 25
+2. word in addWord consists of lowercase English letters.
+3. word in search consist of '.' or lowercase English letters.
+4. There will be at most 2 dots in word for search queries.
+5. At most 10^4 calls will be made to addWord and search.
+   
+**Examples:** 
+```python3
+["WordDictionary","addWord","addWord","addWord","search","search","search","search"]
+[[],["bad"],["dad"],["mad"],["pad"],["bad"],[".ad"],["b.."]] #=> [null,null,null,null,false,true,true,true]
+```
+
+**Hint:** 
+1. addWord: we add the word char by char and set the isWord flag to true at the end
+2. search: to account for the wildcard (".") use dfs to check all options. If we run out of letters we return True if isWord is true at curr node and false otherwise. Also return false if you can't search deeper but still have letters.
+
+```python3
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.end_node = 0
+        
+class WordDictionary:
+    def __init__(self):
+        self.root = TrieNode()      
+
+    def addWord(self, word):
+        root = self.root
+        for symbol in word:
+            root = root.children.setdefault(symbol, TrieNode())
+        root.end_node = 1
+        
+    def search(self, word):
+        def dfs(node, i):
+            if i == len(word): return node.end_node
+               
+            if word[i] == ".":
+                for child in node.children:
+                    if dfs(node.children[child], i+1): return True
+                    
+            if word[i] in node.children:
+                return dfs(node.children[word[i]], i+1)
+            
+            return False
+    
+        return dfs(self.root, 0)
+```
+
+**Time:** The worst time complexity is also O(M), potentially we can visit all our Trie, if we have pattern like ...... For words without ., time complexity will be O(h), where h is height of Trie. For words with several letters and several ., we have something in the middle.
+**Space:** O(M), where M is sum of lengths of all words in our Trie.
+
