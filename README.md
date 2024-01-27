@@ -8272,7 +8272,7 @@ If the heap size reaches K, push, then pop largest element.
 
 At the end, the max heap will only contain the closest k element. Return contents of the heap
 
-Note: you could use quick select (avg O(n) worst case O(n^2)
+Note: you could use quick select (avg O(n) worst case O(n^2))
 
 ```python3
 class Solution(object):
@@ -8288,3 +8288,70 @@ class Solution(object):
 **Time:** O(N * logK)
 **Space:** O(K)
 
+## 147. Task Scheduler
+**Reference:** https://leetcode.com/problems/task-scheduler/solutions/104511/Java-Solution-PriorityQueue-and-HashMap/
+ 
+**Description:** Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle.
+
+However, there is a non-negative integer n that represents the cooldown period between two same tasks (the same letter in the array), that is that there must be at least n units of time between any two same tasks.
+
+Return the least number of units of times that the CPU will take to finish all the given tasks.
+
+**Constraints:** 
+1 <= task.length <= 10^4
+tasks[i] is upper-case English letter.
+The integer n is in the range [0, 100].
+
+**Examples:** 
+```python3
+tasks = ["A","A","A","B","B","B"], n = 2 #=> 8
+```
+
+```python3
+tasks = ["A","A","A","B","B","B"], n = 0 #=> 6
+```
+
+```python3
+tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"], n = 2 #=> 16
+```
+
+**Hint:** 
+Greedy
+1. Create a map to track the frequency of each task
+2. Sort it from min to max
+3. Pick elements in descending order, one by one. At each step, decease the idle time by min(f-max - 1, f). Where f is the current frequency
+4. Return busy + idle slots.
+
+```python3
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        if n == 0: return len(tasks)
+        
+        task_to_count = {}
+        for c in tasks:
+            task_to_count[c] = task_to_count.get(c, 0) + 1
+        
+        queue = []
+        for count in task_to_count.values():
+            queue.append(-count) # Max heap?
+        
+        heapq.heapify(queue)
+        
+        cooldown = {}
+        curr_time = 0
+        while queue or cooldown:
+            if curr_time - n - 1 in cooldown:
+                heapq.heappush(queue, cooldown.pop(curr_time - n - 1))
+            
+            if queue:
+                count = -heapq.heappop(queue) - 1
+                if count > 0:
+                    cooldown[curr_time] = -count
+            
+            curr_time += 1
+        
+        return curr_time
+```
+
+**Time:** O(Ntotal), where Ntotal is the number of tasks to complete
+**Space:** O(1) to keep array of 26 elements
