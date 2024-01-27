@@ -183,6 +183,9 @@ nums.reverse()
 nums.sort() # Smallest to largest or alphabetical
 nums.sort(reverse=True)
 
+# Sum
+sum(nums)
+
 # Custom Sort (sort by length of string, shortest to longest)
 arr = ["bob", "alice", "jane", "doe"]
 arr.sort(key=lambda x: len(x)) # JS: arr.sort((a, b) => a.length - b.length)
@@ -813,23 +816,18 @@ nums = [-1,1,0,-3,3] #=> [0,0,9,0,0]
 
 **Hint:** Get the values to the right of each number, get the values to the left of each number, combine multiply the lefts and rights to create the final solution
 
-```java
-class Solution {
-    public int[] productExceptSelf(int[] nums) {
-        int n = nums.length;
-        int[] res = new int[n];
-        res[0] = 1;
-        for (int i = 1; i < n; i++) {
-            res[i] = res[i - 1] * nums[i - 1];
-        }
-        int right = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            res[i] *= right;
-            right *= nums[i];
-        }
-        return res;
-    }
-}
+```python3
+def productExceptSelf(nums):
+    n = len(nums)
+    res = [0] * n
+    res[0] = 1
+    for i in range(1, n):
+        res[i] = res[i - 1] * nums[i - 1]
+    right = 1
+    for i in range(n - 1, -1, -1):
+        res[i] *= right
+        right *= nums[i]
+    return res
 ```
 **Time:** O(n)
 **Space:** O(n)
@@ -850,25 +848,22 @@ nums = [1] #=> [[1]]
 
 **Hint:** Backtracking, include or don't include each number until target = 0
 
-```java
-public List<List<Integer>> combinationSum(int[] nums, int target) {
-    List<List<Integer>> list = new ArrayList<>();
-    Arrays.sort(nums);
-    backtrack(list, new ArrayList<>(), nums, target, 0);
-    return list;
-}
-
-private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
-    if(remain < 0) return;
-    else if(remain == 0) list.add(new ArrayList<>(tempList));
-    else{ 
-        for(int i = start; i < nums.length; i++){
-            tempList.add(nums[i]);
-            backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
-            tempList.remove(tempList.size() - 1);
-        }
-    }
-}
+```python3
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        result = []
+        self.dfs(result, [], candidates, target, 0)
+        return result
+    
+    def dfs(self, result, tempList, nums, target, idx):
+        if target < 0: return
+        if target == 0: 
+            result.append(tempList.copy())
+            return
+        for i in range(idx, len(nums)):
+            tempList.append(nums[i])
+            self.dfs(result, tempList, nums, target - nums[i], i) 
+            tempList.pop()
 ```
 **Time:** O(2^n)
 **Space:** O(n)
@@ -924,25 +919,19 @@ nums = [2,0,1] #=> [0,1,2]
 
 **Hint:** Count each color, then insert them in order (2 pass), or 2 pointer (below)
 
-```java
-public void sortColors(int[] nums) {
-    // 1-pass
-    int p1 = 0, p2 = nums.length - 1, index = 0;
-    while (index <= p2) {
-        if (nums[index] == 0) {
-            nums[index] = nums[p1];
-            nums[p1] = 0;
-            p1++;
-        }
-        if (nums[index] == 2) {
-            nums[index] = nums[p2];
-            nums[p2] = 2;
-            p2--;
-            index--;
-        }
-        index++;
-    }
-}
+```python3
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        p1, p2, index = 0, len(nums) - 1, 0
+        while index <= p2:
+            if nums[index] == 0:
+                nums[index], nums[p1] = nums[p1], 0
+                p1 += 1
+            if nums[index] == 2:
+                nums[index], nums[p2] = nums[p2], 2
+                p2 -= 1
+                index -= 1
+            index += 1
 ```
 **Time:** O(n)
 **Space:** O(1)
@@ -1098,23 +1087,21 @@ nums = [0,1,0] #=> 2
 
 **Hint:** Maybe Recursive DP. Keep track of global max, if curr == 0 subract 1 from count if curr == 1 add 1.  If count == 0, start new subarray length 1. If count is in hashmap replace it iff new count is longer if it is not in the hashmap, add a new hashmap for it
 
-```java
-public class Solution {
-    public int findMaxLength(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(0, -1);
-        int maxlen = 0, count = 0;
-        for (int i = 0; i < nums.length; i++) {
-            count = count + (nums[i] == 1 ? 1 : -1);
-            if (map.containsKey(count)) {
-                maxlen = Math.max(maxlen, i - map.get(count));
-            } else {
-                map.put(count, i);
-            }
-        }
-        return maxlen;
-    }
-}
+```python3
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        k %= len(nums)
+        self.reverse(nums, 0, len(nums) - 1)
+        self.reverse(nums, 0, k - 1)
+        self.reverse(nums, k, len(nums) - 1)
+    
+    def reverse(self, nums, start, end):
+        while start < end:
+            temp = nums[start]
+            nums[start] = nums[end]
+            nums[end] = temp
+            start += 1
+            end -= 1
 ```
 **Time:** O(n)
 **Space:** O(n)
@@ -1134,21 +1121,17 @@ nums = [1,2,3], k = 3] #=> 2
 
 **Hint:** Maybe Recursive DP. Keep a global count, use a HashMap. For each number in arr, increament local sum if sum - k is in the hashmap, increment the global count, either way add the sum to the hash map or increment it if it is already there
 
-```java
-public class Solution {
-    public int subarraySum(int[] nums, int k) {
-        int count = 0, sum = 0;
-        HashMap < Integer, Integer > map = new HashMap < > ();
-        map.put(0, 1);
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            if (map.containsKey(sum - k))
-                count += map.get(sum - k);
-            map.put(sum, map.getOrDefault(sum, 0) + 1);
-        }
-        return count;
-    }
-}
+```python3
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        count, s, res = 0, 0, 0
+        map = {0: 1}
+        for i in range(len(nums)):
+            s += nums[i]
+            if s - k in map:
+                count += map[s - k]
+            map[s] = map.get(s, 0) + 1
+        return count
 ```
 **Time:** O(n)
 **Space:** O(n)
@@ -1693,29 +1676,21 @@ If the asteroid is with - sign, there can be couple of cases :
 2. if the stack top is also -ve, simply push the asteroid, no question of collision since both move in left direction.
 3. if the absolute value of asteroid & stack top are same, both would be blown off, so effectively pop off from stack & do nothing with the current asteroid.
 
-```java
-public int[] asteroidCollision(int[] asteroids) {
-        Stack<Integer> s = new Stack<>();
-        for(int i: asteroids){
-            if(i > 0){
-                s.push(i);
-            }else{// i is negative
-                while(!s.isEmpty() && s.peek() > 0 && s.peek() < Math.abs(i)){
-                    s.pop();
-                }
-                if(s.isEmpty() || s.peek() < 0){
-                    s.push(i);
-                }else if(i + s.peek() == 0){
-                    s.pop(); //equal
-                }
-            }
-        }
-        int[] res = new int[s.size()];   
-        for(int i = res.length - 1; i >= 0; i--){
-            res[i] = s.pop();
-        }
-        return res;
-    }
+```python3
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        s = []
+        for i in asteroids:
+            if i > 0:
+                s.append(i)
+            else:  # i is negative
+                while s and s[-1] > 0 and s[-1] < abs(i):
+                    s.pop()
+                if not s or s[-1] < 0:
+                    s.append(i)
+                elif i + s[-1] == 0:
+                    s.pop()  # equal
+        return s
 ```
 **Time:** O(n)
 **Space:** O(n)
@@ -1741,43 +1716,23 @@ s = " 3+5 / 2 " #=> 5
 
 **Hint:** Iterate over input string. If you encounter a digit append it to any adjacent digits that you just saw in num variable. If + operator, append num to stack. If - operator append -num to stack. If * or / pop stack and * or / num and popped then push result.  At the end of the loop, the stack will contain only numbers. Add all of them together and return the result
 
-```java
-public class Solution {
-	public int calculate(String s) {
-	    int len;
-	    if(s==null || (len = s.length())==0) return 0;
-	    Stack<Integer> stack = new Stack<Integer>();
-	    int num = 0;
-	    char sign = '+';
-	    for(int i=0;i<len;i++){
-	        if(Character.isDigit(s.charAt(i))){
-	            num = num*10+s.charAt(i)-'0';
-	        }
-	        if((!Character.isDigit(s.charAt(i)) &&' '!=s.charAt(i)) || i==len-1){
-	            if(sign=='-'){
-	                stack.push(-num);
-	            }
-	            if(sign=='+'){
-	                stack.push(num);
-	            }
-	            if(sign=='*'){
-	                stack.push(stack.pop()*num);
-	            }
-	            if(sign=='/'){
-	                stack.push(stack.pop()/num);
-	            }
-	            sign = s.charAt(i);
-	            num = 0;
-	        }
-	    }
-	
-	    int re = 0;
-	    for(int i:stack){
-	        re += i;
-	    }
-	    return re;
-	}
-}
+```python
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack = []
+        num = 0
+        sign = '+'
+        for idx in range(len(s)):
+            if s[idx].isdigit():
+                num = num * 10 + int(s[idx])
+            if not s[idx].isdigit() and s[idx] != ' ' or idx == len(s) - 1:
+                if sign == '-': stack.append(-num)
+                if sign == '+': stack.append(num)
+                if sign == '*': stack.append(stack.pop()*num)
+                if sign == '/':  stack.append(int(stack.pop()/num))
+                sign = s[idx]
+                num = 0
+        return sum(stack) 
 ```
 **Time:** O(n)
 **Space:** O(n)
@@ -1799,28 +1754,26 @@ height = [4,2,0,3,2,5] #=> 9
 
 **Hint:** Note: Move smaller height's pointer toward middle. Create left and right pointers at ends of array. Iterate until they converge. If left height < right height if left height >= leftMax, update leftMax otherwise, increment answer with leftMax - height[left]. Either way, increment left pointer. If left height >= right height repeat proces on right side, but decrement right pointer
 
-```cpp
-class Solution {
-public:
-    int trap(int A[], int n) {
-        int left=0; int right=n-1;
-        int res=0;
-        int maxleft=0, maxright=0;
-        while(left<=right){
-            if(A[left]<=A[right]){
-                if(A[left]>=maxleft) maxleft=A[left];
-                else res+=maxleft-A[left];
-                left++;
-            }
-            else{
-                if(A[right]>=maxright) maxright= A[right];
-                else res+=maxright-A[right];
-                right--;
-            }
-        }
-        return res;
-    }
-};
+```python3
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        left, right = 0, len(height) - 1
+        res = 0
+        maxleft, maxright = 0, 0
+        while left <= right:
+            if height[left] <= height[right]:
+                if height[left] >= maxleft:
+                    maxleft = height[left]
+                else:
+                    res += maxleft - height[left]
+                left += 1
+            else:
+                if height[right] >= maxright:
+                    maxright = height[right]
+                else:
+                    res += maxright - height[right]
+                right -= 1
+        return res
 ```
 **Time:** O(n)
 **Space:** O(1)
@@ -2002,35 +1955,31 @@ string is valid. Otherwise, we can scan the stack to get longest
 valid substring: use the opposite side - substring between adjacent indices
 should be valid parentheses.
 
-```cpp
-class Solution {
-public:
-    int longestValidParentheses(string s) {
-        int n = s.length(), longest = 0;
-        stack<int> st;
-        for (int i = 0; i < n; i++) {
-            if (s[i] == '(') st.push(i);
-            else {
-                if (!st.empty()) {
-                    if (s[st.top()] == '(') st.pop();
-                    else st.push(i);
-                }
-                else st.push(i);
-            }
-        }
-        if (st.empty()) longest = n;
-        else {
-            int a = n, b = 0;
-            while (!st.empty()) {
-                b = st.top(); st.pop();
-                longest = max(longest, a-b-1);
-                a = b;
-            }
-            longest = max(longest, a);
-        }
-        return longest;
-    }
-};
+```python3
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        n = len(s)
+        longest = 0
+        st = []
+        for i in range(n):
+            if s[i] == '(':
+                st.append(i)
+            else:
+                if st and s[st[-1]] == '(':
+                    st.pop()
+                else:
+                    st.append(i)
+        if not st:
+            longest = n
+        else:
+            a, b = n, 0
+            while st:
+                b = st[-1]
+                st.pop()
+                longest = max(longest, a - b - 1)
+                a = b
+            longest = max(longest, a)
+        return longest
 ```
 **Time:** O(n)
 **Space:** O(n)
