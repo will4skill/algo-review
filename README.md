@@ -8561,3 +8561,58 @@ class Solution:
 
 **Time:** O(N) avg, O(N^2) worst case 
 **Space:** O(1)
+
+## 151. Find Median from Data Stream
+**Reference:** https://leetcode.com/problems/find-median-from-data-stream/solutions/74047/JavaPython-two-heap-solution-O(log-n)-add-O(1)-find/
+ 
+**Description:** The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
+
+1. For example, for arr = [2,3,4], the median is 3.
+2. For example, for arr = [2,3], the median is (2 + 3) / 2 = 2.5.
+   
+Implement the MedianFinder class:
+1. MedianFinder() initializes the MedianFinder object.
+2. void addNum(int num) adds the integer num from the data stream to the data structure.
+3. double findMedian() returns the median of all elements so far. Answers within 10^-5 of the actual answer will be accepted.
+
+Follow up:
+1. If all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
+2. If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
+
+**Constraints:** 
+1. -10^5 <= num <= 10^5
+2. There will be at least one element in the data structure before calling findMedian.
+3. At most 5 * 10^4 calls will be made to addNum and findMedian.
+
+**Examples:** 
+```python3
+["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"]
+[[], [1], [2], [], [3], []] #=> [null, null, null, 1.5, null, 2.0]
+```
+
+**Hint:** 
+1. Use a max heap to store the smaller half and a min heap to store the larger half
+2. addNum: if number of elements is even, insert number into min heap and pop from max heap. If number of elements is odd, insert into max heap, and poll element from min heap. Flip even boolean.
+3. findMedian: If number of elements is even return min.poll() max.pol()  / 2 else return max.poll()
+
+```python3
+class MedianFinder:
+    def __init__(self):
+        self.small = []  # the smaller half of the list, max heap (invert min-heap)
+        self.large = []  # the larger half of the list, min heap
+
+    def addNum(self, num):
+        if len(self.small) == len(self.large):
+            heappush(self.large, -heappushpop(self.small, -num))
+        else:
+            heappush(self.small, -heappushpop(self.large, num))
+
+    def findMedian(self):
+        if len(self.small) == len(self.large):
+            return float(self.large[0] - self.small[0]) / 2.0
+        else:
+            return float(self.large[0])
+```
+
+**Time:** O(log n) add, O(1) find
+**Space:** O(n)
