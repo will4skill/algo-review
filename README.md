@@ -2003,58 +2003,35 @@ list1 = [], list2 = [0] #=> [0]
 
 **Hint:** Use the merge logic from merge sort. Don't forget the longer list leftovers at end. Note: You can also use recursion if you want
 
-```cpp
-class Solution {
-public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-       
-        // if list1 happen to be NULL
-        // we will simply return list2.
-        if(list1 == NULL)
-            return list2;
-		
-        // if list2 happen to be NULL
-        // we will simply return list1.
-        if(list2 == NULL)
-            return list1;
+```python3
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not list1: return list2
+        if not list2: return list1
         
-        ListNode * ptr = list1;
-        if(list1 -> val > list2 -> val)
-        {
-            ptr = list2;
-            list2 = list2 -> next;
-        }
-        else
-        {
-            list1 = list1 -> next;
-        }
-        ListNode *curr = ptr;
+        ptr = list1
+        if list1.val > list2.val:
+            ptr = list2
+            list2 = list2.next
+        else:
+            list1 = list1.next
+        curr = ptr
         
-        // till one of the list doesn't reaches NULL
-        while(list1 &&  list2)
-        {
-            if(list1 -> val < list2 -> val){
-                curr->next = list1;
-                list1 = list1 -> next;
-            }
-            else{
-                curr->next = list2;
-                list2 = list2 -> next;
-            }
-            curr = curr -> next;
-                
-        }
-		
-        // adding remaining elements of bigger list.
-        if(!list1)
-            curr -> next = list2;
-        else
-            curr -> next = list1;
+        while list1 and list2:
+            if list1.val < list2.val:
+                curr.next = list1
+                list1 = list1.next
+            else:
+                curr.next = list2
+                list2 = list2.next
+            curr = curr.next
+        
+        if not list1:
+            curr.next = list2
+        else:
+            curr.next = list1
             
-        return ptr;
-       
-    }
-};
+        return ptr
 ```
 **Time:** O(n)
 **Space:** O(1)
@@ -3526,24 +3503,25 @@ root = [] #=> true
 
 **Hint:** Balanced if no two subtrees differ in height by more than 1.  Use bottom up DFS, bubbling up -1 if the height don't match or just check the height at each node (O(n^2))
 
-```cpp
-class solution {
-public:
-int dfsHeight (TreeNode *root) {
-        if (root == NULL) return 0;
-        
-        int leftHeight = dfsHeight (root -> left);
-        if (leftHeight == -1) return -1;
-        int rightHeight = dfsHeight (root -> right);
-        if (rightHeight == -1) return -1;
-        
-        if (abs(leftHeight - rightHeight) > 1)  return -1;
-        return max (leftHeight, rightHeight) + 1;
-    }
-    bool isBalanced(TreeNode *root) {
-        return dfsHeight (root) != -1;
-    }
-};
+```python3
+class Solution:
+    def dfsHeight(self, root):
+        if root is None:
+            return 0
+
+        leftHeight = self.dfsHeight(root.left)
+        if leftHeight == -1:
+            return -1
+        rightHeight = self.dfsHeight(root.right)
+        if rightHeight == -1:
+            return -1
+
+        if abs(leftHeight - rightHeight) > 1:
+            return -1
+        return max(leftHeight, rightHeight) + 1
+
+    def isBalanced(self, root):
+        return self.dfsHeight(root) != -1
 ```
 **Time:** O(n)
 **Space:** O(1)
@@ -5517,6 +5495,7 @@ class Solution:
 
 ## 102. Pacific Atlantic Water Flow
 **Reference:** https://leetcode.com/problems/pacific-atlantic-water-flow/solutions/1126938/short-easy-w-explanation-diagrams-simple-graph-traversals-dfs-bfs/
+a801a28cb4b6e70a
 
 **Description:** There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.
 
@@ -5546,38 +5525,42 @@ heights = [[1]] #=> [[0,0]]
 
 **Hint:** BFS: start with all cells adjacent to one of the oceans (A). Visited neighbors that are greater than or equal to the starting nodes until you reach a subset of cells adjacent to the other ocean (B). Do the same from B to A. The final answer we get will be the intersection of sets A and B (A ∩ B). 
 
-```cpp
-class Solution {
-public:
-    int m, n;
-    vector<vector<int> > ans;
-    vector<vector<bool> > atlantic, pacific;
-    queue<pair<int, int> > q;
-    vector<vector<int> > pacificAtlantic(vector<vector<int>>& mat) {
-        if(!size(mat)) return ans;
-        m = size(mat), n = size(mat[0]);
-        atlantic = pacific = vector<vector<bool> >(m, vector<bool>(n, false));
-        for(int i = 0; i < m; i++) bfs(mat, pacific, i, 0), bfs(mat, atlantic, i, n - 1);
-        for(int i = 0; i < n; i++) bfs(mat, pacific, 0, i), bfs(mat, atlantic, m - 1, i);             
-        return ans;
-    }
-    void bfs(vector<vector<int> >& mat, vector<vector<bool> >& visited, int i, int j){        
-        q.push({i, j});
-        while(!q.empty()){
-            tie(i, j) = q.front(); q.pop();
-            if(visited[i][j]) continue;
-            visited[i][j] = true;
-            if(atlantic[i][j] && pacific[i][j]) ans.push_back(vector<int>{i, j});
-            if(i + 1 <  m && mat[i + 1][j] >= mat[i][j]) q.push({i + 1, j});
-            if(i - 1 >= 0 && mat[i - 1][j] >= mat[i][j]) q.push({i - 1, j});
-            if(j + 1 <  n && mat[i][j + 1] >= mat[i][j]) q.push({i, j + 1});
-            if(j - 1 >= 0 && mat[i][j - 1] >= mat[i][j]) q.push({i, j - 1});
-        }
-    }
-};
+```python3
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        N, M = len(heights), len(heights[0])
+        atlantic = [[False] * M for _ in range(N)]
+        pacific = [[False] * M for _ in range(N)]
+        ans = []
+        for i in range(N):
+            self.bfs(heights, ans, atlantic, pacific, pacific, i, 0)
+            self.bfs(heights, ans, atlantic, pacific, atlantic, i, M - 1)
+        for i in range(M):
+            self.bfs(heights, ans, atlantic, pacific, pacific, 0, i)
+            self.bfs(heights, ans, atlantic, pacific, atlantic, N - 1, i)
+        return ans
+        
+    def bfs(self, heights, ans, atlantic, pacific, visited, i, j):
+        N, M = len(heights), len(heights[0])
+        q = deque()
+        q.append((i, j))
+        while q:
+            i, j = q.popleft()
+            if visited[i][j]: continue
+            visited[i][j] = True
+            if atlantic[i][j] and pacific[i][j]:
+                ans.append([i, j])
+            if i + 1 < N and heights[i + 1][j] >= heights[i][j]:
+                q.append((i + 1, j))
+            if i - 1 >= 0 and heights[i - 1][j] >= heights[i][j]:
+                q.append((i - 1, j))
+            if j + 1 < M and heights[i][j + 1] >= heights[i][j]:
+                q.append((i, j + 1))
+            if j - 1 >= 0 and heights[i][j - 1] >= heights[i][j]:
+                q.append((i, j - 1))
 ```
-**Time:** O(M*N)
-**Space:** O(M*N)
+**Time:** O(M * N)
+**Space:** O(M * N)
 
 ## 103. Shortest Path to Get Food
 **Reference:** https://www.cnblogs.com/cnoodle/p/15645191.html
