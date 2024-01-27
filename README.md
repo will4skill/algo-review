@@ -1258,26 +1258,23 @@ schedule = [[[1,3],[6,7]],[[2,4]],[[2,5],[9,12]]]  #=> [[5,6],[7,9]]
 
 **Hint:** Sort the intervals by start times. Initialize temp to be the first interval. Iterate over the interval list.  If temp.end < curr.start (no overlap) add that interval to the output and set temp to current. Otherwise, if there is overlap and the current interval ends after temp set temp to be the current interval.
 
-```java
-class Solution {
-    public List<Interval> employeeFreeTime(List<List<Interval>> avails) {
-        List<Interval> result = new ArrayList<>();
-        List<Interval> timeLine = new ArrayList<>();
-        avails.forEach(e -> timeLine.addAll(e));
-        Collections.sort(timeLine, ((a, b) -> a.start - b.start));
+```python3
+class Solution:
+    def employeeFreeTime(self, avails: List[List[Interval]]) -> List[Interval]:
+        result = []
+        timeLine = []
+        for e in avails:
+            timeLine.extend(e)
+        timeLine.sort(key=lambda x: x.start)
 
-        Interval temp = timeLine.get(0);
-        for (Interval each : timeLine) {
-            if (temp.end < each.start) {
-                result.add(new Interval(temp.end, each.start));
-                temp = each;
-            } else {
-                temp = temp.end < each.end ? each : temp;
-            }
-        }
-        return result;
-    }
-}
+        temp = timeLine[0]
+        for each in timeLine:
+            if temp.end < each.start:
+                result.append(Interval(temp.end, each.start))
+                temp = each
+            else:
+                temp = each if temp.end < each.end else temp
+        return result
 ```
 **Time:** O(nlogn)
 **Space:** O(n)
@@ -2156,39 +2153,35 @@ head = [1,2] #=> false
 
 **Hint:** Use fast and slow to get ptrs to the mid and end. Reverse from end to mid, iterate toward middle comparing the chars
 
-```java
-public boolean isPalindrome(ListNode head) {
-    ListNode fast = head, slow = head;
-    while (fast != null && fast.next != null) {
-        fast = fast.next.next;
-        slow = slow.next;
-    }
-    if (fast != null) { // odd nodes: let right half smaller
-        slow = slow.next;
-    }
-    slow = reverse(slow);
-    fast = head;
-    
-    while (slow != null) {
-        if (fast.val != slow.val) {
-            return false;
-        }
-        fast = fast.next;
-        slow = slow.next;
-    }
-    return true;
-}
+```python3
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        fast, slow, = head, head
+        while fast != None and fast.next != None:
+            fast = fast.next.next
+            slow = slow.next
 
-public ListNode reverse(ListNode head) {
-    ListNode prev = null;
-    while (head != null) {
-        ListNode next = head.next;
-        head.next = prev;
-        prev = head;
-        head = next;
-    }
-    return prev;
-}
+        # odd nodes: let right half smaller
+        if fast != None: slow = slow.next
+        
+        slow = self.reverse(slow)
+        fast = head
+
+        while slow != None:
+            if fast.val != slow.val: return False
+            fast = fast.next
+            slow = slow.next
+        
+        return True
+    
+    def reverse(self, head):
+        prev = None
+        while head != None:
+            next_node = head.next
+            head.next = prev
+            prev = head
+            head = next_node
+        return prev
 ```
 **Time:** O(n)
 **Space:** O(1)
@@ -3286,34 +3279,36 @@ s = "a", t = "aa" #=> ""
 2. Move end to find a valid window.
 3. When a valid window is found, move start to find a smaller window."
 
-```java
-class Solution {
-  public String minWindow(String s, String t) {
-    int [] map = new int[128];
-    for (char c : t.toCharArray()) {
-      map[c]++;
-    }
-    int start = 0, end = 0, minStart = 0, minLen = Integer.MAX_VALUE, counter = t.length();
-    while (end < s.length()) {
-      final char c1 = s.charAt(end);
-      if (map[c1] > 0) counter--;
-      map[c1]--;
-      end++;
-      while (counter == 0) {
-        if (minLen > end - start) {
-          minLen = end - start;
-          minStart = start;
-        }
-        final char c2 = s.charAt(start);
-        map[c2]++;
-        if (map[c2] > 0) counter++;
-        start++;
-      }
-    }
+```python3
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        map = [0] * 128
+        for c in t:
+            map[ord(c)] += 1
 
-    return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
-  }
-}
+        start, end = 0, 0
+        minStart, minLen = 0, float('inf')
+        counter = len(t)
+
+        while end < len(s):
+            c1 = s[end]
+            if map[ord(c1)] > 0:
+                counter -= 1
+            map[ord(c1)] -= 1
+            end += 1
+
+            while counter == 0:
+                if minLen > end - start:
+                    minLen = end - start
+                    minStart = start
+
+                c2 = s[start]
+                map[ord(c2)] += 1
+                if map[ord(c2)] > 0:
+                    counter += 1
+                start += 1
+
+        return "" if minLen == float('inf') else s[minStart:minStart + minLen]
 ```
 **Time:** ???
 **Space:** ???
@@ -3348,87 +3343,66 @@ Case 3: If s1[0:cut] is palindrome and there exists s2 is the reversing string o
 Case 4: Similiar to case3. If s1[cut+1: ] is palindrome and there exists s2 is the reversing string of s1[0:cut] , then s1+s2 is palindrome.
 To make the search faster, build a HashMap to store the String-idx pairs.
 
-```java
-public class Solution {
-public List<List<Integer>> palindromePairs(String[] words) {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    if(words == null || words.length == 0){
-        return res;
-    }
-    //build the map save the key-val pairs: String - idx
-    HashMap<String, Integer> map = new HashMap<>();
-    for(int i = 0; i < words.length; i++){
-        map.put(words[i], i);
-    }
-    
-    //special cases: "" can be combine with any palindrome string
-    if(map.containsKey("")){
-        int blankIdx = map.get("");
-        for(int i = 0; i < words.length; i++){
-            if(isPalindrome(words[i])){
-                if(i == blankIdx) continue;
-                res.add(Arrays.asList(blankIdx, i));
-                res.add(Arrays.asList(i, blankIdx));
-            }
-        }
-    }
-    
-    //find all string and reverse string pairs
-    for(int i = 0; i < words.length; i++){
-        String cur_r = reverseStr(words[i]);
-        if(map.containsKey(cur_r)){
-            int found = map.get(cur_r);
-            if(found == i) continue;
-            res.add(Arrays.asList(i, found));
-        }
-    }
-    
-    //find the pair s1, s2 that 
-    //case1 : s1[0:cut] is palindrome and s1[cut+1:] = reverse(s2) => (s2, s1)
-    //case2 : s1[cut+1:] is palindrome and s1[0:cut] = reverse(s2) => (s1, s2)
-    for(int i = 0; i < words.length; i++){
-        String cur = words[i];
-        for(int cut = 1; cut < cur.length(); cut++){
-            if(isPalindrome(cur.substring(0, cut))){
-                String cut_r = reverseStr(cur.substring(cut));
-                if(map.containsKey(cut_r)){
-                    int found = map.get(cut_r);
-                    if(found == i) continue;
-                    res.add(Arrays.asList(found, i));
-                }
-            }
-            if(isPalindrome(cur.substring(cut))){
-                String cut_r = reverseStr(cur.substring(0, cut));
-                if(map.containsKey(cut_r)){
-                    int found = map.get(cut_r);
-                    if(found == i) continue;
-                    res.add(Arrays.asList(i, found));
-                }
-            }
-        }
-    }
-    
-    return res;
-}
+```python3
+from typing import List
+from collections import defaultdict
 
-public String reverseStr(String str){
-    StringBuilder sb= new StringBuilder(str);
-    return sb.reverse().toString();
-}
+class Solution:
+    def palindromePairs(self, words: List[str]) -> List[List[int]]:
+        res = []
+        if not words:
+            return res
+        
+        def is_palindrome(s):
+            return s == s[::-1]
 
-public boolean isPalindrome(String s){
-    int i = 0;
-    int j = s.length() - 1;
-    while(i <= j){
-        if(s.charAt(i) != s.charAt(j)){
-            return false;
-        }
-        i++;
-        j--;
-    }
-    return true;
-}
-}
+        def reverse_str(s):
+            return s[::-1]
+
+        # Build the map: String - idx
+        word_map = {word: i for i, word in enumerate(words)}
+
+        # Special case: "" can be combined with any palindrome string
+        if "" in word_map:
+            blank_idx = word_map[""]
+            for i, word in enumerate(words):
+                if is_palindrome(word):
+                    if i == blank_idx:
+                        continue
+                    res.append([blank_idx, i])
+                    res.append([i, blank_idx])
+
+        # Find all string and reverse string pairs
+        for i, word in enumerate(words):
+            reversed_word = reverse_str(word)
+            if reversed_word in word_map:
+                found = word_map[reversed_word]
+                if found == i:
+                    continue
+                res.append([i, found])
+
+        # Find pairs (s1, s2) where:
+        # - case1: s1[0:cut] is palindrome and s1[cut+1:] = reverse(s2) => (s2, s1)
+        # - case2: s1[cut+1:] is palindrome and s1[0:cut] = reverse(s2) => (s1, s2)
+        for i, word in enumerate(words):
+            for cut in range(1, len(word)):
+                if is_palindrome(word[:cut]):
+                    cut_r = reverse_str(word[cut:])
+                    if cut_r in word_map:
+                        found = word_map[cut_r]
+                        if found == i:
+                            continue
+                        res.append([found, i])
+
+                if is_palindrome(word[cut:]):
+                    cut_r = reverse_str(word[:cut])
+                    if cut_r in word_map:
+                        found = word_map[cut_r]
+                        if found == i:
+                            continue
+                        res.append([i, found])
+
+        return res
 ```
 **Time:** ???
 **Space:** ???
@@ -5613,48 +5587,43 @@ grid = [["X","*"],["#","X"]] #=> -1
 
 **Hint:** See 39. Closest carrot. Essentially, grid graph shortest path. BFS (+= 1 for each new layer)
 
-```java
-class Solution {
-    int[][] DIRS = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
+```python3
+from collections import deque
+class Solution:
+    DIRS = [[0, -1], [0, 1], [1, 0], [-1, 0]]
 
-    public int getFood(char[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        Queue<int[]> queue = new LinkedList<>();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '*') {
-                    queue.offer(new int[] { i, j });
-                    break;
-                }
-            }
-        }
-        boolean[][] visited = new boolean[m][n];
+    def getFood(self, grid):
+        m, n = len(grid), len(grid[0])
+        queue = deque()
 
-        int step = 0;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                int[] cur = queue.poll();
-                int x = cur[0];
-                int y = cur[1];
-                if (grid[x][y] == '#') {
-                    return step;
-                }
-                for (int[] dir : DIRS) {
-                    int r = x + dir[0];
-                    int c = y + dir[1];
-                    if (r >= 0 && r < m && c >= 0 && c < n && grid[r][c] != 'X' && !visited[r][c]) {
-                        visited[r][c] = true;
-                        queue.offer(new int[] { r, c });
-                    }
-                }
-            }
-            step++;
-        }
-        return -1;
-    }
-}
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '*':
+                    queue.append((i, j))
+                    break
+
+        visited = [[False] * n for _ in range(m)]
+        step = 0
+
+        while queue:
+            size = len(queue)
+
+            for _ in range(size):
+                x, y = queue.popleft()
+
+                if grid[x][y] == '#':
+                    return step
+
+                for dir in self.DIRS:
+                    r, c = x + dir[0], y + dir[1]
+
+                    if 0 <= r < m and 0 <= c < n and grid[r][c] != 'X' and not visited[r][c]:
+                        visited[r][c] = True
+                        queue.append((r, c))
+
+            step += 1
+
+        return -1
 ```
 **Time:** O(rc) r = number of rows c = number of columns
 **Space:** O(rc)
