@@ -8240,3 +8240,51 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 146. K Closest Points to Origin
+**Reference:** https://leetcode.com/problems/k-closest-points-to-origin/solutions/294389/easy-to-read-python-min-heap-solution-beat-99-python-solutions/
+ 
+**Description:** Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)^2 + (y1 - y2)^2).
+
+You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).
+
+**Constraints:** 
+1 <= k <= points.length <= 10^4
+-10^4 <= xi, yi <= 10^4
+
+**Examples:** 
+```python3
+points = [[1,3],[-2,2]], k = 1 #=> [[-2,2]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/8f86c747-cffb-43db-8b09-955a3c1e4f36)
+
+```python3
+points = [[3,3],[5,-1],[-2,4]], k = 2 #=> [[3,3],[-2,4]]
+```
+
+**Hint:** 
+Iterate over each point, pushing them into a max heap unless heap size is K
+
+If the heap size reaches K, push, then pop largest element.
+
+At the end, the max heap will only contain the closest k element. Return contents of the heap
+
+Note: you could use quick select (avg O(n) worst case O(n^2)
+
+```python3
+class Solution(object):
+    def kClosest(self, points, k):
+        heap = []
+        for (x, y) in points:
+            dist = -(x*x + y*y)
+            if len(heap) == k:
+                heapq.heappushpop(heap, (dist, x, y))
+            else:
+```
+
+**Time:** O(N * logK)
+**Space:** O(K)
+
