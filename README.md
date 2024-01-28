@@ -9205,8 +9205,6 @@ nums = [3,2,1] #=> [1,2,3]
 nums = [1,1,5] #=> [1,5,1]
 ```
 
-![image](https://github.com/will4skill/algo-review/assets/10373005/4f98e173-cddc-4172-b1ec-5921ed47405f)
-
 **Hint:** 
 Tim note: I thinking that you could just use the permutation algo in a real interview
 
@@ -9242,3 +9240,53 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 163. Generate Parentheses
+**Reference:** https://leetcode.com/problems/generate-parentheses/
+ 
+**Description:** Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+**Constraints:** 
+1 <= n <= 8
+   
+**Examples:** 
+```python3
+n = 3 #=> ["((()))","(()())","(())()","()(())","()()()"]
+n = 1 #=> [["()"]
+```
+
+**Hint:** 
+Use backtracking. Start with an empty output array. Count number of open and closed parens. 
+
+1. Base case: if length of curr == 2 * n, join current paren array, push result onto ouput and return
+
+2. Branches: 
+a. if number of open "(" parens is less than n, branch by adding or not adding a new one. Increment open count
+b. if number of close ")" parens is less than number of open "(" parens, either add or don't ad one. Increment close count
+ 
+
+```python3
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        result = []
+        self.helper(result, [], 0, 0, n)
+        return result
+
+    def helper(self, result, curr, open_count, close_count, max_count):
+        if len(curr) == max_count * 2:
+            result.append(''.join(curr))
+            return
+
+        if open_count < max_count:
+            curr.append('(')
+            self.helper(result, curr, open_count + 1, close_count, max_count)
+            curr.pop()
+
+        if close_count < open_count:
+            curr.append(')')
+            self.helper(result, curr, open_count, close_count + 1, max_count)
+            curr.pop()
+```
+
+**Time:** O(4^n/(sqrt(n)))
+**Space:** O(4^n/(sqrt(n)))
