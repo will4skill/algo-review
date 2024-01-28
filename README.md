@@ -9358,3 +9358,69 @@ class Solution:
 
 **Time:** O(4^n/(sqrt(n)))?
 **Space:** O(4^n/(sqrt(n)))?
+
+## 165. Spiral Matrix
+**Reference:** https://leetcode.com/problems/spiral-matrix/solutions/3502600/python-java-c-simple-solution-easy-to-understand/
+ 
+**Description:** Given an m x n matrix, return all elements of the matrix in spiral order.
+
+**Constraints:** 
+1. m == matrix.length
+2. n == matrix[i].length
+3. 1 <= m, n <= 10
+4. -100 <= matrix[i][j] <= 100
+   
+**Examples:** 
+```python3
+matrix = [[1,2,3],[4,5,6],[7,8,9]] #=> [1,2,3,6,9,8,7,4,5]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/840b5e2f-db37-492d-8973-774f3af51ed1)
+
+```python3
+matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]] #=> [1,2,3,4,8,12,11,10,9,5,6,7]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/43d63fd3-03d0-466d-9fd3-61d65191e4c8)
+
+**Hint:** 
+while output.length < m * n 
+1. move as far as you can to the right (then, reduce top start: top++)
+2. move as far as you can to the bottom (right--)
+3. move as far as you can to the left (bottom--)
+4. move as far as you can up (left++)
+
+```python3
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        if not matrix:
+            return []
+
+        rows, cols = len(matrix), len(matrix[0])
+        top, bottom, left, right = 0, rows-1, 0, cols-1
+        result = []
+        
+        while len(result) < rows * cols:
+            for i in range(left, right+1):
+                result.append(matrix[top][i])
+            top += 1
+            
+            for i in range(top, bottom+1):
+                result.append(matrix[i][right])
+            right -= 1
+            
+            if top <= bottom:
+                for i in range(right, left-1, -1):
+                    result.append(matrix[bottom][i])
+                bottom -= 1
+            
+            if left <= right:
+                for i in range(bottom, top-1, -1):
+                    result.append(matrix[i][left])
+                left += 1
+        
+        return result
+```
+
+**Time:** O(mn)
+**Space:** O(mn)
