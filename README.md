@@ -9703,3 +9703,120 @@ class Solution:
 
 **Time:** O(m^9) m represents the number of blanks to be filled in
 **Space:** O(1)
+
+## 169. Design Hit Counter
+**Reference:** https://leetcode.ca/2016-11-26-362-Design-Hit-Counter/
+ 
+**Description:** Design a hit counter which counts the number of hits received in the past 5 minutes (i.e., the past 300 seconds).
+
+Your system should accept a timestamp parameter (in seconds granularity), and you may assume that calls are being made to the system in chronological order (i.e., timestamp is monotonically increasing). Several hits may arrive roughly at the same time.
+
+Implement the HitCounter class:
+1. HitCounter() Initializes the object of the hit counter system.
+2. void hit(int timestamp) Records a hit that happened at timestamp (in seconds). Several hits may happen at the same timestamp.
+3. int getHits(int timestamp) Returns the number of hits in the past 5 minutes from timestamp (i.e., the past 300 seconds).
+
+Follow up: What if the number of hits per second could be huge? Does your design scale?
+
+**Constraints:** 
+1. 1 <= timestamp <= 2 * 10^9
+2. All the calls are being made to the system in chronological order (i.e., timestamp is monotonically increasing).
+3. At most 300 calls will be made to hit and getHits.
+   
+**Examples:** 
+```python3
+["HitCounter", "hit", "hit", "hit", "getHits", "hit", "getHits", "getHits"]
+[[], [1], [2], [3], [4], [300], [300], [301]] #=> [null, null, null, null, 3, null, 4, 3]
+```
+
+**Hint:** 
+Use a queue
+
+Hit: jump add a timestamp to the queue O(1)
+getHits: remove all hits older than 300 seconds from queue. return queue size: O(n)
+
+For the follow up question
+hit: idx = timestamp % 300. If times[idx] != timestamp, update times[idx] and reset hits[idx] to 1. Otherwise, increment hits[idx]
+
+getHits: scan times and sum the hits that are within 300 seconds. Return total sum
+
+```python3
+class HitCounter:
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.counter = Counter()
+
+    def hit(self, timestamp: int) -> None:
+        """
+        Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity).
+        """
+        self.counter[timestamp] += 1
+
+    def getHits(self, timestamp: int) -> int:
+        """
+        Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity).
+        """
+        return sum([v for t, v in self.counter.items() if t + 300 > timestamp])
+
+
+# Your HitCounter object will be instantiated and called as such:
+# obj = HitCounter()
+# obj.hit(timestamp)
+# param_2 = obj.getHits(timestamp)
+
+
+from collections import deque
+
+class HitCounter: # queue
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.hits = deque()
+
+    def hit(self, timestamp: int) -> None:
+        """
+        Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity).
+        """
+        self.hits.append(timestamp)
+
+    def getHits(self, timestamp: int) -> int:
+        """
+        Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity).
+        """
+        while self.hits and self.hits[0] <= timestamp - 300:
+            self.hits.popleft()
+        return len(self.hits)
+
+############
+
+class HitCounter: # follow-up
+    def __init__(self):
+        self.times = [0] * 300
+        self.hits = [0] * 300
+
+    def hit(self, timestamp: int) -> None:
+        idx = timestamp % 300
+        if self.times[idx] != timestamp:
+            self.times[idx] = timestamp
+            self.hits[idx] = 1
+        else:
+            self.hits[idx] += 1
+
+    def getHits(self, timestamp: int) -> int:
+        res = 0
+        for i in range(300):
+            if timestamp - self.times[i] < 300:
+                res += self.hits[i]
+        return res
+```
+
+**Time:** hit: O(1), getHits: O(n)
+**Space:** O(n)
