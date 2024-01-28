@@ -9116,3 +9116,65 @@ class Solution:
 
 **Time:** O(n * 2^n)
 **Space:** O(2^n) ??
+
+## 161. Letter Combinations of a Phone Number
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0017-letter-combinations-of-a-phone-number.py
+ 
+**Description:** Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+**Constraints:** 
+0 <= digits.length <= 4
+digits[i] is a digit in the range ['2', '9'].
+   
+**Examples:** 
+```python3
+digits = "23" #=> ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+digits = "" #=> []
+digits = "2" #=> ["a","b","c"]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4f98e173-cddc-4172-b1ec-5921ed47405f)
+
+
+**Hint:** 
+Use backtracking.
+
+1. Map digits to characters. Start with empty output array 
+2. Base Case:
+if currString.length == digits.length add current string to output and return
+
+3. Branches: 
+At each level backtrack with all possible charaters of the current digit. Increase the digit index when you recurse until all digits are explored. Since you are passing strings in, you don't need to pop anything.
+
+```python3
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        result = []
+        digitToChar = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "qprs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
+
+        if digits:
+            self.backtrack(0, "", digits, digitToChar, result)
+
+        return result
+    
+    def backtrack(self, i, curStr, digits, digitToChar, result):
+        if len(curStr) == len(digits):
+            result.append(curStr)
+            return
+        for c in digitToChar[digits[i]]:
+            self.backtrack(i + 1, curStr + c, digits, digitToChar, result)
+```
+
+**Time:** O(4^N * N)
+**Space:** O(N)
