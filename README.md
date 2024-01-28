@@ -9473,7 +9473,6 @@ board =
 ,[".",".",".",".","8",".",".","7","9"]] #=> false
 ```
 
-![image](https://github.com/will4skill/algo-review/assets/10373005/43d63fd3-03d0-466d-9fd3-61d65191e4c8)
 
 **Hint:** 
 1. Create sets for rows, cols and 3x3 squares. 
@@ -9508,3 +9507,54 @@ class Solution:
 
 **Time:** O(n^2)
 **Space:** O(n)
+
+## 167. Rotate Image
+**Reference:** https://leetcode.com/problems/rotate-image/solutions/3440564/animation-understand-in-30-seconds/
+ 
+**Description:** You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+
+You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+
+**Constraints:** 
+n == matrix.length == matrix[i].length
+1 <= n <= 20
+-1000 <= matrix[i][j] <= 1000
+   
+**Examples:** 
+```python3
+matrix = [[1,2,3],[4,5,6],[7,8,9]] #=> [[7,4,1],[8,5,2],[9,6,3]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/add6a9aa-355d-4417-86e8-ab17efd3b6a6)
+
+
+```python3
+matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]] #=> [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/ca9fc25a-b817-4159-b2ec-411ba0b99540)
+
+
+**Hint:** 
+https://assets.leetcode.com/users/images/0ab215cd-9cd8-4872-90a7-901fb660dc67_1682068950.8864057.gif
+
+1. Transpose the matrix: iterate over entire matrix, swappng matrix[i][j] with matrix[j][i]
+2. Swap columns: Iterate row by row, reversing each row
+
+```python3
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        row = len(matrix)
+        
+        # Transpose the matrix
+        for i in range(row):
+            for j in range(i+1, row):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+        # Reverse each row
+        for i in range(row):
+            matrix[i] = matrix[i][::-1]
+```
+
+**Time:** O(n)
+**Space:** O(1)
