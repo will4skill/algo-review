@@ -9536,7 +9536,7 @@ matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]] #=> [[15,13,2,5],[14,3
 
 
 **Hint:** 
-https://assets.leetcode.com/users/images/0ab215cd-9cd8-4872-90a7-901fb660dc67_1682068950.8864057.gif
+![leet](https://github.com/will4skill/algo-review/assets/10373005/df6b8e2b-b179-4640-98f4-1e3fd067c3ad)
 
 1. Transpose the matrix: iterate over entire matrix, swappng matrix[i][j] with matrix[j][i]
 2. Swap columns: Iterate row by row, reversing each row
