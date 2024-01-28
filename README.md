@@ -9558,3 +9558,76 @@ class Solution:
 
 **Time:** O(n)
 **Space:** O(1)
+
+## 167. Set Matrix Zeroes
+**Reference:** https://leetcode.com/problems/set-matrix-zeroes/solutions/657430/python-solution-w-approach-explanation-readable-with-space-progression-from-o-m-n-o-1/
+ 
+**Description:** Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's. You must do it in place.
+
+Follow up:
+1. A straightforward solution using O(mn) space is probably a bad idea.
+2. A simple improvement uses O(m + n) space, but still not the best solution.
+3. Could you devise a constant space solution?
+
+**Constraints:** 
+1. m == matrix.length
+2. n == matrix[0].length
+3. 1 <= m, n <= 200
+4. -2^31 <= matrix[i][j] <= 2^31 - 1
+   
+**Examples:** 
+```python3
+matrix = [[1,1,1],[1,0,1],[1,1,1]] #=> [[1,0,1],[0,0,0],[1,0,1]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/b3d1cce3-0fb7-4ae2-958b-1f02ad9c0eaa)
+
+```python3
+matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]] #=> [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/a3d5b817-7ad2-414e-a21d-65a675345e2b)
+
+**Hint:** 
+Use the left most colmn and the top row to track which rows and columns need to be zeros. Create variables to track if first row and first column have zeros.
+
+1. Iterate throught entire matrix updating the first row and first column if you find any zeros. Only update the first row and column and 2 helper variables. 
+2. Interate through the rest of the matrix (not the 1st row and column), updating the current cell value to zero if the corresponding first row or column are set to zero.
+3. Update the first column and row to zeros if there corresponding helper variables say to do so.
+
+```python3
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        m = len(matrix)
+        n = len(matrix[0])
+		
+        first_row_has_zero = False
+        first_col_has_zero = False
+        
+        # iterate through matrix to mark the zero row and cols
+        for row in range(m):
+            for col in range(n):
+                if matrix[row][col] == 0:
+                    if row == 0:
+                        first_row_has_zero = True
+                    if col == 0:
+                        first_col_has_zero = True
+                    matrix[row][0] = matrix[0][col] = 0
+    
+        # iterate through matrix to update the cell to be zero if it's in a zero row or col
+        for row in range(1, m):
+            for col in range(1, n):
+                matrix[row][col] = 0 if matrix[0][col] == 0 or matrix[row][0] == 0 else matrix[row][col]
+        
+        # update the first row and col if they're zero
+        if first_row_has_zero:
+            for col in range(n):
+                matrix[0][col] = 0
+        
+        if first_col_has_zero:
+            for row in range(m):
+                matrix[row][0] = 0
+```
+
+**Time:** O(m * n)
+**Space:** O(1)
