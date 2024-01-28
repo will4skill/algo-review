@@ -8964,7 +8964,7 @@ class FileSystem:
 6. readContentFromFile: O(m + k) // k is the total length of the content.
 **Space:** Trie class: O(mn), m: paths are of length m, n: number of unique paths, For content storage: O(t), t: he total length of the content across all files
 
-## 159. Permutations
+## 158. Permutations
 **Reference:** https://leetcode.com/problems/permutations/solutions/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)/
  
 **Description:** Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
@@ -9050,7 +9050,7 @@ class Solution:
 **Time:** ~O(n * n!)
 **Space:** ~O(n * n!)
 
-## 160. Subsets
+## 159. Subsets
 **Reference:** https://leetcode.com/problems/permutations/solutions/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)/
  
 **Description:** Given an integer array nums of unique elements, return all possible subsets(the power set). The solution set must not contain duplicate subsets. Return the solution in any order.
@@ -9117,7 +9117,7 @@ class Solution:
 **Time:** O(n * 2^n)
 **Space:** O(2^n) ??
 
-## 161. Letter Combinations of a Phone Number
+## 160. Letter Combinations of a Phone Number
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0017-letter-combinations-of-a-phone-number.py
  
 **Description:** Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
@@ -9179,7 +9179,7 @@ class Solution:
 **Time:** O(4^N * N)
 **Space:** O(N)
 
-## 162. Next Permutation
+## 161. Next Permutation
 **Reference:** https://leetcode.com/problems/next-permutation/solutions/13867/c-from-wikipedia/
  
 **Description:** A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
@@ -9241,7 +9241,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 163. Generate Parentheses
+## 162. Generate Parentheses
 **Reference:** https://leetcode.com/problems/generate-parentheses/
  
 **Description:** Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
@@ -9291,7 +9291,7 @@ class Solution:
 **Time:** O(4^n/(sqrt(n)))
 **Space:** O(4^n/(sqrt(n)))
 
-## 164. N-Queens
+## 163. N-Queens
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0051-n-queens.py
  
 **Description:** The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
@@ -9359,7 +9359,7 @@ class Solution:
 **Time:** O(4^n/(sqrt(n)))?
 **Space:** O(4^n/(sqrt(n)))?
 
-## 165. Spiral Matrix
+## 164. Spiral Matrix
 **Reference:** https://leetcode.com/problems/spiral-matrix/solutions/3502600/python-java-c-simple-solution-easy-to-understand/
  
 **Description:** Given an m x n matrix, return all elements of the matrix in spiral order.
@@ -9425,7 +9425,7 @@ class Solution:
 **Time:** O(mn)
 **Space:** O(mn)
 
-## 166. Valid Sudoku
+## 165. Valid Sudoku
 **Reference:** https://leetcode.com/problems/valid-sudoku/solutions/476369/javascript-solution-beats-100-with-explanation-real-explanations/
  
 **Description:** Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
@@ -9508,7 +9508,7 @@ class Solution:
 **Time:** O(n^2)
 **Space:** O(n)
 
-## 167. Rotate Image
+## 166. Rotate Image
 **Reference:** https://leetcode.com/problems/rotate-image/solutions/3440564/animation-understand-in-30-seconds/
  
 **Description:** You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
