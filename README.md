@@ -9424,3 +9424,87 @@ class Solution:
 
 **Time:** O(mn)
 **Space:** O(mn)
+
+## 166. Valid Sudoku
+**Reference:** https://leetcode.com/problems/valid-sudoku/solutions/476369/javascript-solution-beats-100-with-explanation-real-explanations/
+ 
+**Description:** Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+1. Each row must contain the digits 1-9 without repetition.
+2. Each column must contain the digits 1-9 without repetition.
+3. Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+   
+Note:
+1. A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+2. Only the filled cells need to be validated according to the mentioned rules.
+
+**Constraints:** 
+1. board.length == 9
+2. board[i].length == 9
+3. board[i][j] is a digit 1-9 or '.'.
+   
+**Examples:** 
+```python3
+board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]] #=> true
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/db97e721-fc20-445d-8bb9-219027859956)
+
+
+```python3
+board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]] #=> false
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/43d63fd3-03d0-466d-9fd3-61d65191e4c8)
+
+**Hint:** 
+1. Create sets for rows, cols and 3x3 squares. 
+2. Recreate them for each row explored
+3. For each cell check the rowSet, colSet and boxSet. Return false if collision, otherwise add to each set
+
+```python3
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        for i in range(9):
+            row, col, box = set(), set(), set()
+            for j in range(9):
+                _row = board[i][j]
+                _col = board[j][i]
+                _box = board[3 * (i // 3) + j // 3][3 * (i % 3) + j % 3]
+
+                if _row != '.':
+                    if _row in row:
+                        return False
+                    row.add(_row)
+                if _col != '.':
+                    if _col in col:
+                        return False
+                    col.add(_col)
+
+                if _box != '.':
+                    if _box in box:
+                        return False
+                    box.add(_box)
+        return True
+```
+
+**Time:** O(n^2)
+**Space:** O(n)
