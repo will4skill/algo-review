@@ -9178,3 +9178,67 @@ class Solution:
 
 **Time:** O(4^N * N)
 **Space:** O(N)
+
+## 162. Next Permutation
+**Reference:** https://leetcode.com/problems/next-permutation/solutions/13867/c-from-wikipedia/
+ 
+**Description:** A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
+
+1. For example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].
+The next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).
+
+1. For example, the next permutation of arr = [1,2,3] is [1,3,2].
+2. Similarly, the next permutation of arr = [2,3,1] is [3,1,2].
+3. While the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.
+Given an array of integers nums, find the next permutation of nums.
+
+The replacement must be in place and use only constant extra memory.
+
+**Constraints:** 
+1 <= nums.length <= 100
+0 <= nums[i] <= 100.
+   
+**Examples:** 
+```python3
+nums = [1,2,3] #=> [1,3,2]
+nums = [3,2,1] #=> [1,2,3]
+nums = [1,1,5] #=> [1,5,1]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/4f98e173-cddc-4172-b1ec-5921ed47405f)
+
+**Hint:** 
+Tim note: I thinking that you could just use the permutation algo in a real interview
+
+"According to Wikipedia, a man named Narayana Pandita presented the following simple algorithm to solve this problem in the 14th century.
+1. Find the largest index k such that nums[k] < nums[k + 1]. If no such index exists, just reverse nums and done.
+2. Find the largest index l > k such that nums[k] < nums[l].
+3. Swap nums[k] and nums[l].
+4. Reverse the sub-array nums[k + 1:]."
+
+```python3
+class Solution:
+    def nextPermutation(self, nums):
+        n = len(nums)
+        k = n - 2
+
+        while k >= 0:
+            if nums[k] < nums[k + 1]:
+                break
+            k -= 1
+
+        if k < 0:
+            nums.reverse()
+        else:
+            l = n - 1
+            while l > k:
+                if nums[l] > nums[k]:
+                    break
+                l -= 1
+            
+            nums[k], nums[l] = nums[l], nums[k]
+            nums[k + 1:] = reversed(nums[k + 1:])
+```
+
+**Time:** O(n)
+**Space:** O(1)
