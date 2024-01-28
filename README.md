@@ -9290,3 +9290,71 @@ class Solution:
 
 **Time:** O(4^n/(sqrt(n)))
 **Space:** O(4^n/(sqrt(n)))
+
+## 164. N-Queens
+**Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0051-n-queens.py
+ 
+**Description:** The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+
+Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.
+
+**Constraints:** 
+1 <= n <= 9
+   
+**Examples:** 
+```python3
+n = 4 #=> [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+n = 1 #=> [["Q"]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/b18114c5-1f03-4b93-b74e-a04a825139b2)
+
+
+**Hint:** 
+Use backtracking. Create a matrix of size n x n. Initialize an empty output array. 
+Create sets for cols, positiveDiag, negativeDiag
+
+Base cases: if all n queens have been placed (i.e., curr row is out of bounds), copy the current configuration over to the output array and return.
+
+Branches: add/don't add a queen to each col in current row iff there are no collisions in the sets. Update the sets to include the new piece. Backtrack while incrementing the row. Remove the new piece from the sets.
+
+```python3
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        col = set()
+        posDiag = set()  # (r + c)
+        negDiag = set()  # (r - c)
+
+        res = []
+        board = [["."] * n for i in range(n)]
+
+        def backtrack(r):
+            if r == n:
+                copy = ["".join(row) for row in board]
+                res.append(copy)
+                return
+
+            for c in range(n):
+                if c in col or (r + c) in posDiag or (r - c) in negDiag:
+                    continue
+
+                col.add(c)
+                posDiag.add(r + c)
+                negDiag.add(r - c)
+                board[r][c] = "Q"
+
+                backtrack(r + 1)
+
+                col.remove(c)
+                posDiag.remove(r + c)
+                negDiag.remove(r - c)
+                board[r][c] = "."
+
+        backtrack(0)
+        return res
+```
+
+**Time:** O(4^n/(sqrt(n)))?
+**Space:** O(4^n/(sqrt(n)))?
