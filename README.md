@@ -9631,3 +9631,75 @@ class Solution:
 
 **Time:** O(m * n)
 **Space:** O(1)
+
+## 168. Sudoku Solver
+**Reference:** https://leetcode.com/problems/sudoku-solver/solutions/15752/straight-forward-java-solution-using-backtracking/
+ 
+**Description:** Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+A sudoku solution must satisfy all of the following rules:
+1. Each of the digits 1-9 must occur exactly once in each row.
+2. Each of the digits 1-9 must occur exactly once in each column.
+3. Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+The '.' character indicates empty cells.
+
+**Constraints:** 
+1. board.length == 9
+2. board[i].length == 9
+3. board[i][j] is a digit or '.'.
+4. It is guaranteed that the input board has only one solution.
+   
+**Examples:** 
+```python3
+board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]] #=> [["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/364c1c90-f4ac-4d99-a7b5-b89d2f3ba06d)
+
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/44c48d1b-ab24-4cf2-aaad-553b08ba164e)
+
+**Hint:** 
+Use backtracking
+
+Create logic to check if you can place piece in row col and square O(n) for each.
+
+For each place on the board, try placing every number from 1 - 9 and recurse, then reverse that decision. If recusive step returns true, short circuit.
+
+```python3
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        if not board or len(board) == 0:
+            return
+        self.solve(board)
+    
+    def solve(self, board):
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == '.':
+                    for c in map(str, range(1, 10)): # trial. Try 1 through 9
+                        if self.is_valid(board, i, j, c):
+                            board[i][j] = c # Put c for this cell
+                            
+                            if self.solve(board):
+                                return True # If it's the solution return true
+                            else:
+                                board[i][j] = '.' # Otherwise go back
+                    
+                    return False
+        return True
+    
+    def is_valid(self, board, row, col, c):
+        for i in range(9):
+            if board[i][col] != '.' and board[i][col] == c:
+                return False  # check row
+            if board[row][i] != '.' and board[row][i] == c:
+                return False  # check column
+            if board[3 * (row // 3) + i // 3][3 * (col // 3) + i % 3] != '.' and \
+               board[3 * (row // 3) + i // 3][3 * (col // 3) + i % 3] == c:
+                return False  # check 3*3 block
+        return True
+```
+
+**Time:** O(m^9) m represents the number of blanks to be filled in
+**Space:** O(1)
