@@ -835,15 +835,23 @@ def productExceptSelf(nums):
 ## 11. Combination Sum
 **Reference:** https://leetcode.com/problems/permutations/discuss/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)
 
-**Description:** Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+**Description:** Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
 
-**Constraints:** 1 <= nums.length <= 6, -10 <= nums[i] <= 10, All the integers of nums are unique.
+The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+
+The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+
+**Constraints:** 
+1. 1 <= candidates.length <= 30
+2. 2 <= candidates[i] <= 40
+3. All elements of candidates are distinct.
+4. 1 <= target <= 40
 
 **Examples:** 
 ```python3
-nums = [1,2,3] #=> [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
-nums = [0,1] #=> [[0,1],[1,0]]
-nums = [1] #=> [[1]]
+candidates = [2,3,6,7], target = 7 #=> [[2,2,3],[7]]
+candidates = [2,3,5], target = 8 #=> [[2,2,2,2],[2,3,3],[3,5]]
+candidates = [2], target = 1 #=> []
 ```
 
 **Hint:** Backtracking, include or don't include each number until target = 0
