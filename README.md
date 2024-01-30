@@ -1081,7 +1081,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 18. Contiguous Array
+## 18. Contiguous Array ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/contiguous-array/editorial/
 
 **Description:** Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
@@ -1094,7 +1094,7 @@ nums = [0,1] #=> 2
 nums = [0,1,0] #=> 2
 ```
 
-**Hint:** Maybe Recursive DP. Keep track of global max, if curr == 0 subract 1 from count if curr == 1 add 1.  If count == 0, start new subarray length 1. If count is in hashmap replace it iff new count is longer if it is not in the hashmap, add a new hashmap for it
+**Hint:** Maybe Recursive DP. Keep track of global max, if curr == 0 subract 1 from count if curr == 1 add 1.  If count == 0, start new subarray length 1. If count is in hashmap replace globalMax iff new count is longer if it is not in the hashmap, add a new hashmap for it
 
 ```python3
 class Solution:
@@ -1112,7 +1112,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 19. Subarray Sum Equals K
+## 19. Subarray Sum Equals K ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/subarray-sum-equals-k/editorial/
 
 **Description:** Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k. A subarray is a contiguous non-empty sequence of elements within an array.
@@ -1125,7 +1125,7 @@ nums = [1,1,1], k = 2 #=> 2
 nums = [1,2,3], k = 3] #=> 2
 ```
 
-**Hint:** Maybe Recursive DP. Keep a global count, use a HashMap. For each number in arr, increament local sum if sum - k is in the hashmap, increment the global count, either way add the sum to the hash map or increment it if it is already there
+**Hint:** Maybe Recursive DP. Keep a global count, use a HashMap. For each number in arr, increament local sum. If sum - k is in the hashmap, increment the global count with hashed value, either way add the sum to the hash map or increment it if it is already there
 
 ```python3
 class Solution:
@@ -1142,7 +1142,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 20. Meeting Rooms II
+## 20. Meeting Rooms II ☠️ ☠️ ☠️ ☠️ 
 **Reference:** https://aaronice.gitbook.io/lintcode/sweep-line/meeting-rooms-ii
 https://github.com/neetcode-gh/leetcode/blob/main/python/0253-meeting-rooms-ii.py
 
@@ -1162,10 +1162,10 @@ https://github.com/neetcode-gh/leetcode/blob/main/python/0253-meeting-rooms-ii.p
 def minMeetingRooms(self, intervals: List[List[int]]) -> int:
         time = []
         for start, end in intervals:
-            time.append((start, 1))
+            time.append((start, 1)) # ????
             time.append((end, -1))
         
-        time.sort(key=lambda x: (x[0], x[1]))
+        time.sort(key=lambda x: (x[0], x[1])) # ????
         
         count = 0
         max_count = 0
@@ -1177,7 +1177,7 @@ def minMeetingRooms(self, intervals: List[List[int]]) -> int:
 **Time:** O((N * logN) + (M * logM))
 **Space:** O(1)
 
-## 21. 3Sum Closest
+## 21. 3Sum Closest ☠️
 **Reference:** https://leetcode.com/problems/3sum-closest/solutions/7871/python-o-n-2-solution/
 
 **Description:** Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
@@ -1214,7 +1214,7 @@ class Solution:
 **Time:** O(n^2)
 **Space:** O(n)
 
-## 22. Non-overlapping Intervals
+## 22. Non-overlapping Intervals ☠️
 **Reference:** https://leetcode.com/problems/non-overlapping-intervals/solutions/276056/python-greedy-interval-scheduling/
 
 **Description:** Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
@@ -1243,12 +1243,12 @@ def eraseOverlapIntervals(intervals):
 **Time:** O(nlog(n))
 **Space:** O(1)
 
-## 23. Employee Free Time
+## 23. Employee Free Time ☠️ ☠️
 **Reference:** https://aaronice.gitbook.io/lintcode/sweep-line/employee-free-time
 
 **Description:** We are given a list scheduleof employees, which represents the working time for each employee.
 Each employee has a list of non-overlappingIntervals, and these intervals are in sorted order.
-Return the list of finite intervals representing common, positive-length free time forallemployees, also in sorted order. 
+Return the list of finite intervals representing common, positive-length free time for all employees, also in sorted order. 
 
 (Even though we are representing Intervals in the form [x, y], the objects inside are Intervals, not lists or arrays. For example, schedule[0][0].start = 1, schedule[0][0].end = 2, and schedule[0][0][0] is not defined.)
 
@@ -1262,7 +1262,7 @@ schedule = [[[1,2],[5,6]],[[1,3]],[[4,10]]] #=> [[3,4]]
 schedule = [[[1,3],[6,7]],[[2,4]],[[2,5],[9,12]]]  #=> [[5,6],[7,9]]
 ```
 
-**Hint:** Sort the intervals by start times. Initialize temp to be the first interval. Iterate over the interval list.  If temp.end < curr.start (no overlap) add that interval to the output and set temp to current. Otherwise, if there is overlap and the current interval ends after temp set temp to be the current interval.
+**Hint:** Sort the intervals by start times. Initialize temp to be the first interval. Iterate over the interval list.  If temp.end < curr.start (no overlap) add that interval to the output and set temp to current. Otherwise, if there is overlap and the current interval ends after temp, set temp to be the current interval.
 
 ```python3
 class Solution:
@@ -1285,7 +1285,7 @@ class Solution:
 **Time:** O(nlogn)
 **Space:** O(n)
 
-## 24. Sliding Window Maximum
+## 24. Sliding Window Maximum ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/sliding-window-maximum/
 
 **Description:** You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
