@@ -944,7 +944,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 14. Container With Most Water
+## 14. Container With Most Water ☠️
 **Reference:** https://leetcode.com/problems/container-with-most-water/description/
 https://leetcode.com/problems/container-with-most-water/ (official)
 
@@ -955,30 +955,35 @@ https://leetcode.com/problems/container-with-most-water/ (official)
 **Examples:** 
 ```python3
 height = [1,8,6,2,5,4,8,3,7] #=> 49
+```
+
+![image](https://github.com/will4skill/algo-review/assets/10373005/d18fca3f-07e1-4f3f-a3a6-5293364eab2d)
+
+```python3
 height = [1,1] #=> 1
 ```
 
 **Hint:** Use two pointers. The area between two lines is limited by the shorter line. Fatter lines have more area (if height is equal). Create start and end pointers. Maintain global max. At each step, find new area and update global max if it is greater. Move the shorter line's ptr forward one step (because shorter is the limiter). Stop when ptrs converge
 
-```javascript
-const maxArea = (height) => {
-  let maxarea = 0;
-  let left = 0, right = height.length - 1;
+```python3
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        globalMaxArea = 0
+        left, right = 0, len(height) - 1
 
-  while (left < right) {
-      const width = right - left;
-      maxarea = Math.max(maxarea, Math.min(height[left], height[right]) * width);
+        while left < right:
+            width = right - left
+            globalMaxArea = max(globalMaxArea, min(height[left], height[right])*width)
 
-      if (height[left] > height[right]) right--;
-      else left++;
-  }
-  return maxarea;
-};
+            if height[left] > height[right]: right -= 1
+            else: left += 1
+        
+        return globalMaxArea
 ```
 **Time:** O(n)
 **Space:** O(1)
 
-## 15. Gas Station
+## 15. Gas Station ☠️ ☠️
 **Reference:** https://leetcode.com/problems/gas-station/solutions/1706142/java-c-python-an-explanation-that-ever-exists-till-now/
 
 **Description:** There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i]. You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations. Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique
@@ -1002,14 +1007,14 @@ class Solution:
             total_surplus += gas[i] - cost[i]
             surplus += gas[i] - cost[i]
             if surplus < 0:
-                surplus = 0
+                surplus = 0 # start all over at next index
                 start = i + 1
         return -1 if (total_surplus < 0) else start
 ```
 **Time:** O(n)
 **Space:** O(1)
 
-## 16. Longest Consecutive Sequence
+## 16. Longest Consecutive Sequence ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-consecutive-sequence/solutions/41057/simple-o-n-with-explanation-just-walk-each-streak/
 
 **Description:** Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. You must write an algorithm that runs in O(n) time.
@@ -1029,18 +1034,17 @@ def longestConsecutive(self, nums):
     nums = set(nums)
     best = 0
     for x in nums:
-        if x - 1 not in nums:
+        if x - 1 not in nums: # only start new streaks, skip previously explored ones
             y = x + 1
             while y in nums:
                 y += 1
             best = max(best, y - x)
     return best
-};
 ```
 **Time:** O(n)
 **Space:** O(n)
 
-## 17. Rotate Array
+## 17. Rotate Array ☠️ ☠️ ☠️ 
 **Reference:** https://leetcode.com/problems/rotate-array/solutions/54250/easy-to-read-java-solution/
 
 **Description:** Given an integer array nums, rotate the array to the right by k steps, where k is non-negative. Follow up: Try to come up with as many solutions as you can. There are at least three different ways to solve this problem. Could you do it in-place with O(1) extra space?
@@ -1055,28 +1059,25 @@ nums = [-1,-100,3,99], k = 2 #=> [3,99,-1,-100]
 
 **Hint:** 
 Steps:
-1. Reverse entire nums
-2. Reverse nums before k
-3. Reverse nums k to end
+1. Reverse entire nums: ex k = 3, [7,6,5,4,3,2,1] 
+2. Reverse nums before k: ex k = 3, [5,6,7,4,3,2,1] 
+3. Reverse nums k to end: ex k = 3, [5,6,7,1,2,3,4]
 
 ```python3
-public void rotate(int[] nums, int k) {
-    k %= nums.length;
-    reverse(nums, 0, nums.length - 1);
-    reverse(nums, 0, k - 1);
-    reverse(nums, k, nums.length - 1);
-}
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        k %= len(nums)
+        self.reverse(nums, 0, len(nums) - 1)
+        self.reverse(nums, 0, k - 1)
+        self.reverse(nums, k, len(nums) - 1)
 
-public void reverse(int[] nums, int start, int end) {
-    while (start < end) {
-        int temp = nums[start];
-        nums[start] = nums[end];
-        nums[end] = temp;
-        start++;
-        end--;
-    }
-}
+    def reverse(self, nums, start, end):
+        while start < end:
+            nums[start], nums[end] = nums[end], nums[start]
+            start += 1
+            end -= 1
 ```
+
 **Time:** O(n)
 **Space:** O(1)
 
