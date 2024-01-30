@@ -1082,7 +1082,7 @@ class Solution:
 **Space:** O(1)
 
 ## 18. Contiguous Array
-**Reference:** https://leetcode.com/problems/rotate-array/solutions/54250/easy-to-read-java-solution/
+**Reference:** https://leetcode.com/problems/contiguous-array/editorial/
 
 **Description:** Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
 
@@ -1098,19 +1098,16 @@ nums = [0,1,0] #=> 2
 
 ```python3
 class Solution:
-    def rotate(self, nums: List[int], k: int) -> None:
-        k %= len(nums)
-        self.reverse(nums, 0, len(nums) - 1)
-        self.reverse(nums, 0, k - 1)
-        self.reverse(nums, k, len(nums) - 1)
-    
-    def reverse(self, nums, start, end):
-        while start < end:
-            temp = nums[start]
-            nums[start] = nums[end]
-            nums[end] = temp
-            start += 1
-            end -= 1
+    def findMaxLength(self, nums: List[int]) -> int:
+        hashmap = {0: -1}
+        maxlen, count = 0, 0
+        for i in range(len(nums)):
+            count += 1 if nums[i] == 1 else -1
+            if count in hashmap:
+                maxlen = max(maxlen, i - hashmap[count])
+            else:
+                hashmap[count] = i
+        return maxlen
 ```
 **Time:** O(n)
 **Space:** O(n)
