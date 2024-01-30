@@ -912,7 +912,7 @@ class Solution:
 **Time:** O(nlog(n))
 **Space:** O(n)
 
-## 13. Sort Colors
+## 13. Sort Colors ☠️
 **Reference:** https://leetcode.com/problems/sort-colors/solutions/26549/java-solution-both-2-pass-and-1-pass/
 
 **Description:** Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue. We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively. You must solve this problem without using the library's sort function. Follow up: Could you come up with a one-pass algorithm using only constant extra space?
@@ -933,12 +933,12 @@ class Solution:
         p1, p2, index = 0, len(nums) - 1, 0
         while index <= p2:
             if nums[index] == 0:
-                nums[index], nums[p1] = nums[p1], 0
-                p1 += 1
+                nums[index], nums[p1] = nums[p1], 0 # Move 0 to beginning
+                p1 += 1 # Move p1 forward
             if nums[index] == 2:
-                nums[index], nums[p2] = nums[p2], 2
-                p2 -= 1
-                index -= 1
+                nums[index], nums[p2] = nums[p2], 2 # Move 2 to the end
+                p2 -= 1 # Move p2 back
+                index -= 1 Move index back
             index += 1
 ```
 **Time:** O(n)
