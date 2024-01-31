@@ -1386,7 +1386,7 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 [[], [1], [2], [], [], []] #=> [null, null, null, 1, 1, false]
 ```
 
-**Hint:** Use and input stack and and output stack. Push to input stack. Pop for output stack. Empty checks both stacks, and peek returns the end of the output stack after moving all elements to it from input stack 
+**Hint:** Use and input stack and and output stack. Push to input stack. Pop from output stack. Empty checks both stacks, and peek returns the end of the output stack after moving all elements to it from input stack 
 
 ```python3
 class Queue:
@@ -1468,7 +1468,7 @@ tokens = ["2","1","+","3","*"] #=> 9
 tokens = ["4","13","5","/","+"] #=> 6
 ```
 
-**Hint:** 
+**Hint:** Create a set of the operators. Iterate over the input array. If current char is a number, push it to the stack. Else, pop the stack twice to retrieve two numbers, then use the current operator to do math with them and push the result back on the stack. Return top of stack
 
 ```javascript
 const OPERATORS = new Set(["+", "-", "/", "*"]);
@@ -1582,7 +1582,7 @@ class MinStack {
 **Time:** O(1)
 **Space:** O(n)
 
-## 30. Daily Temperatures
+## 30. Daily Temperatures ☠️ ☠️
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0739-daily-temperatures.py
 
 **Description:** Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
@@ -1614,7 +1614,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n) note: (O(1) space possible)
 
-## 31. Decode String
+## 31. Decode String ☠️ ☠️
 **Reference:** https://leetcode.com/problems/decode-string/solutions/941309/python-stack-solution-explained/
 
 **Description:** Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer. You may assume that the input string is always valid; there are no extra white spaces, square brackets are well-formed, etc. Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there will not be input like 3a or 2[4].
@@ -1644,21 +1644,21 @@ class Solution:
             elif s[it] == "[":
                 stack.append(num)
                 num = 0
-                stack.append("")
-            elif s[it] == "]":
+                stack.append("") # Tim note: why?
+            elif s[it] == "]": # Finished block
                 str1 = stack.pop()
                 rep = stack.pop()
                 str2 = stack.pop()
                 stack.append(str2 + str1 * rep)
             else:
-                stack[-1] += s[it]              
+                stack[-1] += s[it]  # Add letter            
             it += 1           
         return "".join(stack)
 ```
 **Time:** O(n)
 **Space:** O(n)
 
-## 32. Asteroid Collision
+## 32. Asteroid Collision ☠️
 **Reference:** https://leetcode.com/problems/asteroid-collision/solutions/193403/java-easy-to-understand-solution/
 
 **Description:** We are given an array asteroids of integers representing asteroids in a row. For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed. Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
@@ -1683,15 +1683,15 @@ If the asteroid is with - sign, there can be couple of cases :
 class Solution:
     def asteroidCollision(self, asteroids: List[int]) -> List[int]:
         s = []
-        for i in asteroids:
-            if i > 0:
-                s.append(i)
-            else:  # i is negative
-                while s and s[-1] > 0 and s[-1] < abs(i):
+        for asteroid in asteroids:
+            if asteroid > 0:
+                s.append(asteroid)
+            else:  # asteroid is negative
+                while s and s[-1] > 0 and s[-1] < abs(asteroid):
                     s.pop()
                 if not s or s[-1] < 0:
-                    s.append(i)
-                elif i + s[-1] == 0:
+                    s.append(asteroid)
+                elif asteroid + s[-1] == 0:
                     s.pop()  # equal
         return s
 ```
@@ -1727,20 +1727,20 @@ class Solution:
         sign = '+'
         for idx in range(len(s)):
             if s[idx].isdigit():
-                num = num * 10 + int(s[idx])
+                num = num * 10 + int(s[idx]) # keep building num
             if not s[idx].isdigit() and s[idx] != ' ' or idx == len(s) - 1:
                 if sign == '-': stack.append(-num)
                 if sign == '+': stack.append(num)
                 if sign == '*': stack.append(stack.pop()*num)
                 if sign == '/':  stack.append(int(stack.pop()/num))
                 sign = s[idx]
-                num = 0
-        return sum(stack) 
+                num = 0 # reset num
+        return sum(stack) # sum stack elements
 ```
 **Time:** O(n)
 **Space:** O(n)
 
-## 34. Trapping Rain Water
+## 34. Trapping Rain Water ☠️ ☠️
 **Reference:** https://leetcode.com/problems/trapping-rain-water/solutions/17357/sharing-my-simple-c-code-o-n-time-o-1-space/
 
 **Description:** Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
@@ -1755,7 +1755,7 @@ height = [0,1,0,2,1,0,1,3,2,1,2,1] #=> 6
 height = [4,2,0,3,2,5] #=> 9
 ```
 
-**Hint:** Note: Move smaller height's pointer toward middle. Create left and right pointers at ends of array. Iterate until they converge. If left height < right height if left height >= leftMax, update leftMax otherwise, increment answer with leftMax - height[left]. Either way, increment left pointer. If left height >= right height repeat proces on right side, but decrement right pointer
+**Hint:** Note: Move smaller height's pointer toward middle. Create left and right pointers at ends of array. Iterate until they converge. If left height < right height if left height >= leftMax, update leftMax. Otherwise, increment answer with leftMax - height[left]. Either way, increment left pointer. If left height >= right height repeat proces on right side, but decrement right pointer
 
 ```python3
 class Solution:
@@ -1781,7 +1781,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 35. Basic Calculator
+## 35. Basic Calculator ☠️ ☠️ ☠️ 
 **Reference:** https://leetcode.com/problems/basic-calculator/solutions/1456850/python-basic-calculator-i-ii-iii-easy-solution-detailed-explanation/
 
 **Description:** Given a string s representing a valid expression, implement a basic calculator to evaluate it, and return the result of the evaluation. Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
@@ -1808,7 +1808,7 @@ s = "(1+(4+5+2)-3)+(6+8)" #=> 23
 class Solution:
     def calculate(self, s):    
         def calc(it):
-            def update(op, v):
+            def update(op, v): # normal calculations
                 if op == "+": stack.append(v)
                 if op == "-": stack.append(-v)
                 if op == "*": stack.append(stack.pop() * v)
@@ -1818,16 +1818,16 @@ class Solution:
             
             while it < len(s):
                 if s[it].isdigit():
-                    num = num * 10 + int(s[it])
+                    num = num * 10 + int(s[it]) # build num
                 elif s[it] in "+-*/":
-                    update(sign, num)
+                    update(sign, num) # update stack
                     num, sign = 0, s[it]
                 elif s[it] == "(":
                     num, j = calc(it + 1)
-                    it = j - 1
+                    it = j - 1  # Tim note, why move backwards?
                 elif s[it] == ")":
-                    update(sign, num)
-                    return sum(stack), it + 1
+                    update(sign, num) # update stack
+                    return sum(stack), it + 1 # return tuple (sum, index)
                 it += 1
             update(sign, num)
             return sum(stack)
@@ -1837,7 +1837,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 36. Largest Rectangle in Histogram
+## 36. Largest Rectangle in Histogram ☠️ ☠️ ☠️ 
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0084-largest-rectangle-in-histogram.py
 
 **Description:** Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
