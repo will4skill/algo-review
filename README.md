@@ -1882,7 +1882,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n) 
 
-## 37. Maximum Frequency Stack
+## 37. Maximum Frequency Stack ☠️ ☠️
 **Reference:** https://leetcode.com/problems/maximum-frequency-stack/solutions/163410/c-java-python-o-1/
 
 **Description:** Design a stack-like data structure to push elements to the stack and pop the most frequent element from the stack.
@@ -1924,14 +1924,14 @@ pop() will pop from the m[maxfreq]
     def pop(self):
         freq, m, maxf = self.freq, self.m, self.maxf
         x = m[maxf].pop()
-        if not m[maxf]: self.maxf = maxf - 1
+        if not m[maxf]: self.maxf = maxf - 1 # ?? 
         freq[x] -= 1
         return x
 ```
 **Time:** O(1)
 **Space:** O(n)
 
-## 38. Longest Valid Parentheses
+## 38. Longest Valid Parentheses ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-valid-parentheses/solutions/14126/my-o-n-solution-using-a-stack/
 
 **Description:** Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses 
@@ -1951,12 +1951,11 @@ push its index to the stack. If current character is ')' and the
 character at the index of the top of stack is '(', we just find a
 matching pair so pop from the stack. Otherwise, we push the index of
 ')' to the stack.
+
 After the scan is done, the stack will only
 contain the indices of characters which cannot be matched. 
-If the stack is empty, the whole input
-string is valid. Otherwise, we can scan the stack to get longest
-valid substring: use the opposite side - substring between adjacent indices
-should be valid parentheses.
+If the stack is empty, the whole input string is valid. Otherwise, we can scan the stack to get longest
+valid substring: use the opposite side - substring between adjacent indices should be valid parentheses.
 
 ```python3
 class Solution:
@@ -1987,10 +1986,10 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 39. Merge Two Sorted Lists
+## 39. Merge Two Sorted Lists ☠️
 **Reference:** https://leetcode.com/problems/merge-two-sorted-lists/solutions/1826666/c-easy-to-understand-2-approaches-recursive-iterative/
 
-**Description:** You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.Return the head of the merged linked list.
+**Description:** You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.
 
 **Constraints:**
 The number of nodes in both lists is in the range [0, 50].
@@ -2013,7 +2012,7 @@ class Solution:
         if not list2: return list1
         
         ptr = list1
-        if list1.val > list2.val:
+        if list1.val > list2.val: # ??? See 49. sort list. I think merging can be cleaned up
             ptr = list2
             list2 = list2.next
         else:
@@ -2088,7 +2087,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 41. Reverse Linked List
+## 41. Reverse Linked List ☠️ ☠️
 **Reference:** https://www.structy.net/problems/reverse-list
 
 **Description:** Given the head of a singly linked list, reverse the list, and return the reversed list. Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
@@ -2144,7 +2143,7 @@ head = [1,2,3,4,5,6] #=> [4,5,6]
 **Time:** O(n)
 **Space:** O(1)
 
-## 43. Palindrome Linked List
+## 43. Palindrome Linked List ☠️
 **Reference:** https://leetcode.com/problems/palindrome-linked-list/solutions/64501/java-easy-to-understand/
 
 **Description:** Given the head of a singly linked list, return true if it is a palindrome or false otherwise. Follow up: Could you do it in O(n) time and O(1) space?
@@ -2192,7 +2191,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 44. LRU Cache
+## 44. LRU Cache ☠️ ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/lru-cache/solutions/45911/java-hashtable-double-linked-list-with-a-touch-of-pseudo-nodes/
 
 **Description:** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
@@ -2366,7 +2365,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 46. Swap Nodes in Pairs
+## 46. Swap Nodes in Pairs ☠️
 **Reference:** https://leetcode.com/problems/swap-nodes-in-pairs/submissions/725221815/
 
 **Description:** Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
@@ -2411,7 +2410,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 47. Odd Even Linked List
+## 47. Odd Even Linked List ☠️
 **Reference:** https://leetcode.com/problems/swap-nodes-in-pairs/submissions/725221815/
 
 **Description:** No real trick, just have to keep track of pointers while iterating over list
@@ -2451,7 +2450,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 48. Add Two Numbers
+## 48. Add Two Numbers ☠️
 **Reference:** https://leetcode.com/problems/add-two-numbers/solutions/3675747/beats-100-c-java-python-beginner-friendly/
 
 **Description:** You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -2499,7 +2498,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 49. Sort List
+## 49. Sort List ☠️ ☠️
 **Reference:** https://leetcode.com/problems/sort-list/solutions/1795126/c-merge-sort-2-pointer-easy-to-understand/
 
 **Description:** Given the head of a linked list, return the list after sorting it in ascending order. Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
@@ -2567,7 +2566,7 @@ class Solution:
 **Time:** O(nlog(n)
 **Space:** O(1)
 
-## 50. Reorder List
+## 50. Reorder List ☠️ ☠️
 **Reference:** https://leetcode.com/problems/reorder-list/solutions/801883/python-3-steps-to-success-explained/
 
 **Description:** You are given the head of a singly linked-list. The list can be represented as:
