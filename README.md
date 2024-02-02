@@ -2618,7 +2618,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 51. Rotate List (right by k places)
+## 51. Rotate List (right by k places) ☠️
 **Reference:** https://leetcode.com/problems/rotate-list/solutions/22715/share-my-java-solution-with-explanation/
 
 **Description:** Given the head of a linked list, rotate the list to the right by k places.
@@ -2669,7 +2669,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 52. Reverse Nodes in k-Group
+## 52. Reverse Nodes in k-Group ☠️ ☠️
 **Reference:** https://leetcode.com/problems/reverse-nodes-in-k-group/solutions/11440/non-recursive-java-solution-and-idea/
 
 **Description:** Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list. k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
@@ -2842,7 +2842,7 @@ class Solution(object):
 **Time:** O(n)
 **Space:** O(1)
 
-## 56. Longest Common Prefix
+## 56. Longest Common Prefix ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-common-prefix/solutions/3273176/python3-c-java-19-ms-beats-99-91/
 
 **Description:** Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string "".
@@ -2876,7 +2876,7 @@ class Solution:
 **Time:** O(nlog(n))
 **Space:** O(1)
 
-## 57. Longest Substring Without Repeating Characters
+## 57. Longest Substring Without Repeating Characters ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-substring-without-repeating-characters/solutions/127839/longest-substring-without-repeating-characters/
 
 **Description:** Given a string, find the length of the longest substring without repeating characters.
@@ -2979,7 +2979,7 @@ class Solution:
             
         return self.limit(res * sign)
     
-    def limit(self, x: int) -> int:
+    def limit(self, x: int) -> int: # Tim note: this kind of seems like a hack to me... 
         if x > MAX_INT:
             return MAX_INT
         if x < MIN_INT:
@@ -2989,7 +2989,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 59. Longest Palindromic Substring
+## 59. Longest Palindromic Substring ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-palindromic-substring/solutions/2928/Very-simple-clean-java-solution/
 
 **Description:** Given a string s, return the longest palindromic substring in s.
@@ -3031,7 +3031,7 @@ class Solution:
 **Time:** O(n^2)
 **Space:** O(n) ??
 
-## 60. Find All Anagrams in a String
+## 60. Find All Anagrams in a String ☠️
 **Reference:** https://leetcode.com/problems/find-all-anagrams-in-a-string/solutions/1737985/python3-sliding-window-hash-table-explained/
 
 **Description:** Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
