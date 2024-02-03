@@ -3194,7 +3194,7 @@ class Solution:
 **Space:** O(n)
 
 ## 64. Encode and Decode Strings ☠️
-**Reference:** https://leetcode.com/problems/largest-number/solutions/1012321/javascript-with-sort-o-nlogn/
+**Reference:** https://medium.com/@miniChang8/leetcode-encode-and-decode-strings-4dde7e0efa1c
 
 **Description:** Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.
 
@@ -3239,8 +3239,8 @@ Note:
 
 **Examples:** 
 ```python3
-nums = [10,2] #=> "210"
-nums = [3,30,34,5,9] #=> "9534330"
+dummy_input = ["Hello","World"] #=> ["Hello","World"]
+dummy_input = [""] #=> [""]
 ```
 
 **Hint:** Create a delimiter for your encode method. She uses / and the length of the word to avoid collisions with real characters.
@@ -3259,11 +3259,11 @@ class Solution:
         while i < len(str):
             # For example, 12/abc
             e = i
-            while e < len(str) and str[e] != '/':
+            while e < len(str) and str[e] != '/': # Find '/'
                 e += 1
-            size = int(str[i:e])
-            word = str[e + 1, e + 1 + size]
-            i = e + 1 + size
+            size = int(str[i:e]) # extract size of next word 
+            word = str[e + 1, e + 1 + size] # slice out word
+            i = e + 1 + size # increment ptr to after curr word
             res.append(word)
         return res
 ```
@@ -3272,6 +3272,7 @@ class Solution:
 
 ## 65. Minimum Window Substring
 **Reference:** https://leetcode.com/problems/minimum-window-substring/solutions/26808/here-is-a-10-line-template-that-can-solve-most-substring-problems/
+ndec09
 
 **Description:** Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "". The testcases will be generated such that the answer is unique. Follow up: Could you find an algorithm that runs in O(m + n) time?
 
