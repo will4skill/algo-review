@@ -337,6 +337,12 @@ b = {"surname": "Crain", "city": "San Francisco"}
 all = {**a, **b}
 print(all) #=> {'name': 'Juliana', 'age': 33, 'surname': 'Crain', 'city': 'San Francisco'}
 
+# Increment
+if key in map: map[key] += 1
+else: map[key] = 0
+# Get Way
+map[key] = map.get(key, 0) + 1
+
 #################################################################################################
 # Heaps
 import heapq
@@ -3114,7 +3120,7 @@ class Solution:
 **Time:** O(m*nlogn))
 **Space:** O(n)
 
-## 62. Longest Repeating Character Replacement
+## 62. Longest Repeating Character Replacement ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-repeating-character-replacement/solutions/91271/java-12-lines-o-n-sliding-window-solution-with-explanation/
 
 **Description:** You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.
@@ -3135,28 +3141,30 @@ s = "AABABBA", k = 1 #=> 4
 ```python3
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        count = [0] * 26
-        start = 0
+        count = {}
+        startIdx = 0
         maxCount = 0
         maxLength = 0
 
-        for end in range(len(s)):
-            count[ord(s[end]) - ord('A')] += 1
-            maxCount = max(maxCount, count[ord(s[end]) - ord('A')])
+        for endIdx in range(len(s)): # Keep expanding the window to the right
+            endChar = s[endIdx]
+            count[endChar] = count.get(endChar, 0) + 1
+            maxCount = max(maxCount, count[endChar])
 
-            if end - start + 1 - maxCount > k:
-                count[ord(s[start]) - ord('A')] -= 1
-                start += 1
+            if endIdx - startIdx + 1 - maxCount > k: # Too many bad chars, shrink the window
+                startChar = s[startIdx]
+                count[startChar] -= 1
+                startIdx += 1
 
-            maxLength = max(maxLength, end - start + 1)
+            maxLength = max(maxLength, endIdx - startIdx + 1) # Update global max if possible
 
         return maxLength  
 ```
-**Time:** O(((N + 26) * N) * (M - N))
-**Space:** O(1)
+**Time:** O(n)
+**Space:** O(n)
 
-## 63. Largest Number
-**Reference:** https://leetcode.com/problems/largest-number/solutions/1012321/javascript-with-sort-o-nlogn/
+## 63. Largest Number ☠️
+**Reference:** https://leetcode.com/problems/largest-number/editorial/
 
 **Description:** Given a list of non-negative integers nums, arrange them such that they form the largest number and return it. Since the result may be very large, so you need to return a string instead of an integer.
 
@@ -3173,19 +3181,19 @@ nums = [3,30,34,5,9] #=> "9534330"
 **Hint:** Use custom sort that compares the concatenated order of each character. Then join
 
 ```python3
+class LargerNumKey(str):
+    def __lt__(x, y):
+        return x+y > y+x
+        
 class Solution:
-    def largestNumber(self, nums: List[int]) -> str:
-        if not nums or len(nums) == 0:
-            return '0'
-        nums = sorted(map(str, nums), key=lambda x: x * 9, reverse=True)
-        if nums[0] == '0':
-            return '0'
-        return ''.join(nums)
+    def largestNumber(self, nums):
+        largest_num = ''.join(sorted(map(str, nums), key=LargerNumKey))
+        return '0' if largest_num[0] == '0' else largest_num
 ```
 **Time:** O(nlogn)
 **Space:** O(n)
 
-## 64. Encode and Decode Strings
+## 64. Encode and Decode Strings ☠️
 **Reference:** https://leetcode.com/problems/largest-number/solutions/1012321/javascript-with-sort-o-nlogn/
 
 **Description:** Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.
@@ -3245,6 +3253,7 @@ class Solution:
             encoded = str(len(s)) + '/' + s
             res += encoded
         return res
+
     def decode(self, str):
         res, i = [], 0
         while i < len(str):
