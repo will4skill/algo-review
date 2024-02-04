@@ -3329,7 +3329,7 @@ class Solution:
 **Time:** O(n + m) ??? Tim note: you have to scan the t and n
 **Space:** O(n + m) ??? Tim note: to hold the chars of t and n in a map
 
-## 66. Palindrome Pairs
+## 66. Palindrome Pairs ☠️ ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/palindrome-pairs/solutions/79210/The-Easy-to-unserstand-JAVA-Solution/
 
 **Description:** You are given a 0-indexed array of unique strings words.
@@ -3354,6 +3354,7 @@ words = ["a",""] #=> [[0,1],[1,0]]
 
 **Hint:** 
 Tim note: I'm still skeptical about this solution. How does it handle duplicate words if you map word => idx?? 
+Also, how does the subtring logic work? Just because there is the reverse of a substring in the word list, how do we know the whole word + the reverse is a valid pair?? 
 
 s1[0:cut] = 0 to cut
 
