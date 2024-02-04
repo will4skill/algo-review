@@ -2796,21 +2796,17 @@ s = "rat", t = "car" #=> false
 ```python3
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        count = [0] * 26
-        
-        # Count the frequency of characters in string s
-        for x in s:
-            count[ord(x) - ord('a')] += 1
-        
-        # Decrement the frequency of characters in string t
-        for x in t:
-            count[ord(x) - ord('a')] -= 1
-        
-        # Check if any character has non-zero frequency
-        for val in count:
-            if val != 0:
-                return False
+        charCount = {}
+    
+        for x in s: # Count the frequency of characters in string s
+            charCount[x] = charCount.get(x, 0) + 1
 
+        for x in t: # Decrement the frequency of characters in string t
+            charCount[x] = charCount.get(x, 0) - 1
+        
+        for val in charCount.values(): # Check if any character has non-zero frequency
+            if val != 0: return False
+        
         return True
 ```
 **Time:** O(n)
@@ -3038,7 +3034,7 @@ class Solution:
 **Space:** O(n) ??
 
 ## 60. Find All Anagrams in a String ☠️
-**Reference:** https://leetcode.com/problems/find-all-anagrams-in-a-string/solutions/1737985/python3-sliding-window-hash-table-explained/
+**Reference:** https://leetcode.com/problems/find-all-anagrams-in-a-string/solutions/1738073/short-and-simple-c-sliding-window-solution/
 
 **Description:** Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
 
@@ -3052,33 +3048,44 @@ s = "cbaebabacd", p = "abc" #=> [0,6]
 s = "abab", p = "ab" #=> [0,1,2]
 ```
 
-**Hint:** "First, we have to create a hash map with letters from p as keys and its frequencies as values. Then, we start sliding the window [0..len(s)] over the s. Every time a letter gets out of the window, we increase the corresponding counter in the hashmap, and when a letter gets in the window - we decrease. As soon as all counters in the hashmap become zeros we encountered an anagram."
+**Hint:** 
+
+1. If p is larger than s return [], no solution are possible
+2. Add all chars in p to a map
+3. Create a window map in s the size of p that starts at 0. Load the window map with the letters in s
+4. If the pMap matches the windowMap, add the solution
+5. If the windowMap accross s until you reach the end
+6. Whenever pMap == windowMap add that solution to the output
+7. Return the output
 
 ```python3
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        hm, res, pL, sL = defaultdict(int), [], len(p), len(s)
-        if pL > sL: return []
+        s_len, p_len = len(s), len(p)
 
-        # build hashmap
-        for ch in p: hm[ch] += 1
+        if s_len < p_len: return []
 
-        # initial full pass over the window
-        for i in range(pL-1):
-            if s[i] in hm: hm[s[i]] -= 1
-            
-        # slide the window with stride 1
-        for i in range(-1, sL-pL+1):
-            if i > -1 and s[i] in hm:
-                hm[s[i]] += 1
-            if i+pL < sL and s[i+pL] in hm: 
-                hm[s[i+pL]] -= 1
-                
-            # check whether we encountered an anagram
-            if all(v == 0 for v in hm.values()): 
-                res.append(i+1)
-                
-        return res        
+        freq_p = [0] * 26
+        window = [0] * 26
+        ans = [] 
+
+        # create freq map with p
+        for i in range(p_len):
+            freq_p[ord(p[i]) - ord('a')] += 1
+
+        # initialize p-size window in s
+        for i in range(p_len):
+            window[ord(s[i]) - ord('a')] += 1
+
+        if freq_p == window: ans.append(0) # Match in first window
+
+        for i in range(p_len, s_len): # shift window across s
+            window[ord(s[i - p_len]) - ord('a')] -= 1 # remove prev char
+            window[ord(s[i]) - ord('a')] += 1 # add new char
+
+            if freq_p == window: ans.append(i - p_len + 1) # solution found
+
+        return ans    
 ```
 **Time:** O(n)
 **Space:** O(1)
