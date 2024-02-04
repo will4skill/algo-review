@@ -3354,7 +3354,6 @@ words = ["a",""] #=> [[0,1],[1,0]]
 
 **Hint:** 
 Tim note: I'm still skeptical about this solution. How does it handle duplicate words if you map word => idx?? 
-Also, how does the subtring logic work? Just because there is the reverse of a substring in the word list, how do we know the whole word + the reverse is a valid pair?? 
 
 s1[0:cut] = 0 to cut
 
@@ -3363,7 +3362,9 @@ s1[cut+1:] = cut + 1 to end
 * Case1: If s1 is a blank string, then for any string that is palindrome s2, s1+s2 and s2+s1 are palindrome.
 * Case 2: If s2 is the reversing string of s1, then s1+s2 and s2+s1 are palindrome.
 * Case 3: If s1[0:cut] is palindrome and there exists s2 is the reversing string of s1[cut+1:] , then s2+s1 is palindrome.
+	* So s1 to cut is a palindrome by itself AND you can find the reverse of the rest of s1 in the word list. Example: s1 = aabc, s1Cut = aa, s2 = cb (i.e., the reverse of s1AfterCut)
 * Case 4: Similiar to case3. If s1[cut+1:] is palindrome and there exists s2 is the reversing string of s1[0:cut] , then s1+s2 is palindrome.
+  	* Same as case 3, except the independent palindrome part of s1 is in the second half of the string. Example: s1 = bcaa, s2 = cb
 
 To make the search faster, build a HashMap to store the String-idx pairs.
 
