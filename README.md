@@ -3270,7 +3270,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 65. Minimum Window Substring
+## 65. Minimum Window Substring ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/minimum-window-substring/solutions/26808/here-is-a-10-line-template-that-can-solve-most-substring-problems/
 ndec09
 
@@ -3297,36 +3297,37 @@ s = "a", t = "aa" #=> ""
 ```python3
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        map = [0] * 128
-        for c in t:
-            map[ord(c)] += 1
+        map = {}
+        for char in t:
+            map[char] = map.get(char, 0) + 1
 
-        start, end = 0, 0
+        startIdx, endIdx = 0, 0
         minStart, minLen = 0, float('inf')
-        counter = len(t)
+        missingCharCount = len(t) # how many char is missing from current window
 
-        while end < len(s):
-            c1 = s[end]
-            if map[ord(c1)] > 0:
-                counter -= 1
-            map[ord(c1)] -= 1
-            end += 1
+        while endIdx < len(s):
+            char1 = s[endIdx]
+            map[char1] = map.get(char1, 0) # Add char1 to map if it is not already there
+            if map[char1] > 0: # is char1 a target character?
+                missingCharCount -= 1 # we shrink count because char is a target
+            map[char1] -= 1 # reduce count of seen char
+            endIdx += 1 # expand window
 
-            while counter == 0:
-                if minLen > end - start:
-                    minLen = end - start
-                    minStart = start
+            while missingCharCount == 0: # all targets have been found
+                if minLen > endIdx - startIdx: # if we found a new best minLen
+                    minLen = endIdx - startIdx # update global minLen
+                    minStart = startIdx # Update start of new minWindow
 
-                c2 = s[start]
-                map[ord(c2)] += 1
-                if map[ord(c2)] > 0:
-                    counter += 1
-                start += 1
+                char2 = s[startIdx]
+                map[char2] = map.get(char2, 0) + 1 # add char2 back into targets
+                if map[char2] > 0: # Note that char2 could be negative (ie not in t)
+                    missingCharCount += 1 # increment count because we need to find char2
+                startIdx += 1 # shrink window startIdx
 
         return "" if minLen == float('inf') else s[minStart:minStart + minLen]
 ```
-**Time:** ???
-**Space:** ???
+**Time:** O(n + m) ??? Tim note: you have to scan the t and n
+**Space:** O(n + m) ??? Tim note: to hold the chars of t and n in a map
 
 ## 66. Palindrome Pairs
 **Reference:** https://leetcode.com/problems/palindrome-pairs/solutions/79210/The-Easy-to-unserstand-JAVA-Solution/
@@ -3352,16 +3353,19 @@ words = ["a",""] #=> [[0,1],[1,0]]
 ```
 
 **Hint:** 
-Case1: If s1 is a blank string, then for any string that is palindrome s2, s1+s2 and s2+s1 are palindrome.
-Case 2: If s2 is the reversing string of s1, then s1+s2 and s2+s1 are palindrome.
-Case 3: If s1[0:cut] is palindrome and there exists s2 is the reversing string of s1[cut+1:] , then s2+s1 is palindrome.
-Case 4: Similiar to case3. If s1[cut+1: ] is palindrome and there exists s2 is the reversing string of s1[0:cut] , then s1+s2 is palindrome.
+Tim note: I'm still skeptical about this solution. How does it handle duplicate words if you map word => idx?? 
+
+s1[0:cut] = 0 to cut
+s1[cut+1:] = cut + 1 to end
+
+* Case1: If s1 is a blank string, then for any string that is palindrome s2, s1+s2 and s2+s1 are palindrome.
+* Case 2: If s2 is the reversing string of s1, then s1+s2 and s2+s1 are palindrome.
+* Case 3: If s1[0:cut] is palindrome and there exists s2 is the reversing string of s1[cut+1:] , then s2+s1 is palindrome.
+* Case 4: Similiar to case3. If s1[cut+1:] is palindrome and there exists s2 is the reversing string of s1[0:cut] , then s1+s2 is palindrome.
+
 To make the search faster, build a HashMap to store the String-idx pairs.
 
 ```python3
-from typing import List
-from collections import defaultdict
-
 class Solution:
     def palindromePairs(self, words: List[str]) -> List[List[int]]:
         res = []
@@ -3374,16 +3378,16 @@ class Solution:
         def reverse_str(s):
             return s[::-1]
 
-        # Build the map: String - idx
+        # Build the map: String => idx
         word_map = {word: i for i, word in enumerate(words)}
+        # Tim note: this is assuming no duplicate words 
 
         # Special case: "" can be combined with any palindrome string
         if "" in word_map:
             blank_idx = word_map[""]
             for i, word in enumerate(words):
                 if is_palindrome(word):
-                    if i == blank_idx:
-                        continue
+                    if i == blank_idx: continue # Skip self
                     res.append([blank_idx, i])
                     res.append([i, blank_idx])
 
@@ -3392,8 +3396,7 @@ class Solution:
             reversed_word = reverse_str(word)
             if reversed_word in word_map:
                 found = word_map[reversed_word]
-                if found == i:
-                    continue
+                if found == i: continue # Skip self
                 res.append([i, found])
 
         # Find pairs (s1, s2) where:
@@ -3405,22 +3408,19 @@ class Solution:
                     cut_r = reverse_str(word[cut:])
                     if cut_r in word_map:
                         found = word_map[cut_r]
-                        if found == i:
-                            continue
+                        if found == i: continue # Skip self
                         res.append([found, i])
 
                 if is_palindrome(word[cut:]):
                     cut_r = reverse_str(word[:cut])
                     if cut_r in word_map:
                         found = word_map[cut_r]
-                        if found == i:
-                            continue
+                        if found == i: continue # Skip self
                         res.append([i, found])
-
         return res
 ```
-**Time:** ???
-**Space:** ???
+**Time:** O(nk^2) ???
+**Space:** O(nk) ???
 
 ## 67. Invert Binary Tree
 **Reference:** https://leetcode.com/problems/invert-binary-tree/solutions/62714/3-4-lines-python/
