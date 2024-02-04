@@ -3356,6 +3356,7 @@ words = ["a",""] #=> [[0,1],[1,0]]
 Tim note: I'm still skeptical about this solution. How does it handle duplicate words if you map word => idx?? 
 
 s1[0:cut] = 0 to cut
+
 s1[cut+1:] = cut + 1 to end
 
 * Case1: If s1 is a blank string, then for any string that is palindrome s2, s1+s2 and s2+s1 are palindrome.
