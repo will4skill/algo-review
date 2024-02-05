@@ -3525,6 +3525,24 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
+```python3
+# Bonus: top down
+class Solution:
+    def dfsHeight(self, root):
+        if not root: return 0
+        return max(self.dfsHeight(root.left), self.dfsHeight(root.right)) + 1
+
+    def isBalanced(self, root):
+        if not root: return True
+
+        left = self.dfsHeight(root.left)
+        right = self.dfsHeight(root.right)
+
+        return abs(left - right) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)
+```
+**Time:** O(n^2)
+**Space:** O(h) 
+
 ## 69. Diameter of Binary Tree
 **Reference:** https://leetcode.com/problems/diameter-of-binary-tree/solutions/1102557/diameter-of-binary-tree/
 
@@ -3633,7 +3651,7 @@ class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         if not p and not q:
             return True
-        if not p or not q:
+        if not p or not q: # Tim note: the ORs have to be under the ANDs for this to work
             return False
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 ```
@@ -3689,7 +3707,7 @@ class Solution:
 **Space:** O(height of tree)
 
 ## 73. Subtree of Another Tree
-**Reference:** https://leetcode.com/problems/subtree-of-another-tree/
+**Reference:** https://leetcode.com/problems/subtree-of-another-tree/solutions/102724/java-solution-tree-traversal/
 
 **Description:** Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise. A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
 
@@ -3719,20 +3737,17 @@ root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2] #=> false
 ```python3
 class Solution:
     def isEqual(self, rootA, rootB):
-        if rootA == None and rootB != None or rootA != None and rootB == None:
-            return False
-        if rootA == None and rootB == None:
-            return True
+        if not rootA and not rootB: return True
+        if not rootA or not rootB: return False
+        if rootA.val != rootB.val: return False
 
-        return rootA.val == rootB.val and self.isEqual(rootA.left, rootB.left) and self.isEqual(rootA.right, rootB.right)
+        return self.isEqual(rootA.left, rootB.left) and self.isEqual(rootA.right, rootB.right) 
 
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        if root == None:
-            return False
+        if not root: return False
         if self.isEqual(root, subRoot): return True
 
         return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
-
 ```
 **Time:** O(S*T)
 **Space:** O(height of taller tree)
