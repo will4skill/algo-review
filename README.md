@@ -3687,21 +3687,16 @@ root = [1,2,2,null,3,null,3] #=> false
 ```python3
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        if root is None:
-            return True
+        if root is None: return True
+        
         return self.isMirror(root.left, root.right)
 
     def isMirror(self, left, right):
-        if left is None and right is None:
-            return True
-        if left is None or right is None:
-            return False
-        if left.val != right.val:
-            return False
+        if left is None and right is None: return True
+        if left is None or right is None: return False
+        if left.val != right.val: return False
 
-        outPair = self.isMirror(left.left, right.right)
-        inPair = self.isMirror(left.right, right.left)
-        return outPair and inPair
+        return self.isMirror(left.left, right.right) and self.isMirror(left.right, right.left)
 ```
 **Time:** O(n)
 **Space:** O(height of tree)
@@ -3752,7 +3747,7 @@ class Solution:
 **Time:** O(S*T)
 **Space:** O(height of taller tree)
 
-## 74. Binary Tree Level Order Traversal
+## 74. Binary Tree Level Order Traversal ☠️
 **Reference:** https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
 **Description:** Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
@@ -3776,11 +3771,58 @@ root = [1] #=> [[1]]
 root = [] #=> []
 ```
 
-**Hint:** BFS: use a queue that tracks node and level. Maintain a level array. If curre level is in level array add node, else add new level to level array then add node. Traverse while increasing level number
+**Hint:** 
+
+BFS: use a queue that tracks node and level. Maintain a level array. If current level is in level array add node, else add new level to level array then add node. Traverse while increasing level number
+
 DFS: Similar logic to above with the level array, remember to increment levelNumber each time you recurse
 
 ```python3
+# https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/1219538/python-simple-bfs-explained/
+# BFS:
+from collections import deque
+class Solution(object):
+    def levelOrder(self, root):
+        if not root: return []
+        queue, result = deque([root]), []
+
+        while queue:
+            level = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                level.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            result.append(level)
+        return result
+```
+
+```python3
+# https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/4575557/bfs-queue-approach-beats-96-59-of-users/
+# BFS
+from collections import deque
+class Solution:
+    def levelOrder(self, root):
+        if not root: return [
+        # queue = deque((root, 0)) # Tim note: passing a tuple to a deque doesn't work 
+        queue = deque()
+        queue.append((root, 0))
+        result = []
+
+        while queue:
+            curr, level = queue.popleft()
+            if len(result) == level:
+                result.append([])
+            result[level].append(curr.val)
+            
+            if curr.left: queue.append((curr.left, level + 1))
+            if curr.right: queue.append((curr.right, level + 1))
+        return result
+```
+
+```python3
 # https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/33550/python-solution-with-detailed-explanation/
+# DFS:
 class Solution(object):
     def levelOrder(self, root):
         result = []
@@ -3788,32 +3830,15 @@ class Solution(object):
         return result
     
     def helper(self, root, level, result):
-        if root is None:
-            return
-        if len(result) <= level:
-            result.append([])
+        if not root: return
+        if len(result) == level: # if you run out of space in list
+            result.append([]) # create a new level 
+
         result[level].append(root.val)
         self.helper(root.left, level+1, result)
-        self.helper(root.right, level+1, result)
+        self.helper(root.right, level+1, result) 
 ```
 
-```python3
-# https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/1219538/python-simple-bfs-explained/
-class Solution:
-    def levelOrder(self, root):
-        if not root: return []
-        queue, result = deque([root]), []
-        
-        while queue:
-            level = []
-            for i in range(len(queue)):
-                node = queue.popleft()
-                level.append(node.val)
-                if node.left:  queue.append(node.left)
-                if node.right: queue.append(node.right)
-            result.append(level)
-        return result
-```
 **Time:** O(n)
 **Space:** O(n)
 
