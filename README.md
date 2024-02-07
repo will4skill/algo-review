@@ -156,6 +156,8 @@ a[start:stop]  # items start through stop-1
 a[start:]      # items start through the rest of the array (Tim note: past end, => [])
 a[:stop]       # items from the beginning through stop-1
 a[:]           # a copy of the whole array
+a[::-1]        # reversed copy of the whole array
+a[::1]         # another way to copy (convenient if you need to toggle between reversed/normal)
 
 # Loop JS: for (const num of nums) console.log(num)  
 # ** Note: string iteration works the same **
