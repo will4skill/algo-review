@@ -3842,7 +3842,7 @@ class Solution(object):
 **Time:** O(n)
 **Space:** O(n)
 
-## 75. Lowest Common Ancestor of a Binary Tree
+## 75. Lowest Common Ancestor of a Binary Tree ☠️
 **Reference:** https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/152682/python-simple-recursive-solution-with-detailed-explanation/
 
 **Description:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree. According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
@@ -3901,7 +3901,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(h)
 
-## 76. Binary Tree Right Side View
+## 76. Binary Tree Right Side View ☠️
 **Reference:** https://leetcode.com/problems/binary-tree-right-side-view/solutions/56012/my-simple-accepted-solution-java/
 
 **Description:** Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
@@ -3948,7 +3948,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(h)
 
-## 77. Construct Binary Tree from Preorder and Inorder Traversal
+## 77. Construct Binary Tree from Preorder and Inorder Traversal ☠️ ☠️
 **Reference:** https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solutions/565412/detailed-python-walkthrough-from-an-o-n-2-solution-to-o-n-faster-than-99-77/
 
 **Description:** Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
@@ -3980,7 +3980,7 @@ preorder = [-1], inorder = [-1] #=> [-1]
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         preorder.reverse() # You can also convert to a deque. The point is for O(1) pop operations
-        inorderDict = { v:i for i,v in enumerate(inorder) } # This provides O(1) idx lookups
+        inorderDict = { val:idx for idx ,val in enumerate(inorder) } # This provides O(1) idx lookups
         return self.buildTreeHelper(preorder, inorderDict, 0, len(preorder) - 1)
 
     def buildTreeHelper(self, preorder, inorderDict, beg, end):
@@ -3995,7 +3995,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 78. Path Sum II
+## 78. Path Sum II ☠️
 **Reference:** https://leetcode.com/problems/path-sum-ii/solutions/2615948/leetcode-the-hard-way-explained-line-by-line/
 
 **Description:** Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
@@ -4046,7 +4046,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(height of tree)
 
-## 79. Maximum Width of Binary Tree
+## 79. Maximum Width of Binary Tree ☠️ ☠️
 **Reference:** https://leetcode.com/problems/maximum-width-of-binary-tree/solutions/3436593/image-explanation-why-long-to-int-c-java-python/
 
 **Description:** Given the root of a binary tree, return the maximum width of the given tree. The maximum width of a tree is the maximum width among all levels. The width of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes that would be present in a complete binary tree extending down to that level are also counted into the length calculation. It is guaranteed that the answer will in the range of a 32-bit signed integer.
@@ -4090,11 +4090,12 @@ class Solution:
             level_length = len(queue)
             level_start = queue[0][1]
             
-            for i in range(level_length):
+            for _ in range(level_length):
                 node, index = queue.popleft() # Destructure
                 
                 if node.left:
                     queue.append((node.left, 2*index))
+                
                 if node.right:
                     queue.append((node.right, 2*index+1))
                     
@@ -4105,7 +4106,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 80. Binary Tree Zigzag Level Order Traversal
+## 80. Binary Tree Zigzag Level Order Traversal ☠️ ☠️
 **Reference:** https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/solutions/749036/python-clean-bfs-solution-explained/
 
 **Description:** Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
@@ -4141,7 +4142,7 @@ class Solution:
         
         while queue:
             level = []
-            for i in range(len(queue)):
+            for _ in range(len(queue)):
                 node = queue.popleft()
                 level.append(node.val)
                 if node.left:  queue.append(node.left)
