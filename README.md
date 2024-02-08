@@ -127,6 +127,8 @@ min([10, 20, 30], [5, 15, 25]) #=> [5, 15, 25]
 
 abs(-5) #=> 5
 
+positiveInfinity = float('inf') ✅
+negativeInfinity = float('-inf') ✅
 
 #################################################################################################
 # Lists
@@ -148,16 +150,16 @@ nums = [0]*length #=> [0, 0, 0]
 nums[0:2] #=> sublist including first idx but not last [0, 0]
 a, b, c = [1, 2, 3] # unpacking JS: [a, b, c] = [1, 2, 3]
 bList = [1,2,3]
-aList = bList.copy() # Shallow Copy
+aList = bList.copy() # Shallow Copy ✅
 
 # https://stackoverflow.com/questions/509211/how-slicing-in-python-works
 a = [1,2,3]
 a[start:stop]  # items start through stop-1
-a[start:]      # items start through the rest of the array (Tim note: past end, => [])
-a[:stop]       # items from the beginning through stop-1
-a[:]           # a copy of the whole array
-a[::-1]        # reversed copy of the whole array
-a[::1]         # another way to copy (convenient if you need to toggle between reversed/normal)
+a[start:]      # items start through the rest of the array (Tim note: past end, => []) ✅
+a[:stop]       # items from the beginning through stop-1 ✅
+a[:]           # a copy of the whole array ✅
+a[::-1]        # reversed copy of the whole array ✅
+a[::1]         # another way to copy (convenient if you need to toggle between reversed/normal)  ✅
 
 # Loop JS: for (const num of nums) console.log(num)  
 # ** Note: string iteration works the same **
@@ -231,6 +233,7 @@ print(str(123) + str(123)) #=> 123123
 # In rare cases you may need the ASCII value of a char
 print(ord("a")) #=> 97 JS: "a".charCodeAt(0);
 print(ord("b")) #=> 98
+ord("b") - ord("a") #=> 1 (normalize for char list map) ✅
 
 # Combine a list of strings (with an empty string delimitor)
 strings = ["ab", "cd", "ef"]
@@ -246,9 +249,10 @@ f'Five plus ten is {a + b} and not {2 * (a + b)}.' #=> 'Five plus ten is 15 and 
 "".isspace() # Returns True if all characters in string are whitespaces
 "".isalnum() # Returns True if given string is alphanumeric
 "".isalpha() # Returns True if given character is alphabet
+"".isdigit(): # Returns True if digit, False otherwise ✅
 
-for c in "string":
-    #do something with c
+for char in "string":  ✅
+    #do something with char
 
 #################################################################################################
 # Queues
@@ -272,7 +276,7 @@ print(queue) #=> deque([1])
 # HashSets
 mySet = set() # JS: mySet = new Set()
 
-mySet.add(1) # JS: mySet.add(1)
+mySet.add(1) # JS: mySet.add(1) ✅
 mySet.add(2)
 print(mySet) #=> {1, 2}
 print(len(mySet)) #=> 2 JS: mySet.size
@@ -281,7 +285,7 @@ print(1 in mySet) #=> True JS: mySet.has(1)
 print(2 in mySet) #=> True
 print(3 in mySet) #=> False
 
-mySet.remove(2) #=> **THROWS ERROR** JS: mySet.delete(2) 
+mySet.remove(2) #=> **THROWS ERROR** JS: mySet.delete(2)  ✅
 print(2 in mySet)
 
 # list to set
@@ -339,11 +343,19 @@ b = {"surname": "Crain", "city": "San Francisco"}
 all = {**a, **b}
 print(all) #=> {'name': 'Juliana', 'age': 33, 'surname': 'Crain', 'city': 'San Francisco'}
 
-# Increment
+# Increment  ✅
 if key in map: map[key] += 1
 else: map[key] = 0
 # Get Way
 map[key] = map.get(key, 0) + 1
+# Default Dict Way (defaultdict does not throw key error)  ✅
+from collections import defaultdict
+map = defaultdict(list) # makes a dictionary with value=>value from list
+
+# Counter  ✅
+from collections import Counter
+freq = collections.Counter(list) # automatically maps values to freq. If you don’t supply a list the default is 0 so you don’t have to do null checks
+freq = collections.Counter("Williams") #=> Counter({'i': 2, 'l': 2, 'W': 1, 'a': 1, 'm': 1, 's': 1})
 
 #################################################################################################
 # Heaps
