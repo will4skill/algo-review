@@ -11,6 +11,8 @@ Popular Algorithm Problems
 # https://www.interviewbit.com/python-cheat-sheet/#string-manipulation-in-python
 # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 # https://ioflood.com/blog/python-min-function-guide-uses-and-examples/
+# https://www.30secondsofcode.org/python/s/sortedlist-vs-list-sort/
+# https://www.freecodecamp.org/news/sort-dictionary-by-value-in-python/
 
 # floor division: 
 25 // 2 #=> 12 JS: Math.floor(25/2)
@@ -143,10 +145,10 @@ first_list + second_list #=> ["a", "b", "c", 1, 2, 3]
 my_list.pop() #=> popped item
 my_list.insert(1, 99) #=> insert 99 at index 1, returns None
 my_list[0] #=> first item
-my_list[-1] #=> last item
-my_list[-2] #=> second to last item
+my_list[-1] #=> last item  ✅
+my_list[-2] #=> second to last item  ✅
 length = 3
-nums = [0]*length #=> [0, 0, 0]
+nums = [0]*length #=> [0, 0, 0] ✅
 nums[0:2] #=> sublist including first idx but not last [0, 0]
 a, b, c = [1, 2, 3] # unpacking JS: [a, b, c] = [1, 2, 3]
 bList = [1,2,3]
@@ -194,6 +196,18 @@ sum(nums)
 arr = ["bob", "alice", "jane", "doe"]
 arr.sort(key=lambda x: len(x)) # JS: arr.sort((a, b) => a.length - b.length)
 print(arr)
+
+# .sort() vs sorted() sorted creates a new list and takes any iterable. Sort sorts in place and only works on lists
+# key=lambda x: x[1] # returns value you want to compare or you can compare two params (See problem # 63 for a custom sort example)
+# reverse=True sorts in descending order
+nums = [2, 3, 1, 5, 6, 4, 0]
+print(sorted(nums))   # [0, 1, 2, 3, 4, 5, 6]
+print(nums)           # [2, 3, 1, 5, 6, 4, 0]
+
+# Default map sort (keys are sorted and returned)
+my_dict = { 'num3': 3, 'num2': 2, 'num1': 100 }
+sortedDict = sorted(my_dict)
+print(sortedDict) #=> ['num1', 'num2', 'num3']
 
 # List comprehension
 fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
@@ -256,20 +270,20 @@ for char in "string":  ✅
 
 #################################################################################################
 # Queues
-from collections import deque
+from collections import deque  ✅
 
-queue = deque()
-queue.append(1) # JS: queue.push()
+queue = deque()  ✅
+queue.append(1) # JS: queue.push()  ✅
 queue.append(2)
-print(queue) #=> deque([1, 2])
+print(queue) #=> deque([1, 2]) 
 
-queue.popleft() #=> 1 JS: queue.shift()
+queue.popleft() #=> 1 JS: queue.shift()  ✅
 print(queue) #=> deque([2])
 
-queue.appendleft(1) # JS: queue.unshift(1)
+queue.appendleft(1) # JS: queue.unshift(1)  ✅
 print(queue) #=> deque([1, 2])
 
-queue.pop() #=> 2 JS: queue.pop()
+queue.pop() #=> 2 JS: queue.pop()  ✅
 print(queue) #=> deque([1])
 
 #################################################################################################
@@ -356,6 +370,11 @@ map = defaultdict(list) # makes a dictionary with value=>value from list
 from collections import Counter
 freq = collections.Counter(list) # automatically maps values to freq. If you don’t supply a list the default is 0 so you don’t have to do null checks
 freq = collections.Counter("Williams") #=> Counter({'i': 2, 'l': 2, 'W': 1, 'a': 1, 'm': 1, 's': 1})
+
+# Comprehension
+words = ["apple", "pear"]
+word_map = {word: i for i, word in enumerate(words)}
+print(word_map) #=> {'apple': 0, 'pear': 1}
 
 #################################################################################################
 # Heaps
@@ -3210,6 +3229,19 @@ class Solution:
     def largestNumber(self, nums):
         largest_num = ''.join(sorted(map(str, nums), key=LargerNumKey))
         return '0' if largest_num[0] == '0' else largest_num
+```
+
+```python3
+# More Readable: https://leetcode.com/problems/largest-number/
+from functools import cmp_to_key
+class Solution:         
+    def largestNumber(self, nums):
+        strs = [str(num) for num in nums] # convert to list of strings
+        comparator = lambda x, y: int(y + x) - int(x + y)
+        sorted_strs = sorted(strs, key=cmp_to_key(comparator))
+        largest_num = ''.join(sorted_strs)
+        if largest_num[0] == '0': return '0' # check for leading zeros
+        return largest_num
 ```
 **Time:** O(nlogn)
 **Space:** O(n)
