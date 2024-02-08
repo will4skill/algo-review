@@ -197,8 +197,8 @@ arr = ["bob", "alice", "jane", "doe"]
 arr.sort(key=lambda x: len(x)) # JS: arr.sort((a, b) => a.length - b.length)
 print(arr)
 
-# .sort() vs sorted() sorted creates a new list and takes any iterable. Sort sorts in place and only works on lists
-# key=lambda x: x[1] # returns value you want to compare or you can compare two params (See problem # 63 for a custom sort example)
+# .sort() vs sorted() sorted creates a new list and takes any iterable. Sort sorts in place and only works on lists ✅
+# key=lambda x: x[1] # returns value you want to compare or you can compare two params (See problem # 63 for a custom sort example) ✅
 # reverse=True sorts in descending order
 nums = [2, 3, 1, 5, 6, 4, 0]
 print(sorted(nums))   # [0, 1, 2, 3, 4, 5, 6]
