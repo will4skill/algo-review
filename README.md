@@ -4156,7 +4156,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 81. Path Sum III
+## 81. Path Sum III ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/path-sum-iii/solutions/141424/python-step-by-step-walk-through-easy-to-understand-two-solutions-comparison/
 
 **Description:** Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum. The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
@@ -4218,12 +4218,12 @@ During the DFS break down, we need to -1 in cache[currPathSum], because this pat
         self.dfs(root.left, target, curr_sum)
         self.dfs(root.right, target, curr_sum)
         # when move to a different branch, the currPathSum is no longer available, hence remove one.
-        self.cache[curr_sum] -=1
+        self.cache[curr_sum] -=1 # ???????????
 ```
 **Time:** O(n)
 **Space:** O(n)
 
-## 82. All Nodes Distance K in Binary Tree
+## 82. All Nodes Distance K in Binary Tree ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/solutions/3747860/python-java-c-simple-solution-easy-to-understand/
 
 **Description:** Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node. You can return the answer in any order.
@@ -4297,7 +4297,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 83. Serialize and Deserialize Binary Tree
+## 83. Serialize and Deserialize Binary Tree ☠️ ☠️
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0297-serialize-and-deserialize-binary-tree.py
 
 **Description:** Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
@@ -4361,7 +4361,7 @@ class Codec:
 **Time:** O(n)
 **Space:** O(n)
 
-## 84. Binary Tree Maximum Path Sum
+## 84. Binary Tree Maximum Path Sum ☠️
 **Reference:** https://leetcode.com/problems/binary-tree-maximum-path-sum/solutions/419793/python-recursive-solution-beats-98-in-time-and-75-in-memory/
 
 **Description:** A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
@@ -4408,7 +4408,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 85. Binary Search
+## 85. Binary Search 
 **Reference:** https://leetcode.com/problems/binary-search/solutions/1322419/5-variations-of-binary-search-a-self-note/
 
 **Description:** Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1. You must write an algorithm with O(log n) runtime complexity.
@@ -4447,7 +4447,7 @@ class Solution:
 **Time:** O(log(n))
 **Space:** O(1)
 
-## 86. First Bad Version
+## 86. First Bad Version ☠️
 **Reference:** https://leetcode.com/problems/first-bad-version/solutions/1591935/python-solution-easy-to-understand-binary-search-with-detailed-explanation/
 
 **Description:** You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
@@ -4472,10 +4472,10 @@ n = 1, bad = 1 #=> 1
 class Solution:
     def firstBadVersion(self, n: int) -> int:
         start, end = 1, n
-        while start < end:
+        while start < end: # keep going until start and end converge
             mid = start + (end - start) // 2
             if isBadVersion(mid):
-                end = mid
+                end = mid # Tim note: not mid - 1, because mid might actually be the first bad version
             if not isBadVersion(mid):
                 start = mid + 1
         return start
@@ -4483,7 +4483,7 @@ class Solution:
 **Time:** O(log(n))
 **Space:** O(1)
 
-## 87. Search in Rotated Sorted Array
+## 87. Search in Rotated Sorted Array ☠️
 **Reference:** https://leetcode.com/problems/search-in-rotated-sorted-array/solutions/1786973/JavaScript-Solution/
 
 **Description:** There is an integer array nums sorted in ascending order (with distinct values).
@@ -4525,12 +4525,12 @@ class Solution:
         right = len(nums) - 1
 
         # Modified binary search to find lowest num. While loop breaks out once left = right, smallest num is found
-        while left < right:
+        while left < right: # Tim: Continue until left and right converge
             middle = (left + right) // 2
             if nums[middle] > nums[right]:
                 left = middle + 1
             else:
-                right = middle
+                right = middle # Tim: not middle - 1, because middle might be min
 
         min_index = left
         left = 0
