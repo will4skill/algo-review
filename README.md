@@ -4601,7 +4601,7 @@ class Solution:
 **Time:** O(log(n))
 **Space:** O(1)
 
-## 88. Time Based Key-Value Store
+## 88. Time Based Key-Value Store ☠️ ☠️
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0981-time-based-key-value-store.py
 
 **Description:** Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
@@ -4654,7 +4654,7 @@ class TimeMap:
 **Time:** O(n), O(log n)
 **Space:** O(n), O(1)
 
-## 89. Search a 2D Matrix (rows are sorted)
+## 89. Search a 2D Matrix (rows are sorted) ☠️
 **Reference:** https://leetcode.com/problems/search-a-2d-matrix/solutions/274992/search-in-2d-matrix/
 
 **Description:** You are given an m x n integer matrix matrix with the following two properties:
@@ -4687,32 +4687,31 @@ matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13 #=> false
 
 **Hint:** Sorted like an S. Use normal binary search except: midValue = Matrix[Math.floor(midIdx/cols)][midIdx%cols]
 
-```javascript
-const searchMatrix = (matrix, target) => {
-  const rows = matrix.length;
-  const cols = matrix[0].length;
+```python3
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        rows = len(matrix)
+        cols = len(matrix[0])
 
-  // Binary Search
-  let startIdx = 0, endIdx = rows*cols - 1;
-  let midIdx, midValue;
+        # Binary Search
+        startIdx, endIdx = 0, rows * cols - 1
 
-  while (startIdx <= endIdx) {
-    midIdx = startIdx + Math.floor((endIdx - startIdx)/2);
-    midValue = matrix[Math.floor(midIdx / cols)][midIdx % cols];
-    if (target === midValue)
-      return true
-    else if (target < midValue)
-      endIdx = midIdx - 1;
-    else
-      startIdx = midIdx + 1;
-  }
-  return false;
-};
+        while startIdx <= endIdx:
+            midIdx = startIdx + (endIdx - startIdx) // 2
+            midValue = matrix[midIdx // cols][midIdx % cols]
+
+            if target == midValue:
+                return True
+            elif target < midValue:
+                endIdx = midIdx - 1
+            else:
+                startIdx = midIdx + 1
+        return False
 ```
 **Time:** O(log(m*n))
 **Space:** O(1)
 
-## 90. Find Minimum in Rotated Sorted Array
+## 90. Find Minimum in Rotated Sorted Array ☠️ ☠
 **Reference:** https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/solutions/158940/beat-100-very-simple-python-very-detailed-explanation/
 
 **Description:** Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
@@ -4825,7 +4824,7 @@ class Solution:
 **Time:** O(log(n))
 **Space:** O(1)
 
-## 91. Maximum Profit in Job Scheduling
+## 91. Maximum Profit in Job Scheduling ☠️ ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/maximum-profit-in-job-scheduling/solutions/409009/java-c-python-dp-solution/
 
 **Description:** We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i].
@@ -4859,7 +4858,7 @@ startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
 
 ![image](https://github.com/will4skill/algo-review/assets/10373005/d483ac47-d253-4a13-a6d8-02d8e8655d2d)
 
-**Hint:** Binary search and DP. 
+**Hint:** Binary search and DP.
 1. Sort jobs by endTime
 2. Use dp list to memoize dp[time] => maxprofit
 3. Choice is similar to knapsack:
@@ -4880,7 +4879,7 @@ startTime = [1,1,1], endTime = [2,3,4], profit = [5,6,4] #=> 6
 **Time:** O(nlog n)
 **Space:** O(n)
 
-## 92. Median of Two Sorted Arrays
+## 92. Median of Two Sorted Arrays ☠️ ☠️ ☠️ ☠️
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0004-median-of-two-sorted-arrays.py
 
 **Description:** Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
