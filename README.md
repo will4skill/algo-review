@@ -4939,7 +4939,7 @@ class Solution:
 **Time:** O(log(min(n, m)))
 **Space:** O(n)
 
-## 93. flood-fill
+## 93. flood-fill ☠️
 **Reference:** https://leetcode.com/problems/flood-fill/solutions/2669996/dfs-bfs-solutions-explained-iterative-recursive/
 
 **Description:** An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
@@ -5010,7 +5010,7 @@ def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> Lis
 **Time:** O(n)
 **Space:** O(n)
 
-## 94. 01 Matrix
+## 94. 01 Matrix ☠️ ☠️
 **Reference:** https://leetcode.com/problems/01-matrix/solutions/1369741/c-java-python-bfs-dp-solutions-with-picture-clean-concise-o-1-space/
 
 **Description:** Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell. The distance between two adjacent cells is 1.
@@ -5165,7 +5165,7 @@ class Solution:
 **Time:** O(n + m): n = nodes, m = edges
 **Space:** O(n): space in visited
 
-## 96. Course Schedule
+## 96. Course Schedule ☠️ ☠️
 **Reference:** https://leetcode.com/problems/course-schedule/solutions/58586/python-20-lines-dfs-solution-sharing-with-explanation/
 
 **Description:** There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
@@ -5192,12 +5192,14 @@ numCourses = 2, prerequisites = [[1,0],[0,1]] #=> false
 ```python3
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
-        graph = [[] for _ in range(numCourses)]
-        visited = [0 for _ in range(numCourses)]
-        # create graph
-        for pair in prerequisites:
+        graph = [[] for _ in range(numCourses)] # 🤯
+        visited = [0 for _ in range(numCourses)] # 🤯
+
+	# create graph
+        for pair in prerequisites: # 🧼
             x, y = pair
             graph[x].append(y)
+
         # visit each node
         for i in range(numCourses):
             if not self.dfs(graph, visited, i):
@@ -5208,7 +5210,7 @@ class Solution(object):
         # if ith node is marked as being visited, then a cycle is found
         if visited[i] == -1:
             return False
-        # if it is done visted, then do not visit again
+        # if visit is done, do not visit again
         if visited[i] == 1:
             return True
         # mark as being visited
@@ -5217,7 +5219,7 @@ class Solution(object):
         for j in graph[i]:
             if not self.dfs(graph, visited, j):
                 return False
-        # after visit all the neighbours, mark it as done visited
+        # after visit all the neighbors, mark it as done visited
         visited[i] = 1
         return True
 ```
