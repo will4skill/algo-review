@@ -52,6 +52,10 @@ Popular Algorithm Problems
 
 # floor division: 
 25 // 2 #=> 12 JS: Math.floor(25/2)
+# ** Google Gemini: ** 
+# Python: The result always has the same sign as the dividend (the number being divided). So, -7 // 2 gives -3, while 7 // -2 gives -3.
+# Other Languages: Some languages like C/C++ use the sign of the divisor instead. So, in C, -7 / 2 gives -3, but 7 / -2 gives -4.
+
 a = 2
 a += 1 #=> does not return anything, increments a
 
