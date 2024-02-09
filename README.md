@@ -4364,7 +4364,7 @@ class Solution:
                     queue.append((neighbor, distance + 1))
         return result
     
-    def buildGraph(self, node, parent, graph):
+    def buildGraph(self, node, parent, graph): # 🔥
         if not node:
             return
         
@@ -5266,7 +5266,7 @@ class Solution(object):
 **Time:** O(n + p) p = # prereqs n = # courses
 **Space:** O(n)
 
-## 97. Number of Islands
+## 97. Number of Islands ☠️
 **Reference:** https://www.structy.net/problems/island-count
 
 **Description:** Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
@@ -5331,12 +5331,12 @@ class Solution:
         self.explore(grid, r, c - 1, visited)
         self.explore(grid, r, c + 1, visited)
         
-        return True
+        return True # Finished exploring island
 ```
 **Time:** Time: O(rc) r = number of rows c = number of columns
 **Space:** O(rc)
 
-## 98. Rotting Oranges
+## 98. Rotting Oranges ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/rotting-oranges/solutions/563686/python-clean-well-explained-faster-than-90/
 
 **Description:** You are given an m x n grid where each cell can have one of three values:
@@ -5428,7 +5428,7 @@ class Solution:
 **Time:** O(rows * cols)
 **Space:** O(rows * cols)
 
-## 99. Accounts Merge
+## 99. Accounts Merge ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/accounts-merge/solutions/109161/python-simple-dfs-with-explanation/
 
 **Description:** Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
@@ -5489,7 +5489,7 @@ class Solution(object):
 **Time:** O(n*logn)
 **Space:** O(n) ??
 
-## 100. Word Search
+## 100. Word Search ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/word-search/solutions/27660/python-dfs-solution-with-comments/
 
 **Description:** Given an m x n grid of characters board and a string word, return true if word exists in the grid.
@@ -5526,7 +5526,7 @@ board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB" #
 ![image](https://github.com/will4skill/algo-review/assets/10373005/2eaf6c98-df03-4527-a27b-733aef27ba9c)
 
 
-**Hint:** Standard DFS starting at each character and trying to complete word. Similar to sum problems, remove found character and then recurse until False or len(word) == 0
+**Hint:** Standard DFS starting at each character and trying to complete word. Similar to sum problems, remove found character and then recurse until False or len(word) == 0 (*backtracking with visited set*)
 
 ```python3
 class Solution:
@@ -5561,7 +5561,7 @@ class Solution:
 **Time:** O(m*n4^s) where m=# of rows, n=# of cols and s=len of the word.
 **Space:** ???
 
-## 101. Minimum Height Trees
+## 101. Minimum Height Trees ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/minimum-height-trees/solutions/76055/share-some-thoughts/
 
 **Description:** A tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.
