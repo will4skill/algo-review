@@ -5093,7 +5093,7 @@ class Solution:  # 520 ms, faster than 96.50%
 **Time:** O(M * N), where M is number of rows, N is number of columns in the matrix.
 **Space:** O(1)
 
-## 95. Clone Graph
+## 95. Clone Graph ☠️
 **Reference:** https://leetcode.com/problems/clone-graph/solutions/1404781/python-easy-clean-code/
 
 **Description:** Given a reference of a node in a connected undirected graph.
@@ -5144,6 +5144,9 @@ adjList = [] #=> []
 
 ```python3
 class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        return self.helper(node, {})
+
     def helper(self, node, visited):
         if node is None:
             return None
@@ -5153,14 +5156,11 @@ class Solution:
         
         for adjNode in node.neighbors:
             if adjNode.val not in visited:
-                newNode.neighbors.append(self.helper(adjNode, visited))
+                # The 🔑 * explore unvisited *
+                newNode.neighbors.append(self.helper(adjNode, visited)) 
             else:
                 newNode.neighbors.append(visited[adjNode.val])
-        
-        return newNode
-    
-    def cloneGraph(self, node: 'Node') -> 'Node':
-        return self.helper(node, {})
+        return newNode 
 ```
 **Time:** O(n + m): n = nodes, m = edges
 **Space:** O(n): space in visited
