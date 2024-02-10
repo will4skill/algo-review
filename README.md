@@ -11,13 +11,13 @@ Popular Algorithm Problems
 7. Loop enumerate  ✅
 8. Char char in string  ✅
 9. Reverse list .reverse and [::-1]  ✅
-10. Map.get(x,0) + 1 (or maybe default dict), then also that counter thing (see 37)  ✅
+10. Map.get(x,0) + 1 (or maybe default dict), then also that counter thing (see [#37](https://github.com/will4skill/algo-review/blob/main/README.md#37-maximum-frequency-stack-%EF%B8%8F-%EF%B8%8F))  ✅
 	a. Note: default dict is the same, but neer raises key error  ✅
 	b. Freq = collections.Counter(list) automatically maps values to freq. If you don’t supply a list the default is 0 so you don’t have to do null checks  ✅
 11. mySet = set(), set.add(‘a’) set.remove(‘a”) ✅ 
 12. String/Arr slicing s[:1] ✅
 13. float(‘inf’) float(‘-inf’) ✅
-14. Custom Sort #63 ✅
+14. Custom Sort [#63](https://github.com/will4skill/algo-review/blob/main/README.md#63-largest-number-%EF%B8%8F) ✅
 15. Heap heapq.heappushpop(heap, (dist, x, y)) ✅
 
 ## Problems to Master: 🏋️‍♂️ 🔄
@@ -86,15 +86,15 @@ input_array = [64, 25, 12, 22, 11]
 quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
-3. Reverse LL # 41, # 43 ✅
-4. Level order traversal (both ways) #  tree # 74, graph 98 ✅
-5. Height of binary tree # 70 ✅
-6. Convert tree to graph  # 82 ✅
-7. Binary search, binary search min/max # 87 ✅
-8. Graph bfs (sshotest path) and dfs # 93 ✅
-9. edges to adjList  # 83 undirected, # 96 directed ✅
-10. Top sort # Graph: # 94, 
-11. graph cycle check: Adj: # 96 ✅
+3. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
+4. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges)
+5. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
+6. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
+7. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
+8. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F)
+9. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed ✅
+10. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) 
+11. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F)
 12. Dijkstra/Bellman ford
 
 ```python3
@@ -177,10 +177,10 @@ result = bellman_ford(graph, start_vertex)
 print(f"Shortest distances from vertex {start_vertex}: {result}")
 ```
 
-14. Trie from scratch # 154 ✅
+14. Trie from scratch [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree)
 15. Bit manip:
 
-https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits
+[135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits)
 ```python3
 # i >> 1 # remove the last bit (divide by 2)
 n = 5 >> 1
@@ -190,7 +190,7 @@ n = 4 & 1
 print(n) #=> 0
 ```
 
-https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits
+[136](https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits)
 ```python3
 # n = n & (n - 1)  # change the first set bit from right to 0
 n = 5
@@ -198,20 +198,20 @@ n = n & (n - 1)
 print(n) #=> 4
 ```
 
-https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number
+[137](https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number)
 ```python3
 # xor ^= num # If you XOR a number with itself, 0 is returned.
 print(5^5) #=> 0
 ```
 
-https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number
+[138](https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number)
 ```python3
 # a^b^b = a, Two xor operations with the same number will eliminate the number and reveal the original number.
 a, b = 1, 2
 print(a^b^b) #=> 1
 ```
 
-https://github.com/will4skill/algo-review/blob/main/README.md#139-reverse-bits
+[#139](https://github.com/will4skill/algo-review/blob/main/README.md#139-reverse-bits)
 ```python3
 # num = (num << 1) | (n & 1) # append the last bit of the given number to the number
 n = 4
@@ -220,9 +220,9 @@ print((num << 1) | (n & 1)) #=> 10 because 101 => 1010
 ```
 
 17. Perms, Combos, Subsets
-	* Permutations: https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations
- 	* Subsets: https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets
-  	* Combinations: https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number	  
+	* Permutations: [#158](https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations)
+ 	* Subsets: [#159](https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets)
+  	* Combinations: [#160](https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number)
 
 
 ## Python3 Cheatsheet
