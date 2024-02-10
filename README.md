@@ -21,20 +21,84 @@ Popular Algorithm Problems
 15. Heap heapq.heappushpop(heap, (dist, x, y)) ✅
 
 ## Problems to Master: 🏋️‍♂️ 🔄
-1. MergeSort, QuickSort (or just quick select)
-2. Reverse LL # 41, # 43 ✅
-3. Level order traversal (both ways) #  tree # 74, graph 98 ✅
-4. Height of binary tree # 70 ✅
-5. Convert tree to graph  # 82 ✅
-6. Binary search, binary search min/max # 87 ✅
-7. Graph bfs (sshotest path) and dfs # 93 ✅
-8. edges to adjList  # 83 undirected, # 96 directed ✅
-9. Top sort # Graph: # 94, 
-10. graph cycle check: Adj: # 96 ✅
-11. Dijkstra/Bellman ford 
-12. Trie from scratch # 154 ✅
-13. Bit manip: >> 1 divide by two, i & 1 extract last bit, n & (n - 1), xor
-14. Perms, Combos, Subsets
+1. MergeSort, QuickSort
+```python3
+# MergeSort: Chat GPT Time: O(nlogn), Space: O(n)
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+
+    left_half = merge_sort(left_half)
+    right_half = merge_sort(right_half)
+
+    return merge(left_half, right_half)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+# Example usage:
+input_array = [64, 25, 12, 22, 11]
+sorted_array = merge_sort(input_array)
+print("Sorted array:", sorted_array)
+```
+
+```python3
+QuickSort: Chat GPT Time: O(nlogn) avg, O(n^2) worst, Space: O(1)
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+def quicksort_inplace(arr, low, high):
+    if low < high:
+        pivot_index = partition(arr, low, high)
+
+        quicksort_inplace(arr, low, pivot_index - 1)
+        quicksort_inplace(arr, pivot_index + 1, high)
+
+# Example usage:
+input_array = [64, 25, 12, 22, 11]
+quicksort_inplace(input_array, 0, len(input_array) - 1)
+print("Sorted array:", input_array)
+```
+3. Reverse LL # 41, # 43 ✅
+4. Level order traversal (both ways) #  tree # 74, graph 98 ✅
+5. Height of binary tree # 70 ✅
+6. Convert tree to graph  # 82 ✅
+7. Binary search, binary search min/max # 87 ✅
+8. Graph bfs (sshotest path) and dfs # 93 ✅
+9. edges to adjList  # 83 undirected, # 96 directed ✅
+10. Top sort # Graph: # 94, 
+11. graph cycle check: Adj: # 96 ✅
+12. Dijkstra/Bellman ford 
+13. Trie from scratch # 154 ✅
+14. Bit manip: >> 1 divide by two, i & 1 extract last bit, n & (n - 1), xor
+15. Perms, Combos, Subsets
 
 
 ## Python3 Cheatsheet
