@@ -212,8 +212,8 @@ result = bellman_ford(graph, start_vertex)
 print(f"Shortest distances from vertex {start_vertex}: {result}")
 ```
 
-14. Trie from scratch [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree)
-15. Bit manip:
+12. Trie from scratch [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree)
+13. Bit manip:
 
 [#135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits)
 ```python3
@@ -254,7 +254,7 @@ num = 5
 print((num << 1) | (n & 1)) #=> 10 because 101 => 1010
 ```
 
-17. Perms, Combos, Subsets
+14. Perms, Combos, Subsets
 	* Permutations: [#158](https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations)
  	* Subsets: [#159](https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets)
   	* Combinations: [#160](https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number)
