@@ -86,14 +86,14 @@ input_array = [64, 25, 12, 22, 11]
 quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
-3. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
-4. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges)
-5. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
-6. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
-7. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
-8. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F)
-9. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
-10. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F)
+2. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
+3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges)
+4. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
+5. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
+6. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
+7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F)
+8. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
+9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
 
 ```python3
@@ -129,8 +129,8 @@ graph = {
 result = topological_sort(graph)
 print("Topological sort:", result)
 ```
-12. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F)
-13. Dijkstra/Bellman ford
+10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F)
+11. Dijkstra/Bellman ford
 
 ```python3
 # ChatGPT Dijkstra
