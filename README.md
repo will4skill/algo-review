@@ -92,10 +92,45 @@ print("Sorted array:", input_array)
 6. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 7. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
 8. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F)
-9. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed ✅
-10. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) 
-11. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F)
-12. Dijkstra/Bellman ford
+9. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
+10. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F)
+	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
+
+```python3
+# ChatGPT
+# Time: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
+# Space: O(V + E), where V is the number of vertices and E is the number of edges in the graph. This includes the space required for the visited set, result list, and the graph representation (adjacency list).
+
+def topological_sort(graph):
+    visited = set()
+    result = []
+
+    for node in graph:
+        if node not in visited:
+            dfs(node, visited, result)
+    return result[::-1]
+
+def dfs(node, visited, result):
+    visited.add(node)
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(neighbor, visited, result)
+    result.append(node)
+
+# Example usage:
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['D', 'E'],
+    'D': [],
+    'E': []
+}
+
+result = topological_sort(graph)
+print("Topological sort:", result)
+```
+12. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F)
+13. Dijkstra/Bellman ford
 
 ```python3
 # ChatGPT Dijkstra
