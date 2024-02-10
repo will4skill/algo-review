@@ -178,8 +178,48 @@ print(f"Shortest distances from vertex {start_vertex}: {result}")
 ```
 
 14. Trie from scratch # 154 ✅
-15. Bit manip: >> 1 divide by two, i & 1 extract last bit, n & (n - 1), xor
-16. Perms, Combos, Subsets
+15. Bit manip:
+
+https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits
+```python3
+# i >> 1 # remove the last bit (divide by 2)
+n = 5 >> 1
+print(n) #=> 2
+# i & 1 # extract the last bit
+n = 4 & 1
+print(n) #=> 0
+```
+
+https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits
+```python3
+# n = n & (n - 1)  # change the first set bit from right to 0
+n = 5
+n = n & (n - 1) 
+print(n) #=> 4
+```
+
+https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number
+```python3
+# xor ^= num # If you XOR a number with itself, 0 is returned.
+print(5^5) #=> 0
+```
+
+https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number
+```python3
+# a^b^b = a, Two xor operations with the same number will eliminate the number and reveal the original number.
+a, b = 1, 2
+print(a^b^b) #=> 1
+```
+
+https://github.com/will4skill/algo-review/blob/main/README.md#139-reverse-bits
+```python3
+# num = (num << 1) | (n & 1) # append the last bit of the given number to the number
+n = 4
+num = 5
+print((num << 1) | (n & 1)) #=> 10 because 101 => 1010
+```
+
+17. Perms, Combos, Subsets
 	* Permutations: https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations
  	* Subsets: https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets
   	* Combinations: https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number	  
