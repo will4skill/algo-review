@@ -95,10 +95,94 @@ print("Sorted array:", input_array)
 9. edges to adjList  # 83 undirected, # 96 directed ✅
 10. Top sort # Graph: # 94, 
 11. graph cycle check: Adj: # 96 ✅
-12. Dijkstra/Bellman ford 
-13. Trie from scratch # 154 ✅
-14. Bit manip: >> 1 divide by two, i & 1 extract last bit, n & (n - 1), xor
-15. Perms, Combos, Subsets
+12. Dijkstra/Bellman ford
+
+```python3
+# ChatGPT Dijkstra
+# Time: O((V + E) * log(V)), where V is the number of vertices and E is the number of edges in the graph. The log(V) factor comes from the priority queue operations.
+# Space: O(V + E) as it requires storage for the distances and the priority queue
+
+import heapq
+def dijkstra(graph, start):
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[start] = 0
+    priority_queue = [(0, start)]
+
+    while priority_queue:
+        current_distance, current_vertex = heapq.heappop(priority_queue)
+
+        if current_distance > distances[current_vertex]:
+            continue
+
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    return distances
+
+# Example usage:
+graph = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'C': 2, 'D': 5},
+    'C': {'A': 4, 'B': 2, 'D': 1},
+    'D': {'B': 5, 'C': 1}
+}
+
+start_vertex = 'A'
+result = dijkstra(graph, start_vertex)
+
+print(f"Shortest distances from {start_vertex}: {result}")
+```
+
+```python3
+# ChatGPT Bellman Ford
+# Time: O(V * E), where V is the number of vertices and E is the number of edges in the graph. The algorithm relaxes all edges in each of the V-1 iterations.
+# Space: O(V + E) as it requires storage for distances and the graph representation. The distances array has O(V) space, and the graph representation (in this case, an adjacency list) has O(E) space.
+
+def bellman_ford(graph, start):
+    vertices = len(graph)
+    distances = [float('infinity')] * vertices
+    distances[start] = 0
+
+    # Relax edges repeatedly
+    for _ in range(vertices - 1):
+        for u in range(vertices):
+            for v, weight in graph[u].items():
+                if distances[u] + weight < distances[v]:
+                    distances[v] = distances[u] + weight
+
+    # Check for negative cycles
+    for u in range(vertices):
+        for v, weight in graph[u].items():
+            if distances[u] + weight < distances[v]:
+                raise ValueError("Graph contains a negative cycle")
+
+    return distances
+
+# Example usage:
+graph = {
+    0: {1: 6, 3: 7},
+    1: {2: 5, 3: 8, 4: -4},
+    2: {1: -2},
+    3: {2: -3, 4: 9},
+    4: {0: 2, 2: 7}
+}
+
+start_vertex = 0
+result = bellman_ford(graph, start_vertex)
+
+print(f"Shortest distances from vertex {start_vertex}: {result}")
+```
+
+14. Trie from scratch # 154 ✅
+15. Bit manip: >> 1 divide by two, i & 1 extract last bit, n & (n - 1), xor
+16. Perms, Combos, Subsets
+	* Permutations: https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations
+ 	* Subsets: https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets
+  	* Combinations: https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number	  
 
 
 ## Python3 Cheatsheet
