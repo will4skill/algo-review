@@ -180,7 +180,7 @@ print(f"Shortest distances from vertex {start_vertex}: {result}")
 14. Trie from scratch [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree)
 15. Bit manip:
 
-[135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits)
+[#135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits)
 ```python3
 # i >> 1 # remove the last bit (divide by 2)
 n = 5 >> 1
@@ -190,7 +190,7 @@ n = 4 & 1
 print(n) #=> 0
 ```
 
-[136](https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits)
+[#136](https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits)
 ```python3
 # n = n & (n - 1)  # change the first set bit from right to 0
 n = 5
@@ -198,13 +198,13 @@ n = n & (n - 1)
 print(n) #=> 4
 ```
 
-[137](https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number)
+[#137](https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number)
 ```python3
 # xor ^= num # If you XOR a number with itself, 0 is returned.
 print(5^5) #=> 0
 ```
 
-[138](https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number)
+[#138](https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number)
 ```python3
 # a^b^b = a, Two xor operations with the same number will eliminate the number and reveal the original number.
 a, b = 1, 2
