@@ -87,7 +87,7 @@ quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
 2. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
-3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges)
+3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food)
 4. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
 5. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 6. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
@@ -5843,9 +5843,8 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 102. Pacific Atlantic Water Flow
+## 102. Pacific Atlantic Water Flow ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/pacific-atlantic-water-flow/solutions/1126938/short-easy-w-explanation-diagrams-simple-graph-traversals-dfs-bfs/
-a801a28cb4b6e70a
 
 **Description:** There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.
 
@@ -5876,43 +5875,57 @@ heights = [[1]] #=> [[0,0]]
 **Hint:** BFS: start with all cells adjacent to one of the oceans (A). Visited neighbors that are greater than or equal to the starting nodes until you reach a subset of cells adjacent to the other ocean (B). Do the same from B to A. The final answer we get will be the intersection of sets A and B (A ∩ B). 
 
 ```python3
+from collections import deque
+
 class Solution:
-    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        N, M = len(heights), len(heights[0])
-        atlantic = [[False] * M for _ in range(N)]
-        pacific = [[False] * M for _ in range(N)]
-        ans = []
-        for i in range(N):
-            self.bfs(heights, ans, atlantic, pacific, pacific, i, 0)
-            self.bfs(heights, ans, atlantic, pacific, atlantic, i, M - 1)
-        for i in range(M):
-            self.bfs(heights, ans, atlantic, pacific, pacific, 0, i)
-            self.bfs(heights, ans, atlantic, pacific, atlantic, N - 1, i)
-        return ans
-        
-    def bfs(self, heights, ans, atlantic, pacific, visited, i, j):
-        N, M = len(heights), len(heights[0])
-        q = deque()
-        q.append((i, j))
-        while q:
-            i, j = q.popleft()
-            if visited[i][j]: continue
+    def __init__(self):
+        self.m = 0
+        self.n = 0
+        self.ans = []
+        self.atlantic = []
+        self.pacific = []
+        self.q = deque()
+
+    def pacificAtlantic(self, mat):
+        if not mat:
+            return self.ans
+        self.m = len(mat)
+        self.n = len(mat[0])
+        self.atlantic = [[False] * self.n for _ in range(self.m)]
+        self.pacific = [[False] * self.n for _ in range(self.m)]
+
+        for i in range(self.m):
+            self.bfs(mat, self.pacific, i, 0)
+            self.bfs(mat, self.atlantic, i, self.n - 1)
+
+        for i in range(self.n):
+            self.bfs(mat, self.pacific, 0, i)
+            self.bfs(mat, self.atlantic, self.m - 1, i)
+
+        return self.ans
+
+    def bfs(self, mat, visited, i, j):
+        self.q.append((i, j))
+        while self.q:
+            i, j = self.q.popleft()
+            if visited[i][j]:
+                continue
             visited[i][j] = True
-            if atlantic[i][j] and pacific[i][j]:
-                ans.append([i, j])
-            if i + 1 < N and heights[i + 1][j] >= heights[i][j]:
-                q.append((i + 1, j))
-            if i - 1 >= 0 and heights[i - 1][j] >= heights[i][j]:
-                q.append((i - 1, j))
-            if j + 1 < M and heights[i][j + 1] >= heights[i][j]:
-                q.append((i, j + 1))
-            if j - 1 >= 0 and heights[i][j - 1] >= heights[i][j]:
-                q.append((i, j - 1))
+            if self.atlantic[i][j] and self.pacific[i][j]:
+                self.ans.append([i, j])
+            if i + 1 < self.m and mat[i + 1][j] >= mat[i][j]:
+                self.q.append((i + 1, j))
+            if i - 1 >= 0 and mat[i - 1][j] >= mat[i][j]:
+                self.q.append((i - 1, j))
+            if j + 1 < self.n and mat[i][j + 1] >= mat[i][j]:
+                self.q.append((i, j + 1))
+            if j - 1 >= 0 and mat[i][j - 1] >= mat[i][j]:
+                self.q.append((i, j - 1))
 ```
 **Time:** O(M * N)
 **Space:** O(M * N)
 
-## 103. Shortest Path to Get Food
+## 103. Shortest Path to Get Food ☠️
 **Reference:** https://www.cnblogs.com/cnoodle/p/15645191.html
 
 **Description:** You are starving and you want to eat food as quickly as possible. You want to find the shortest path to arrive at any food cell.
