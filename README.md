@@ -87,13 +87,13 @@ quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
 2. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
-3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food)
+3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves)
 4. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
 5. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 6. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
 7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F)
 8. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
-9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F)
+9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
 
 ```python3
@@ -129,7 +129,7 @@ graph = {
 result = topological_sort(graph)
 print("Topological sort:", result)
 ```
-10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F)
+10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree)
 11. Dijkstra/Bellman ford
 
 ```python3
@@ -6017,7 +6017,7 @@ class Solution:
 **Time:** O(rc) r = number of rows c = number of columns
 **Space:** O(rc)
 
-## 104. Graph Valid Tree
+## 104. Graph Valid Tree ☠️ ☠️
 **Reference:** https://algomonster.medium.com/leetcode-261-graph-valid-tree-f27c212c1db1
 
 **Description:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
@@ -6092,7 +6092,7 @@ class Solution:
 **Time:** O(n^2)
 **Space:** O(n)
 
-## 105. Course Schedule II
+## 105. Course Schedule II ☠️ ☠️
 **Reference:** https://leetcode.com/problems/course-schedule-ii/submissions/1155573265/ 
 vsharda1
 
@@ -6159,7 +6159,7 @@ class Solution:
 **Time:** O(e + n) e = number of edges n = number of nodes
 **Space:** O(n)
 
-## 106. Number of Connected Components in an Undirected Graph
+## 106. Number of Connected Components in an Undirected Graph ☠️
 **Reference:** https://leetcode.ca/all/323.html
 
 **Description:** Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to find the number of connected components in an undirected graph.
@@ -6203,9 +6203,9 @@ def explore(graph, current, visited):
   visited.add(current)
   
   for neighbor in graph[current]:
-    explore(graph, neighbor, visited)
+    explore(graph, neighbor, visited) # We ignore the returns here
   
-  return True
+  return True # The 🔑 is to return true only after you finish exploring
 
 def build_graph(edges):
   graph = {}
@@ -6227,7 +6227,7 @@ def build_graph(edges):
 **Time:** O(e) n = number of nodes e = number edges
 **Space:** O(n)
 
-## 107. Minimum Knight Moves
+## 107. Minimum Knight Moves ☠️ ☠️
 **Reference:** https://leetcode.ca/2019-03-11-1197-Minimum-Knight-Moves/
 
 **Description:** In an infinite chess board with coordinates from -infinity to +infinity, you have a knight at square [0, 0].
@@ -6254,10 +6254,10 @@ Use BFS over the grid with the additional constraint of having to move in the 8 
 ```python3
 class Solution:
     def minKnightMoves(self, x: int, y: int) -> int:
-        q = deque([(0, 0)])
+        q = deque([(0, 0)]) # Note this nesting required to load up the deque with a tuple/arr ?? 
         ans = 0
         vis = {(0, 0)}
-        dirs = ((-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1))
+        dirs = ((-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1)) # 🔥
         while q:
             for _ in range(len(q)):
                 i, j = q.popleft()
@@ -6268,7 +6268,7 @@ class Solution:
                     if (c, d) not in vis:
                         vis.add((c, d))
                         q.append((c, d))
-            ans += 1
+            ans += 1 # The 🔑 is to increment count only after finishing a level 
         return -1
 ```
 
