@@ -87,11 +87,11 @@ quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
 2. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
-3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves)
+3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder)
 4. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
 5. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 6. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
-7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F)
+7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder)
 8. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
 9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
@@ -130,7 +130,7 @@ result = topological_sort(graph)
 print("Topological sort:", result)
 ```
 10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree)
-11. Dijkstra/Bellman ford
+11. Dijkstra/Bellman ford [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops)
 
 ```python3
 # ChatGPT Dijkstra
@@ -6275,7 +6275,7 @@ class Solution:
 **Time:** O(n^2)
 **Space:** O(n^2)
 
-## 108. Cheapest Flights Within K Stops
+## 108. Cheapest Flights Within K Stops ☠️ ☠️ ☠️ 
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0787-cheapest-flights-within-k-stops.py
 
 **Description:** There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei] indicates that there is a flight from city fromi to city toi with cost pricei.
@@ -6337,7 +6337,32 @@ class Solution:
 **Time:** O(E*V)
 **Space:** ???
 
-## 109. Word Ladder
+```python3
+# https://leetcode.com/problems/cheapest-flights-within-k-stops/solutions/267200/python-dijkstra/
+# Dijktra
+class Solution:
+    def findCheapestPrice(self, n, flights, src, dst, K):
+        graph = collections.defaultdict(dict)
+        for s, d, w in flights:
+            graph[s][d] = w
+        pq = [(0, src, K+1)]
+        vis = [0] * n
+        while pq:
+            w, x, k = heapq.heappop(pq)
+            if x == dst:
+                return w
+            if vis[x] >= k:
+                continue
+            vis[x] = k
+            for y, dw in graph[x].items():
+                heapq.heappush(pq, (w+dw, y, k-1))
+        return -1
+```
+
+**Time:** O((m + n)logn) # m = edges, n = nodes it can be improved to O(m + nlogn) with a Fibonacci heap where a delete min costs logn but an update cost costs constant time.
+**Space:** ???
+
+## 109. Word Ladder ☠️
 **Reference:** https://leetcode.com/problems/word-ladder/solutions/40729/compact-python-solution/
 
 **Description:** A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
@@ -6386,7 +6411,7 @@ class Solution(object):
 **Time:** O(N*26*(L^2))
 **Space:** O(n)
 
-## 110. Longest Increasing Path in a Matrix
+## 110. Longest Increasing Path in a Matrix ☠️
 **Reference:**  https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/1195189/Javascript-Dynamic-Programming
 
 **Description:** Given an m x n integers matrix, return the length of the longest increasing path in matrix.
@@ -6432,7 +6457,7 @@ const longestIncreasingPath = (matrix) => {
 
 function dfs(matrix, r, c, memo, prev){
   if(r >= matrix.length || r < 0 || c >= matrix[0].length || c < 0 ||
-    matrix[r][c] <= prev)
+    matrix[r][c] <= prev) // The 🔑 is to keep track of the prev value
     return 0;
 
   const key = r + "," + c;
