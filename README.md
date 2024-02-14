@@ -6709,29 +6709,34 @@ routes = [[7,12],[4,5,15],[6],[15,19],[9,12,13]], source = 15, target = 12 #=> -
 3. Traverse until you reach end
 
 ```python3
+from collections import deque
 class Solution:
     def numBusesToDestination(self, routes, S, T):
-        stopToRoute = collections.defaultdict(set)
-        
+        stopToRoute = {}
         for i, stops in enumerate(routes):
             for stop in stops: 
+                if stop not in stopToRoute: stopToRoute[stop] = set()
                 stopToRoute[stop].add(i)
-                
-        bfs = [(S,0)]
+        
+        queue = deque()    
+        queue.append((S,0))
+        
         seenStops = {S}
         seenRoutes = set()
         
-        for stop, count in bfs:
+        while queue:
+            stop, count  = queue.popleft()
             if stop == T: 
                 return count
             
-            for routeIndex in stopToRoute[stop]:
-                if routeIndex not in seenRoutes:
-                    seenRoutes.add(routeIndex)
-                    for next_stop in routes[routeIndex]:
-                        if next_stop not in seenStops:
-                            seenStops.add(next_stop)
-                            bfs.append((next_stop, count+1))
+            if stop in stopToRoute: # here is why you might use a default dict set...
+                for routeIndex in stopToRoute[stop]: # stop could be invalid
+                    if routeIndex not in seenRoutes:
+                        seenRoutes.add(routeIndex)
+                        for next_stop in routes[routeIndex]:
+                            if next_stop not in seenStops:
+                                seenStops.add(next_stop)
+                                queue.append((next_stop, count+1))
         return -1
 ```
 
