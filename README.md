@@ -87,13 +87,13 @@ quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
 2. Reverse LL [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
-3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder)
+3. Level order traversal (both ways) #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes)
 4. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
 5. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 6. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
 7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder)
-8. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
-9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii)
+8. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes)
+9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii) [#112](https://github.com/will4skill/algo-review/blob/main/README.md#112-alien-dictionary)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
 
 ```python3
@@ -6475,7 +6475,7 @@ function dfs(matrix, r, c, memo, prev){
 **Time:** O(mn)
 **Space:** O(mn)
 
-## 111. Word Search II
+## 111. Word Search II ☠️ ☠️ ☠️ 
 **Reference:**  https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/1195189/Javascript-Dynamic-Programming
 
 **Description:** Given an m x n board of characters and a list of strings words, return all words on the board. Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
@@ -6508,7 +6508,8 @@ board = [["a","b"],["c","d"]], words = ["abcb"] #=> []
 **Hint:**
 1. Create a Trie data structure
 2. Insert all words into trie
-3. DFS over mxn board, searching for your words
+3. Maintain visited set to avoid duplicate letters
+5. DFS over mxn board, searching for your words * backtrack by pushing to visited before dfs and popping from visited after dfs *
 
 ```python3
 class TrieNode:
@@ -6579,7 +6580,7 @@ class Solution:
 **Time:** O((ROWS * COLS) * (4 * (3 ^ (WORDS - 1))))
 **Space:** O(N)
 
-## 112. Alien Dictionary
+## 112. Alien Dictionary ☠️ ☠️ ☠️
 **Reference:**  https://leetcode.com/problems/alien-dictionary/discuss/763913/Javascript-Graph-Topological-Sort
 
 **Description:** There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
@@ -6617,6 +6618,7 @@ class Solution:
 
 **Hint:**
 1 Convert the word list into an adjacencyList. To do this, compare each pair of words and use the first differing letter to determine the relative order of edges.
+2. Also, contruct a map of parents (indegrees) of each node as you contruct the adjList
 2. Topologically sort your graph
 
 ```javascript
@@ -6676,7 +6678,7 @@ const alienOrder = (words) => {
 **Time:** O(C), C = total length of all the words
 **Space:** O(1) O(U + min U^2, N), N be the total number of strings in the input list, U be the total number of unique letters in the alien alphabet.
 
-## 113. Bus Routes
+## 113. Bus Routes ☠️ ☠️
 **Reference:**  https://leetcode.com/problems/bus-routes/solutions/122771/c-java-python-bfs-solution/
 ax2
 
