@@ -19,6 +19,7 @@ Popular Algorithm Problems
 13. float(‘inf’) float(‘-inf’) ✅
 14. Custom Sort [#63](https://github.com/will4skill/algo-review/blob/main/README.md#63-largest-number-%EF%B8%8F) ✅
 15. Heap heapq.heappushpop(heap, (dist, x, y)) ✅
+16. Random list value: import random, random.choice(nums)
 
 ## Problems to Master: 🏋️‍♂️ 🔄
 1. MergeSort, QuickSort
@@ -6743,7 +6744,7 @@ class Solution:
 **Time:** O(m+n) n = edges, m = nodes
 **Space:** O(1)
 
-## 114. Lowest Common Ancestor of a Binary Search Tree
+## 114. Lowest Common Ancestor of a Binary Search Tree ☠️
 **Reference:**  https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/solutions/1347857/c-java-python-iterate-in-bst-picture-explain-time-o-h-space-o-1/
 
 **Description:** Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
@@ -6774,7 +6775,7 @@ root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4 #=> 2
 root = [2,1], p = 2, q = 1 #=> 2
 ```
 
-**Hint:** BFS
+**Hint:** 
 Note, there is a more general solution for non BSTs. 
 1. Let large = max(p.val, q.val), small = min(p.val, q.val)
 2. If root.val > large then both node p and q belong to the left subtree, go to left by root = root.left.
@@ -6786,12 +6787,12 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         small = min(p.val, q.val)
         large = max(p.val, q.val)
-        while root:
+        while root: # Not really BFS, more like DFS 
             if root.val > large:  # p, q belong to the left subtree
                 root = root.left
             elif root.val < small:  # p, q belong to the right subtree
                 root = root.right
-            else:  # Now, small <= root.val <= large -> This is the LCA between p and q
+            else:  # Now, small <= root.val <= large -> This is the LCA between p and q # 🔑
                 return root
         return None
 ```
@@ -6799,7 +6800,7 @@ class Solution:
 **Time:** O(height)
 **Space:** O(1)
 
-## 115. Convert Sorted Array to Binary Search Tree
+## 115. Convert Sorted Array to Binary Search Tree ☠️
 **Reference:** https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/submissions/1139608527/
 
 **Description:** Given an integer array nums where the elements are sorted in ascending order, convert it to a 
@@ -6853,7 +6854,7 @@ class Solution:
 **Time:** O(n log n)
 **Space:** O(n)
 
-## 116. Validate Binary Search Tree
+## 116. Validate Binary Search Tree ☠️
 **Reference:** https://leetcode.com/problems/validate-binary-search-tree/solutions/32178/clean-python-solution/
 wz2326
 
@@ -6883,6 +6884,7 @@ root = [5,1,4,null,null,3,6] #=> false
 ![image](https://github.com/will4skill/algo-review/assets/10373005/33b6bf34-b7cb-4e12-8597-c1330ba3d37a)
 
 **Hint:** See structy. Traverse tree in order, check if values from traversal are sorted. If sorted, return true.
+See next problem for pushing to a global list to simplify logic below
 
 ```python3
 class Solution(object):
@@ -6898,7 +6900,7 @@ class Solution(object):
 **Time:** O(n)
 **Space:** O(n)
 
-## 117. Kth Smallest Element in a BST
+## 117. Kth Smallest Element in a BST ☠️
 **Reference:** https://leetcode.com/problems/kth-smallest-element-in-a-bst/solutions/1960046/recursion-vector-solutions-with-complexity-analysis-c-java-python/
 
 **Description:** Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
@@ -6945,7 +6947,7 @@ class Solution(object):
 **Time:** O(n)
 **Space:** O(n)
 
-## 118. Inorder Successor in BST
+## 118. Inorder Successor in BST ☠️ ☠️
 **Reference:** https://www.enjoyalgorithms.com/blog/inorder-successor-in-binary-search-tree
 
 **Description:** Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
@@ -7045,7 +7047,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 120. Insert Delete GetRandom O(1)
+## 120. Insert Delete GetRandom O(1) ☠️
 **Reference:** https://leetcode.com/problems/insert-delete-getrandom-o1/solutions/455253/python-super-efficient-detailed-explanation/
 
 **Description:** Implement the RandomizedSet class:
@@ -7069,7 +7071,8 @@ You must implement the functions of the class such that each function works in a
 **Hint:** If it wasn't for get random, you could just use a set. Instead use a list that holds the values and a map between each value and its location in the list. That way you can use the list when you want a random element.
 
 Insert: just append to the end of the list and add a new entry to the hm
-delete: Swap the last element in the list with the one you are removing, pop it from the list O(1) and remove it from the hm O(1)
+
+delete: Swap the last element in the list with the one you are removing, pop it from the list O(1) and remove it from the hm O(1) 🤯 🔥
 
 ```python3
 class RandomizedSet:
@@ -7131,7 +7134,7 @@ class RandomizedSet:
 **Time:** O(1)
 **Space:** O(n)
 
-## 121. First Missing Positive
+## 121. First Missing Positive ☠️ ☠️
 **Reference:** https://leetcode.com/problems/first-missing-positive/solutions/17080/python-o-1-space-o-n-time-solution-with-explanation/
 @ivalue
 
@@ -7158,7 +7161,7 @@ https://leetcode.com/problems/first-missing-positive/solutions/17080/python-o-1-
 ```python3
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
-        nums = list(set(nums)) + [0]
+        nums = list(set(nums)) + [0] # Tim note, they are appending a zero after removing duplicates, seems like O(n) space...
         n = len(nums)
         for i in range(len(nums)):  # delete those useless elements
             if nums[i] < 0 or nums[i] >= n:
