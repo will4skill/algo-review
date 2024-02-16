@@ -7203,15 +7203,15 @@ class Solution:
     def helper(self, n: int, memo: dict[int, int]) -> int:
         if n == 0 or n == 1:
             return 1
-        if n not in memo:
+        if n not in memo: # 🤯
             memo[n] = self.helper(n-1, memo) + self.helper(n-2, memo)
-        return memo[n]
+        return memo[n] # 🤯
 ```
 
 **Time:** O(n)
 **Space:** O(n) Note: O(1) space possible, if you just use two previous values
 
-## 123. Maximum Subarray
+## 123. Maximum Subarray ☠️
 **Reference:** https://leetcode.com/problems/maximum-subarray
 
 **Description:** Given an integer array nums, find the subarray with the largest sum, and return its sum.
@@ -7249,7 +7249,7 @@ const maxSubArray = nums => {
 **Time:** O(n)
 **Space:** O(1)
 
-## 124. Coin Change
+## 124. Coin Change ☠️
 **Reference:** https://www.structy.net/problems/min-change
 
 **Description:** You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
@@ -7302,14 +7302,14 @@ class Solution:
         for coin in coins:
             min_coins = min(min_coins, self.helper(amount - coin, coins, memo))
             
-        memo[amount] = min_coins + 1
+        memo[amount] = min_coins + 1 # The 🔑
         return memo[amount]
 ```
 
 **Time:** O(a*c) a = amount c = # coins
 **Space:** O(a)
 
-## 125. Partition Equal Subset Sum
+## 125. Partition Equal Subset Sum ☠️ ☠️
 **Reference:** https://techsauce.medium.com/solving-partition-equal-subset-sum-problem-knapsack-problem-2b47ad13733b
 
 **Description:** Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
@@ -7383,7 +7383,7 @@ class Solution:
 **Time:** O(N*sum)
 **Space:** O(N*sum)
 
-## 126. Unique Paths
+## 126. Unique Paths ☠️
 **Reference:** https://leetcode.com/problems/unique-paths/solutions/1670399/js-dp-memo-and-tabulation/
 
 **Description:** There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
@@ -7437,7 +7437,7 @@ class Solution:
 **Time:** O(nm)
 **Space:** O(nm)
 
-## 127. House Robber
+## 127. House Robber ☠️
 **Reference:** https://leetcode.com/problems/unique-paths/solutions/1670399/js-dp-memo-and-tabulation/
 
 **Description:** You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
@@ -7483,7 +7483,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 128. Maximum Product Subarray (*contiguous)
+## 128. Maximum Product Subarray (*contiguous) ☠️ ☠️
 **Reference:** https://leetcode.com/problems/maximum-product-subarray/solutions/48302/2-passes-scan-beats-99/
 
 **Description:** Given an integer array nums, find a subarray that has the largest product, and return the product. The test cases are generated so that the answer will fit in a 32-bit integer.
@@ -7500,7 +7500,13 @@ nums = [-2,0,-1] #=> 0
 ```
 
 **Hint:** Dynamic Programming.
-Similar to max sum subarray, you have a global max and a local max. At each item in the array, the new local max will either be the new item by itself or the new item * the currentLocal max. If a zero is encountered, After updating the localMax, update the globalMax if possible. reset the localMax to 0. To account for negative numbers, you have to repeat this process from right to left as well. 
+Similar to max sum subarray, you have a global max and a local max. 
+
+At each item in the array, the new local max will either be the new item by itself or the new item * the currentLocal max. 
+
+If a zero is encountered, After updating the localMax, update the globalMax if possible. reset the localMax to 0.  # 🔑
+
+To account for negative numbers, you have to repeat this process from right to left as well. # 🔑
 
 ```python3
 class Solution:
@@ -7522,7 +7528,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 129. Longest Increasing Subsequence (*!= contiguous)
+## 129. Longest Increasing Subsequence (*!= contiguous) ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/longest-increasing-subsequence/solutions/1326552/optimization-from-brute-force-to-dynamic-programming-explained/
 
 Follow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?
