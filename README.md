@@ -9579,7 +9579,7 @@ class Solution:
 **Time:** O(n * 2^n)
 **Space:** O(2^n) ??
 
-## 160. Letter Combinations of a Phone Number
+## 160. Letter Combinations of a Phone Number ☠️ ☠
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0017-letter-combinations-of-a-phone-number.py
  
 **Description:** Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
@@ -9631,17 +9631,17 @@ class Solution:
         return result
     
     def backtrack(self, i, curStr, digits, digitToChar, result):
-        if len(curStr) == len(digits):
+        if len(curStr) == len(digits): # all digits converted to chars
             result.append(curStr)
             return
         for c in digitToChar[digits[i]]:
-            self.backtrack(i + 1, curStr + c, digits, digitToChar, result)
+            self.backtrack(i + 1, curStr + c, digits, digitToChar, result) # no push/pop needed for strings (can't reuse)
 ```
 
 **Time:** O(4^N * N)
 **Space:** O(N)
 
-## 161. Next Permutation
+## 161. Next Permutation ☠️ ☠ ☠️
 **Reference:** https://leetcode.com/problems/next-permutation/solutions/13867/c-from-wikipedia/
  
 **Description:** A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
@@ -9668,7 +9668,7 @@ nums = [1,1,5] #=> [1,5,1]
 ```
 
 **Hint:** 
-Tim note: I thinking that you could just use the permutation algo in a real interview
+Tim note: I'm thinking that you could just use the permutation algo in a real interview
 
 "According to Wikipedia, a man named Narayana Pandita presented the following simple algorithm to solve this problem in the 14th century.
 1. Find the largest index k such that nums[k] < nums[k + 1]. If no such index exists, just reverse nums and done.
@@ -9703,7 +9703,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 162. Generate Parentheses
+## 162. Generate Parentheses ☠️ ☠ ☠️
 **Reference:** https://leetcode.com/problems/generate-parentheses/
  
 **Description:** Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
@@ -9723,9 +9723,12 @@ Use backtracking. Start with an empty output array. Count number of open and clo
 1. Base case: if length of curr == 2 * n, join current paren array, push result onto ouput and return
 
 2. Branches: 
-a. if number of open "(" parens is less than n, branch by adding or not adding a new one. Increment open count
-b. if number of close ")" parens is less than number of open "(" parens, either add or don't ad one. Increment close count
- 
+
+	a. if number of open "(" parens is less than n, branch by adding or not adding a new one. Increment open count
+
+	b. if number of close ")" parens is less than number of open "(" parens, either add or don't ad one. Increment close count
+
+Tim note: you have to add "(" first to keep the string valid
 
 ```python3
 class Solution:
@@ -9753,7 +9756,7 @@ class Solution:
 **Time:** O(4^n/(sqrt(n)))
 **Space:** O(4^n/(sqrt(n)))
 
-## 163. N-Queens
+## 163. N-Queens ☠️ ☠ ☠️ ☠️
 **Reference:** https://github.com/neetcode-gh/leetcode/blob/main/python/0051-n-queens.py
  
 **Description:** The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
