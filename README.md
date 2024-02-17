@@ -9973,7 +9973,7 @@ class Solution:
 **Time:** O(n^2)
 **Space:** O(n)
 
-## 166. Rotate Image
+## 166. Rotate Image ☠️ ☠️
 **Reference:** https://leetcode.com/problems/rotate-image/solutions/3440564/animation-understand-in-30-seconds/
  
 **Description:** You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
@@ -10024,7 +10024,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 167. Set Matrix Zeroes
+## 167. Set Matrix Zeroes ☠️ ☠️
 **Reference:** https://leetcode.com/problems/set-matrix-zeroes/solutions/657430/python-solution-w-approach-explanation-readable-with-space-progression-from-o-m-n-o-1/
  
 **Description:** Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's. You must do it in place.
@@ -10097,7 +10097,7 @@ class Solution:
 **Time:** O(m * n)
 **Space:** O(1)
 
-## 168. Sudoku Solver
+## 168. Sudoku Solver ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/sudoku-solver/solutions/15752/straight-forward-java-solution-using-backtracking/
  
 **Description:** Write a program to solve a Sudoku puzzle by filling the empty cells.
@@ -10169,7 +10169,7 @@ class Solution:
 **Time:** O(m^9) m represents the number of blanks to be filled in
 **Space:** O(1)
 
-## 169. Design Hit Counter
+## 169. Design Hit Counter ☠️ ☠️ ☠️
 **Reference:** https://leetcode.ca/2016-11-26-362-Design-Hit-Counter/
  
 **Description:** Design a hit counter which counts the number of hits received in the past 5 minutes (i.e., the past 300 seconds).
