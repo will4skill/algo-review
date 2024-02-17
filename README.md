@@ -9824,7 +9824,7 @@ class Solution:
 **Time:** O(4^n/(sqrt(n)))?
 **Space:** O(4^n/(sqrt(n)))?
 
-## 164. Spiral Matrix
+## 164. Spiral Matrix ☠️
 **Reference:** https://leetcode.com/problems/spiral-matrix/solutions/3502600/python-java-c-simple-solution-easy-to-understand/
  
 **Description:** Given an m x n matrix, return all elements of the matrix in spiral order.
@@ -9890,7 +9890,7 @@ class Solution:
 **Time:** O(mn)
 **Space:** O(mn)
 
-## 165. Valid Sudoku
+## 165. Valid Sudoku ☠️
 **Reference:** https://leetcode.com/problems/valid-sudoku/solutions/476369/javascript-solution-beats-100-with-explanation-real-explanations/
  
 **Description:** Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
