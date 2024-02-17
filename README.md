@@ -3,7 +3,7 @@ Popular Algorithm Problems
 
 ## Things to Memorize: 🧠 🔄
 1. Floor logic # See  [#145](https://github.com/will4skill/algo-review/blob/main/README.md#145-reverse-integer)  ✅
-2. Duque import and use (pop, append, popLeft)  ✅
+2. Dequeue import and use (pop, append, popLeft)  ✅
 3. -1 is last element in list  ✅
 4. Initialize arr with value (array = [0]*10)  ✅
 5. List pop, list append  ✅
@@ -19,7 +19,7 @@ Popular Algorithm Problems
 13. float(‘inf’) float(‘-inf’) ✅
 14. Custom Sort [#63](https://github.com/will4skill/algo-review/blob/main/README.md#63-largest-number-%EF%B8%8F) ✅
 15. Heap heapq.heappushpop(heap, (dist, x, y)) ✅
-16. Random list value: import random, random.choice(nums)
+16. Random list value: import random, random.choice(nums), random int: random.randint(0, 10) <-- inclusive
 
 ## Problems to Master: 🏋️‍♂️ 🔄
 1. MergeSort, QuickSort
@@ -531,6 +531,9 @@ f'Five plus ten is {a + b} and not {2 * (a + b)}.' #=> 'Five plus ten is 15 and 
 
 for char in "string":  ✅
     #do something with char
+
+"abcd".startswith("abc") #=> True ✅
+"abcd".startswith("x") #=> False ✅
 
 #################################################################################################
 # Queues
@@ -8253,7 +8256,7 @@ class Solution:
 **Time:** O(1)
 **Space:** O(1)
 
-## 140. Find the Duplicate Number
+## 140. Find the Duplicate Number ☠️
 **Reference:** https://leetcode.com/problems/find-the-duplicate-number/solutions/1893098/bit-manipulation-explained/
 
 **Description:** Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
@@ -8280,6 +8283,8 @@ nums = [3,1,3,4,2] #=> 3
 
 **Hint:** 
 For each possible bit used in the numbers in [1,n] we will count how many of the numbers in nums use that bit, and compare that with the count we would get looking only at the numbers from in [1,n] only once. If the difference of the counts is positive, we add that bit to our answer.
+
+🤮 Tim note: I absolutely hate this solution 🤮
 
 ```python3
 class Solution:
@@ -8311,7 +8316,24 @@ class Solution:
 **Time:** O(n log(n))
 **Space:** O(1)
 
-## 141. Roman to Integer
+My preferred solution:
+https://leetcode.com/problems/find-the-duplicate-number/solutions/1892921/9-approaches-count-hash-in-place-marked-sort-binary-search-bit-mask-fast-slow-pointers/
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        length = len(nums)
+        for num in nums:
+            idx = abs(num)
+            if nums[idx] < 0: # you've already processed that number
+                return idx
+            nums[idx] = -nums[idx] # set nums[idx] to negative
+        return length
+```
+
+**Time:** O(n)
+**Space:** O(1)
+
+
+## 141. Roman to Integer ☠️
 **Reference:** https://leetcode.com/problems/roman-to-integer/solutions/6537/my-straightforward-python-solution/
 
 **Description:** Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
@@ -8365,7 +8387,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 142. Palindrome Number
+## 142. Palindrome Number ☠️ ☠️
 **Reference:** https://leetcode.com/problems/palindrome-number/solutions/785314/python-3-1-solution-is-89-20-faster-2nd-is-99-14-faster-explanation-added/
 
 **Description:** Given an integer x, return true if x is a palindrome, and false otherwise.
@@ -8397,15 +8419,15 @@ class Solution:
         inputNum = x
         newNum = 0
         while x > 0:
-            newNum = newNum * 10 + x % 10
-            x = x // 10
+            newNum = newNum * 10 + x % 10 # multiply by 10 to shift left, add last bit of x
+            x = x // 10 # remove most right bit of x 
         return newNum == inputNum
 ```
 
 **Time:** O(n)
 **Space:** O(1)
 
-## 143. Random Pick with Weight
+## 143. Random Pick with Weight ☠️ ☠️ ☠️ 
 **Reference:** 
 https://www.educative.io/answers/what-is-the-weighted-random-selection-algorithm
 https://leetcode.com/problems/random-pick-with-weight/solutions/884261/array-binary-search-faster-than-97/
@@ -8463,7 +8485,7 @@ class Solution:
 **Time:** O(n)
 **Space:** O(n)
 
-## 144. Pow(x, n)
+## 144. Pow(x, n) ☠️
 **Reference:** https://leetcode.com/problems/powx-n/solutions/19560/shortest-python-guaranteed/
  
 **Description:** Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).
@@ -8499,7 +8521,7 @@ class Solution:
         if not n:
             return 1
         if n < 0:
-            return 1 / self.myPow(x, -n)
+            return 1 / self.myPow(x, -n) # flips n back to positive
         if n % 2:
             return x * self.myPow(x, n-1)
         return self.myPow(x*x, n/2)
@@ -8508,7 +8530,7 @@ class Solution:
 **Time:** O(logn)
 **Space:** O(1)
 
-## 145. Reverse Integer
+## 145. Reverse Integer ☠️ ☠️
 **Reference:** https://leetcode.com/problems/reverse-integer/description/
  
 **Description:** Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
@@ -8577,8 +8599,9 @@ class Solution:
 **Time:** O(n)
 **Space:** O(1)
 
-## 146. K Closest Points to Origin
+## 146. K Closest Points to Origin ☠️
 **Reference:** https://leetcode.com/problems/k-closest-points-to-origin/solutions/294389/easy-to-read-python-min-heap-solution-beat-99-python-solutions/
+@user0717aZ
  
 **Description:** Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
 
@@ -8602,9 +8625,9 @@ points = [[3,3],[5,-1],[-2,4]], k = 2 #=> [[3,3],[-2,4]]
 ```
 
 **Hint:** 
-Iterate over each point, pushing them into a max heap unless heap size is K
+Iterate over each point, pushing them into a max heap
 
-If the heap size reaches K, push, then pop largest element.
+If the heap size reaches K + 1, pop largest element.
 
 At the end, the max heap will only contain the closest k element. Return contents of the heap
 
@@ -8616,15 +8639,16 @@ class Solution(object):
         heap = []
         for (x, y) in points:
             dist = -(x*x + y*y)
-            if len(heap) == k:
-                heapq.heappushpop(heap, (dist, x, y))
-            else:
+            heapq.heappush(heap, (dist, x, y))
+            if len(heap) > k:
+                heapq.heappop(heap)
+        return [(x,y) for (dist,x, y) in heap]
 ```
 
 **Time:** O(N * logK)
 **Space:** O(K)
 
-## 147. Task Scheduler
+## 147. Task Scheduler ☠️ ☠️
 **Reference:** https://leetcode.com/problems/task-scheduler/solutions/104511/Java-Solution-PriorityQueue-and-HashMap/
  
 **Description:** Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle.
@@ -8653,46 +8677,46 @@ tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"], n = 2 #=> 16
 
 **Hint:** 
 Greedy
-1. Create a map to track the frequency of each task
-2. Sort it from min to max
-3. Pick elements in descending order, one by one. At each step, decease the idle time by min(f-max - 1, f). Where f is the current frequency
-4. Return busy + idle slots.
+1. We should always process the task that has the largest amount of time left
+2. Put the task counts in a max heap
+3. Start to process tasks from front of the queue. If amount left > 0, put it into a coolDown HashMap
+4. If there's task which cool-down expired, put it into the queue and wait to be processed
+5. Repeat step 3, 4 till there is no task left
 
 ```python3
-class Solution(object):
+from collections import Counter
+from heapq import heappush, heappop
+
+class Solution:
     def leastInterval(self, tasks, n):
-        if n == 0: return len(tasks)
-        
-        task_to_count = {}
-        for c in tasks:
-            task_to_count[c] = task_to_count.get(c, 0) + 1
-        
-        queue = []
-        for count in task_to_count.values():
-            queue.append(-count) # Max heap?
-        
-        heapq.heapify(queue)
-        
+        if n == 0:
+            return len(tasks)
+
+        task_to_count = Counter(tasks)
+        max_heap = [-count for count in task_to_count.values()]
+        heapify(max_heap)
+
         cooldown = {}
         curr_time = 0
-        while queue or cooldown:
+
+        while max_heap or cooldown:
             if curr_time - n - 1 in cooldown:
-                heapq.heappush(queue, cooldown.pop(curr_time - n - 1))
-            
-            if queue:
-                count = -heapq.heappop(queue) - 1
-                if count > 0:
-                    cooldown[curr_time] = -count
-            
+                heappush(max_heap, cooldown.pop(curr_time - n - 1))
+
+            if max_heap:
+                count = -heappop(max_heap)
+                if count > 1:
+                    cooldown[curr_time] = -(count - 1)
+
             curr_time += 1
-        
+
         return curr_time
 ```
 
 **Time:** O(Ntotal), where Ntotal is the number of tasks to complete
 **Space:** O(1) to keep array of 26 elements
 
-## 148. Top K Frequent Words
+## 148. Top K Frequent Words ☠️
 **Reference:** https://leetcode.com/problems/top-k-frequent-words/solutions/108346/my-simple-java-solution-using-hashmap-priorityqueue-o-nlogk-time-o-n-space/
  
 **Description:** Given an array of strings words and an integer k, return the k most frequent strings.
@@ -8740,7 +8764,7 @@ class Solution(object):
         heapq.heapify(heap)
         
         result = []
-        for _ in range(k):
+        for _ in range(k): 
             result.append(heapq.heappop(heap)[1])
         
         return result
@@ -8749,7 +8773,7 @@ class Solution(object):
 **Time:** O(nlogk)
 **Space:** O(n)
 
-## 149. Find K Closest Elements
+## 149. Find K Closest Elements ☠️ ☠️
 **Reference:** https://leetcode.com/problems/find-k-closest-elements/description/
  
 **Description:** Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order.
@@ -8801,7 +8825,7 @@ class Solution(object):
                     heapq.heappush(min_heap, num)
         
         ans = []
-        while min_heap: # pop everything. the heap will maintain ascending order
+        while min_heap: # 🔥 pop everything. the heap will maintain ascending order
             ans.append(heapq.heappop(min_heap))
         
         return ans
@@ -8818,7 +8842,7 @@ class Solution(object):
         lo, hi = 0, len(arr)-k
         while lo<hi:
             mid = (lo + hi)//2
-            if x-arr[mid]>arr[mid+k]-x:
+            if x-arr[mid]>arr[mid+k]-x: # is distance from mid to x is greater than distance from mid+k to x
                 lo = mid + 1
             else:
                 hi = mid
@@ -8828,7 +8852,7 @@ class Solution(object):
 **Time:** O(logN + k)
 **Space:** O(k)
 
-## 150. Kth Largest Element in an Array
+## 150. Kth Largest Element in an Array ☠️ ☠️
 **Reference:** https://leetcode.com/problems/kth-largest-element-in-an-array/description/
  
 **Description:** Given an integer array nums and an integer k, return the kth largest element in the array.
@@ -8862,13 +8886,14 @@ class Solution:
             heapq.heappush(min_heap, num)
             if len(min_heap) > k:
                 heapq.heappop(min_heap)
-        return min_heap[0]
+        return min_heap[0] # return peek
 ```
 
 **Time:** O(N lg K)
 **Space:** O(K)
 
 ```python3
+# Quick select
 # https://leetcode.com/problems/kth-largest-element-in-an-array/solutions/3906260/100-3-approaches-video-heap-quickselect-sorting/
 class Solution:
     def findKthLargest(self, nums, k):
@@ -8898,7 +8923,7 @@ class Solution:
 **Time:** O(N) avg, O(N^2) worst case 
 **Space:** O(1)
 
-## 151. Find Median from Data Stream
+## 151. Find Median from Data Stream ☠️ ☠️
 **Reference:** https://leetcode.com/problems/find-median-from-data-stream/solutions/74047/JavaPython-two-heap-solution-O(log-n)-add-O(1)-find/
  
 **Description:** The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
@@ -8953,7 +8978,7 @@ class MedianFinder:
 **Time:** O(log n) add, O(1) find
 **Space:** O(n)
 
-## 152. Merge k Sorted Lists
+## 152. Merge k Sorted Lists ☠️
 **Reference:** https://leetcode.com/problems/merge-k-sorted-lists/solutions/354814/Java-Heap-Solution/
  
 **Description:** You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
@@ -8999,9 +9024,9 @@ class Solution:
 ```
 
 **Time:** O(N log k)
-**Space:** O(N)
+**Space:** O(N) # Tim note: couldn't you use merge from merge sort and have O(1) space??
 
-## 153. Smallest Range Covering Elements from K Lists
+## 153. Smallest Range Covering Elements from K Lists ☠️ ☠️
 **Reference:** https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/solutions/104893/java-code-using-priorityqueue-similar-to-merge-k-array/
  
 **Description:** You have k lists of sorted integers in non-decreasing order. Find the smallest range that includes at least one number from each of the k lists.
@@ -9041,13 +9066,13 @@ class Solution:
                 max_val = max(max_val, val)
         
         start, end = float('-inf'), float('inf')
-        while len(pq) == len(nums):
+        while len(pq) == len(nums): # There must be exactly one element from each list in the heap
             val, i = heapq.heappop(pq)
-            if max_val - val < end - start:
-                start, end = val, max_val
-            if nums[i]:
+            if max_val - val < end - start: # is range between max_val and val is less than end and start...
+                start, end = val, max_val # ...update end and start
+            if nums[i]: # if there are values left in curr list... 
                 new_val = nums[i].pop(0)
-                heapq.heappush(pq, (new_val, i))
+                heapq.heappush(pq, (new_val, i)) # replace curr value with new (larger) value
                 max_val = max(max_val, new_val)
         
         return [start, end]
@@ -9056,7 +9081,7 @@ class Solution:
 **Time:** O(n * log(m)) Heapifying m elements takes O(log(m)) time, n is the total number of elements in all lists, m is the total number of lists
 **Space:** O(m)
 
-## 154. Implement Trie (Prefix Tree)
+## 154. Implement Trie (Prefix Tree) ☠️ ☠️
 **Reference:** https://leetcode.com/problems/implement-trie-prefix-tree/solutions/58989/my-python-solution/
  
 **Description:** A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
@@ -9133,7 +9158,7 @@ class Trie:
 **Time:** insert: O(n), search: O(n), startsWith: O(n)
 **Space:** insert: O(n), search: O(1), startsWith: O(1)
 
-## 155. Word Break
+## 155. Word Break ☠️ ☠️
 **Reference:** https://leetcode.com/problems/word-break/description/
  
 **Description:** Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
@@ -9164,7 +9189,8 @@ if string in memo => return memo[string]
 
 Branches: 
 1. Iterate over dictictionary words. If a word is a prefix in the string, remove the word from the string and recurse with the remaining characters.
-2. If dfs with that those remaining characters returns true, add the string to the memo and return true (because you know the prefix and suffix are valid).
+
+If dfs with that those remaining characters returns true, add the string to the memo and return true (because you know the prefix and suffix are valid).
 
 Final return: memo[string] = false
 return meo[string]
@@ -9213,7 +9239,7 @@ class Solution:
 **Time:** O(n^3)
 **Space:** O(n)
 
-## 156. Design Add and Search Words Data Structure
+## 156. Design Add and Search Words Data Structure ☠️ ☠️ ☠️
 **Reference:** https://leetcode.com/problems/design-add-and-search-words-data-structure/solutions/774530/python-trie-solution-with-dfs-explained/
  
 **Description:** Design a data structure that supports adding new words and finding if a string matches any previously added string.
@@ -9275,9 +9301,10 @@ class WordDictionary:
 ```
 
 **Time:** The worst time complexity is also O(M), potentially we can visit all our Trie, if we have pattern like ...... For words without ., time complexity will be O(h), where h is height of Trie. For words with several letters and several ., we have something in the middle.
+
 **Space:** O(M), where M is sum of lengths of all words in our Trie.
 
-## 157. Design In-Memory File System
+## 157. Design In-Memory File System ☠️ ☠️ ☠️ ☠
 **Reference:** https://algo.monster/liteproblems/588
  
 **Description:** Design an in-memory file system to simulate the following functions:
@@ -9399,7 +9426,7 @@ class FileSystem:
 6. readContentFromFile: O(m + k) // k is the total length of the content.
 **Space:** Trie class: O(mn), m: paths are of length m, n: number of unique paths, For content storage: O(t), t: he total length of the content across all files
 
-## 158. Permutations
+## 158. Permutations ☠️ ☠
 **Reference:** https://leetcode.com/problems/permutations/solutions/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)/
  
 **Description:** Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
@@ -9485,7 +9512,7 @@ class Solution:
 **Time:** ~O(n * n!)
 **Space:** ~O(n * n!)
 
-## 159. Subsets
+## 159. Subsets ☠️ ☠
 **Reference:** https://leetcode.com/problems/permutations/solutions/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)/
  
 **Description:** Given an integer array nums of unique elements, return all possible subsets(the power set). The solution set must not contain duplicate subsets. Return the solution in any order.
