@@ -132,9 +132,10 @@ print("Topological sort:", result)
 ```
 
 ```
+# ChatGPT
 # Kahn's algorithm:
-Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
-Space Complexity: O(V), where V is the number of vertices in the graph.
+# Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
+# Space Complexity: O(V), where V is the number of vertices in the graph.
 
 from collections import defaultdict, deque
 def topological_sort(graph):
