@@ -130,6 +130,52 @@ graph = {
 result = topological_sort(graph)
 print("Topological sort:", result)
 ```
+
+```
+# Kahn's algorithm:
+Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
+Space Complexity: O(V), where V is the number of vertices in the graph.
+
+from collections import defaultdict, deque
+def topological_sort(graph):
+    # Step 1: Calculate in-degrees for each vertex
+    in_degrees = defaultdict(int)
+    for vertices in graph.values():
+        for vertex in vertices:
+            in_degrees[vertex] += 1
+
+    # Step 2: Initialize queue with vertices having in-degree 0
+    queue = deque([vertex for vertex, in_degree in in_degrees.items() if in_degree == 0])
+
+    # Step 3: Perform topological sorting
+    result = []
+    while queue:
+        current_vertex = queue.popleft()
+        result.append(current_vertex)
+
+        for neighbor in graph[current_vertex]:
+            in_degrees[neighbor] -= 1
+            if in_degrees[neighbor] == 0:
+                queue.append(neighbor)
+
+    # Check for cycles (all vertices should be visited)
+    if len(result) != len(graph):
+        raise ValueError("Graph contains a cycle")
+
+    return result
+
+# Example usage:
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['D'],
+    'D': []
+}
+
+sorted_order = topological_sort(graph)
+print("Topological Sort:", sorted_order)
+```
+
 10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree-%EF%B8%8F-%EF%B8%8F)
 11. Dijkstra/Bellman ford [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 
