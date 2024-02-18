@@ -2,7 +2,7 @@
 Popular Algorithm Problems
 
 ## Things to Memorize: 🧠 🔄
-1. Floor logic # See  [#145](https://github.com/will4skill/algo-review/blob/main/README.md#145-reverse-integer)  ✅
+1. Floor logic # See  [#145](https://github.com/will4skill/algo-review/blob/main/README.md#145-reverse-integer-%EF%B8%8F-%EF%B8%8F)  ✅
 2. Dequeue import and use (pop, append, popLeft)  ✅
 3. -1 is last element in list  ✅
 4. Initialize arr with value (array = [0]*10)  ✅
@@ -92,9 +92,9 @@ print("Sorted array:", input_array)
 4. Height of binary tree [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
 5. Convert tree to graph  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 6. Binary search, binary search min/max [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
-7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes)
+7. Graph bfs (sshotest path) and dfs [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder-%EF%B8%8F) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes-%EF%B8%8F-%EF%B8%8F)
 8. edges to adjList  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
-9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii) [#112](https://github.com/will4skill/algo-review/blob/main/README.md#112-alien-dictionary)
+9. Top sort # Graph: [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii-%EF%B8%8F-%EF%B8%8F) [#112](https://github.com/will4skill/algo-review/blob/main/README.md#112-alien-dictionary-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
 
 ```python3
@@ -130,8 +130,8 @@ graph = {
 result = topological_sort(graph)
 print("Topological sort:", result)
 ```
-10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree)
-11. Dijkstra/Bellman ford [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops)
+10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree-%EF%B8%8F-%EF%B8%8F)
+11. Dijkstra/Bellman ford [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 
 ```python3
 # ChatGPT Dijkstra
@@ -213,10 +213,10 @@ result = bellman_ford(graph, start_vertex)
 print(f"Shortest distances from vertex {start_vertex}: {result}")
 ```
 
-12. Trie from scratch [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree)
+12. Trie from scratch [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree-%EF%B8%8F-%EF%B8%8F)
 13. Bit manip:
 
-[#135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits)
+[#135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 ```python3
 # i >> 1 # remove the last bit (divide by 2)
 n = 5 >> 1
@@ -226,7 +226,7 @@ n = 4 & 1
 print(n) #=> 0
 ```
 
-[#136](https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits)
+[#136](https://github.com/will4skill/algo-review/blob/main/README.md#136-number-of-1-bits-%EF%B8%8F-%EF%B8%8F)
 ```python3
 # n = n & (n - 1)  # change the first set bit from right to 0
 n = 5
@@ -234,20 +234,20 @@ n = n & (n - 1)
 print(n) #=> 4
 ```
 
-[#137](https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number)
+[#137](https://github.com/will4skill/algo-review/blob/main/README.md#137-single-number-%EF%B8%8F)
 ```python3
 # xor ^= num # If you XOR a number with itself, 0 is returned.
 print(5^5) #=> 0
 ```
 
-[#138](https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number)
+[#138](https://github.com/will4skill/algo-review/blob/main/README.md#138-missing-number-%EF%B8%8F)
 ```python3
 # a^b^b = a, Two xor operations with the same number will eliminate the number and reveal the original number.
 a, b = 1, 2
 print(a^b^b) #=> 1
 ```
 
-[#139](https://github.com/will4skill/algo-review/blob/main/README.md#139-reverse-bits)
+[#139](https://github.com/will4skill/algo-review/blob/main/README.md#139-reverse-bits-%EF%B8%8F-%EF%B8%8F)
 ```python3
 # num = (num << 1) | (n & 1) # append the last bit of the given number to the number
 n = 4
@@ -256,9 +256,9 @@ print((num << 1) | (n & 1)) #=> 10 because 101 => 1010
 ```
 
 14. Perms, Combos, Subsets
-	* Permutations: [#158](https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations)
- 	* Subsets: [#159](https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets)
-  	* Combinations: [#160](https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number)
+	* Permutations: [#158](https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations-%EF%B8%8F-)
+ 	* Subsets: [#159](https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets-%EF%B8%8F-)
+  	* Combinations: [#160](https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number-%EF%B8%8F-)
 
 
 ## Python3 Cheatsheet
