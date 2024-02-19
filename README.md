@@ -4163,7 +4163,7 @@ class Solution(object):
 from collections import deque
 class Solution:
     def levelOrder(self, root):
-        if not root: return [
+        if not root: return []
         # queue = deque((root, 0)) # Tim note: passing a tuple to a deque doesn't work 
         queue = deque()
         queue.append((root, 0))
