@@ -131,7 +131,7 @@ result = topological_sort(graph)
 print("Topological sort:", result)
 ```
 
-```
+```python3
 # ChatGPT
 # Kahn's algorithm:
 # Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
