@@ -118,6 +118,22 @@ def dfs(node, visited, result):
             dfs(neighbor, visited, result)
     result.append(node)
 
+# Tim Simplified:
+def topological_sort(graph):
+    visited = set()
+    result = []
+
+    for node in graph:
+        dfs(node, visited, result)
+    return result[::-1]
+
+def dfs(node, visited, result):
+    if node in visited: return
+    visited.add(node)
+    for neighbor in graph[node]:
+        dfs(neighbor, visited, result)
+    result.append(node)
+
 # Example usage:
 graph = {
     'A': ['B', 'C'],
