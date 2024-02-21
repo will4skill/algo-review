@@ -152,45 +152,57 @@ print("Topological sort:", result)
 # Kahn's algorithm:
 # Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
 # Space Complexity: O(V), where V is the number of vertices in the graph.
+from collections import deque
 
-from collections import defaultdict, deque
 def topological_sort(graph):
     # Step 1: Calculate in-degrees for each vertex
-    in_degrees = defaultdict(int)
-    for vertices in graph.values():
-        for vertex in vertices:
-            in_degrees[vertex] += 1
+    in_degree = {}  # Dictionary to store in-degrees for each node
+    for node in graph:
+        in_degree[node] = 0
+
+    for node in graph:
+        for neighbor in graph[node]:
+            in_degree[neighbor] += 1
 
     # Step 2: Initialize queue with vertices having in-degree 0
-    queue = deque([vertex for vertex, in_degree in in_degrees.items() if in_degree == 0])
+    queue = deque()
+    for node in in_degree:
+        if in_degree[node] == 0:
+            queue.append(node)
 
     # Step 3: Perform topological sorting
     result = []
     while queue:
-        current_vertex = queue.popleft()
-        result.append(current_vertex)
+        current_node = queue.popleft()
+        result.append(current_node)
 
-        for neighbor in graph[current_vertex]:
-            in_degrees[neighbor] -= 1
-            if in_degrees[neighbor] == 0:
+        for neighbor in graph[current_node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
                 queue.append(neighbor)
 
-    # Check for cycles (all vertices should be visited)
+    # Step 4: Check for cycles (all vertices should be visited)
     if len(result) != len(graph):
-        raise ValueError("Graph contains a cycle")
-
-    return result
+        # Graph has a cycle
+        return None
+    else:
+        return result
 
 # Example usage:
 graph = {
-    'A': ['B', 'C'],
-    'B': ['D'],
-    'C': ['D'],
-    'D': []
+    1: [2, 3],
+    2: [4],
+    3: [4],
+    4: [5],
+    5: []
 }
 
-sorted_order = topological_sort(graph)
-print("Topological Sort:", sorted_order)
+sorted_nodes = topological_sort(graph)
+
+if sorted_nodes is not None:
+    print("Topological Sort:", sorted_nodes)
+else:
+    print("Graph contains a cycle.")
 ```
 
 10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree-%EF%B8%8F-%EF%B8%8F)
