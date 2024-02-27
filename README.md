@@ -592,7 +592,7 @@ ord("b") - ord("a") #=> 1 (normalize for char list map) ✅
 strings = ["ab", "cd", "ef"]
 print("".join(strings)) #=> abcdef JS: strings.join("")
 "ab,cd,ef".split(',') #=> ["ab", "cd", "ef"] Note: " " is the default delim
-list("abcdef") #=> ['a', 'b', 'c', 'd', 'e', 'f']
+list("abcdef") #=> ['a', 'b', 'c', 'd', 'e', 'f'] # JS: "abcdef".split("")
 
 a = 5
 b = 10
@@ -617,7 +617,8 @@ from collections import deque  ✅
 queue = deque()  ✅
 queue.append(1) # JS: queue.push()  ✅
 queue.append(2)
-print(queue) #=> deque([1, 2]) 
+print(queue) #=> deque([1, 2])
+print(list(queue)) #=> [1, 2]
 
 queue.popleft() #=> 1 JS: queue.shift()  ✅
 print(queue) #=> deque([2])
@@ -635,6 +636,7 @@ mySet = set() # JS: mySet = new Set()
 mySet.add(1) # JS: mySet.add(1) ✅
 mySet.add(2)
 print(mySet) #=> {1, 2}
+print(list(mySet)) #=> [1, 2]
 print(len(mySet)) #=> 2 JS: mySet.size
 
 print(1 in mySet) #=> True JS: mySet.has(1)
