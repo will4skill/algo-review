@@ -217,7 +217,7 @@ Bellman-Ford: Can handle negative weights. Can identify negative cycles.
 ```python3
 # ChatGPT Dijkstra
 # Time: O((V + E) * log(V)), where V is the number of vertices and E is the number of edges in the graph. The log(V) factor comes from the priority queue operations.
-# Space: O(V + E) as it requires storage for the distances and the priority queue
+# Space: O(V) for distances and priority_queue
 
 import heapq
 def dijkstra(graph, source):
@@ -258,17 +258,19 @@ print(f"Shortest distances from {start_vertex}: {result}")
 ```
 
 ```python3
-# ChatGPT Bellman Ford
+# ChatGPT/Gemini Bellman Ford
 # Time: O(V * E), where V is the number of vertices and E is the number of edges in the graph. The algorithm relaxes all edges in each of the V-1 iterations.
-# Space: O(V + E) as it requires storage for distances and the graph representation. The distances array has O(V) space, and the graph representation (in this case, an adjacency list) has O(E) space.
+# Space: O(V) as it requires storage for distances and the graph representation. The distances array has O(V) space, and the graph representation (in this case, an adjacency list) has O(E) space.
 
 def bellman_ford(graph, start):
+    # Initialize distances for all nodes as infinity (except source)
     vertices = len(graph)
     distances = [float('inf')] * vertices
     distances[start] = 0
 
     # Relax edges repeatedly
     for _ in range(vertices - 1):
+	# Iterate through all edges and update distances
         for u in range(vertices):
             for v, weight in graph[u].items():
                 if distances[u] + weight < distances[v]:
