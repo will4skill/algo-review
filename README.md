@@ -100,7 +100,7 @@ print("Sorted array:", input_array)
 ```python3
 # ChatGPT
 # Time: O(V + E), where V is the number of vertices and E is the number of edges in the graph.
-# Space: O(V + E), where V is the number of vertices and E is the number of edges in the graph. This includes the space required for the visited set, result list, and the graph representation (adjacency list).
+# Space: O(V), to store the vertices
 
 def topological_sort(graph):
     visited = set()
@@ -220,12 +220,12 @@ Bellman-Ford: Can handle negative weights. Can identify negative cycles.
 # Space: O(V + E) as it requires storage for the distances and the priority queue
 
 import heapq
-def dijkstra(graph, start):
-    # Dictionary to store the shortest distances from the start vertex
-    distances = {vertex: float('infinity') for vertex in graph}
-    distances[start] = 0
+def dijkstra(graph, source):
+    # Dictionary to store the shortest distances from the source vertex
+    distances = {vertex: float('inf') for vertex in graph}
+    distances[source] = 0
     # Priority queue to store vertices and their distances
-    priority_queue = [(0, start)]
+    priority_queue = [(0, source)]
 
     while priority_queue:
         # Get the vertex with the smallest distance
@@ -235,11 +235,11 @@ def dijkstra(graph, start):
             continue
         # Explore neighbors
         for neighbor, weight in graph[current_vertex].items():
-            distance = current_distance + weight
+            new_distance = current_distance + weight
             # If a shorter path is found, update the distance
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                heapq.heappush(priority_queue, (distance, neighbor))
+            if new_distance < distances[neighbor]:
+                distances[neighbor] = new_distance
+                heapq.heappush(priority_queue, (new_distance, neighbor))
 
     return distances
 
@@ -264,7 +264,7 @@ print(f"Shortest distances from {start_vertex}: {result}")
 
 def bellman_ford(graph, start):
     vertices = len(graph)
-    distances = [float('infinity')] * vertices
+    distances = [float('inf')] * vertices
     distances[start] = 0
 
     # Relax edges repeatedly
