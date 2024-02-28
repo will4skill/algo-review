@@ -208,6 +208,12 @@ else:
 10. graph cycle check: Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree-%EF%B8%8F-%EF%B8%8F)
 11. Dijkstra/Bellman ford [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 
+Both used for finding shortest paths in weighted graphs
+
+Dijkstra: Cannot handle negative weights. Typically more effcient than Bellman for +weight graphs (because it doesn't need to explore paths that are longer than the currently known shortest path). Cannot handle negative cycles (will not terminate). 
+
+Bellman-Ford: Can handle negative weights. Can identify negative cycles. 
+
 ```python3
 # ChatGPT Dijkstra
 # Time: O((V + E) * log(V)), where V is the number of vertices and E is the number of edges in the graph. The log(V) factor comes from the priority queue operations.
@@ -215,7 +221,7 @@ else:
 
 import heapq
 def dijkstra(graph, start):
-     # Dictionary to store the shortest distances from the start vertex
+    # Dictionary to store the shortest distances from the start vertex
     distances = {vertex: float('infinity') for vertex in graph}
     distances[start] = 0
     # Priority queue to store vertices and their distances
