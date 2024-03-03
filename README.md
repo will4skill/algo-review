@@ -22,7 +22,7 @@ Popular Algorithm Problems
 16. Random list value: import random, random.choice(nums), random int: random.randint(0, 10) <-- inclusive
 
 ## Problems to Master: 🏋️‍♂️ 🔄
-**1. MergeSort, QuickSort**
+1. **MergeSort, QuickSort**
 ```python3
 # MergeSort: Chat GPT Time: O(nlogn), Space: O(n)
 def merge_sort(arr):
@@ -87,14 +87,14 @@ input_array = [64, 25, 12, 22, 11]
 quicksort_inplace(input_array, 0, len(input_array) - 1)
 print("Sorted array:", input_array)
 ```
-**2. Reverse LL** [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
-**3. Level order traversal (both ways)** #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food-%EF%B8%8F) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves-%EF%B8%8F-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder-%EF%B8%8F) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes-%EF%B8%8F-%EF%B8%8F)
-**4. Height of binary tree** [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
-**5. Convert tree to graph**  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
-**6. Binary search, binary search min/max** [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
-**7. Graph bfs (sshotest path) and dfs** [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder-%EF%B8%8F) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes-%EF%B8%8F-%EF%B8%8F)
-**8. edges to adjList**  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
-**9. Top sort # Graph:** [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii-%EF%B8%8F-%EF%B8%8F) [#112](https://github.com/will4skill/algo-review/blob/main/README.md#112-alien-dictionary-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
+2. **Reverse LL** [#41](https://github.com/will4skill/algo-review/blob/main/README.md#41-reverse-linked-list-%EF%B8%8F-%EF%B8%8F), [#43](https://github.com/will4skill/algo-review/blob/main/README.md#43-palindrome-linked-list-%EF%B8%8F)
+3. **Level order traversal (both ways)** #  tree [#74](https://github.com/will4skill/algo-review/blob/main/README.md#74-binary-tree-level-order-traversal-%EF%B8%8F), graph [#98](https://github.com/will4skill/algo-review/blob/main/README.md#98-rotting-oranges-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F) another graph [#103](https://github.com/will4skill/algo-review/blob/main/README.md#103-shortest-path-to-get-food-%EF%B8%8F) [#107](https://github.com/will4skill/algo-review/blob/main/README.md#107-minimum-knight-moves-%EF%B8%8F-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder-%EF%B8%8F) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes-%EF%B8%8F-%EF%B8%8F)
+4. **Height of binary tree** [#70](https://github.com/will4skill/algo-review/blob/main/README.md#70-maximum-depth-of-binary-tree)
+5. **Convert tree to graph**  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
+6. **Binary search, binary search min/max** [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
+7. **Graph bfs (sshotest path) and dfs** [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder-%EF%B8%8F) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes-%EF%B8%8F-%EF%B8%8F)
+8. **edges to adjList**  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
+9. **Top sort # Graph:** [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii-%EF%B8%8F-%EF%B8%8F) [#112](https://github.com/will4skill/algo-review/blob/main/README.md#112-alien-dictionary-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
 
 ```python3
@@ -205,8 +205,8 @@ else:
     print("Graph contains a cycle.")
 ```
 
-**10. graph cycle check:** Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree-%EF%B8%8F-%EF%B8%8F)
-**11. Dijkstra/Bellman ford** [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
+10. **graph cycle check:** Adj: [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) [#104](https://github.com/will4skill/algo-review/blob/main/README.md#104-graph-valid-tree-%EF%B8%8F-%EF%B8%8F)
+11. **Dijkstra/Bellman ford** [#108](https://github.com/will4skill/algo-review/blob/main/README.md#108-cheapest-flights-within-k-stops-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 
 Both used for finding shortest paths in weighted graphs
 
@@ -299,8 +299,8 @@ result = bellman_ford(graph, start_vertex)
 print(f"Shortest distances from vertex {start_vertex}: {result}")
 ```
 
-**12. Trie from scratch** [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree-%EF%B8%8F-%EF%B8%8F)
-**13. Bit manip:**
+12. **Trie from scratch** [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree-%EF%B8%8F-%EF%B8%8F)
+13. **Bit manip:**
 
 [#135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 ```python3
@@ -341,11 +341,11 @@ num = 5
 print((num << 1) | (n & 1)) #=> 10 because 101 => 1010
 ```
 
-**14. Perms, Combos, Subsets**
+14. **Perms, Combos, Subsets**
 	* Permutations: [#158](https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations-%EF%B8%8F-)
  	* Subsets: [#159](https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets-%EF%B8%8F-)
   	* Combinations: [#160](https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number-%EF%B8%8F-)
-**15. Sliding Window Examples: (I think these are from Educative.com)**
+15. **Sliding Window Examples: (I think these are from Educative.com)**
 ```python3
 # Example 1: Static window size K
 arr = [1, 2, 3, 4, 5, 6]
