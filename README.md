@@ -345,7 +345,72 @@ print((num << 1) | (n & 1)) #=> 10 because 101 => 1010
 	* Permutations: [#158](https://github.com/will4skill/algo-review/blob/main/README.md#158-permutations-%EF%B8%8F-)
  	* Subsets: [#159](https://github.com/will4skill/algo-review/blob/main/README.md#159-subsets-%EF%B8%8F-)
   	* Combinations: [#160](https://github.com/will4skill/algo-review/blob/main/README.md#160-letter-combinations-of-a-phone-number-%EF%B8%8F-)
+15. Sliding Window Examples: (I think these are from Educative.com)
+```python3
+# Example 1: Static window size K
+arr = [1, 2, 3, 4, 5, 6]
+K = 3
+result = [0] * len(arr)  # Initialize result array
 
+windowSum = 0
+windowStart = 0
+for windowEnd in range(len(arr)):
+  windowSum += arr[windowEnd]  # Step 1: Load up window until size "k"
+
+  if windowEnd >= K - 1:  # Step 2: When window is loaded...
+    result[windowStart] = windowSum / K  # Step 3: Calculate the current average
+    windowSum -= arr[windowStart]  # Step 4: Remove oldest element
+    windowStart += 1  # Step 5: Slide window forward one step
+
+print(result)  # Output: [1.5, 2.5, 3.5, 4.5, 5.5]
+```
+
+```python3
+# Example 2: Smallest window that meets a condition
+arr = [4, 2, 2, 7, 8, 1, 2, 8, 1]
+S = 8
+
+windowSum = 0
+minLength = float('inf')
+windowStart = 0
+
+for windowEnd in range(len(arr)):
+  windowSum += arr[windowEnd]  # Step 1: Grow window until the condition is met
+
+  while windowSum >= S:  # Step 2: Shrink window to left until condition fails
+    minLength = min(minLength, windowEnd - windowStart + 1)  # Step 3: Update current min if better
+    windowSum -= arr[windowStart]  # Step 4: Remove oldest element
+    windowStart += 1  # Step 5: Slide the window ahead
+
+print(minLength)  # Output: 2
+```
+
+```python3
+# Example 3: Longest window that meets a condition
+str = "aabccbb"
+k = 3
+
+charFrequencyMap = {}  # Using a dictionary for character frequencies
+windowStart = 0
+maxLength = 0
+
+for windowEnd in range(len(str)):
+  rightChar = str[windowEnd]
+  # Step 1: Expand to right until too big
+  charFrequencyMap[rightChar] = charFrequencyMap.get(rightChar, 0) + 1
+
+  # Step 2: Shrink to left until condition is met
+  while len(charFrequencyMap) > k:
+    leftChar = str[windowStart]
+    charFrequencyMap[leftChar] -= 1
+    if charFrequencyMap[leftChar] == 0:
+      del charFrequencyMap[leftChar]
+    windowStart += 1  # Shrink the window
+
+  maxLength = max(maxLength, windowEnd - windowStart + 1)  # Remember current max length
+
+print(maxLength)  # Output: 3
+```
 
 ## Python3 Cheatsheet
 ```python3
