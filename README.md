@@ -8471,6 +8471,7 @@ class Solution:
 
 My preferred solution:
 https://leetcode.com/problems/find-the-duplicate-number/solutions/1892921/9-approaches-count-hash-in-place-marked-sort-binary-search-bit-mask-fast-slow-pointers/
+```python3
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
         length = len(nums)
