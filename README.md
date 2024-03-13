@@ -302,6 +302,19 @@ print(f"Shortest distances from vertex {start_vertex}: {result}")
 12. **Trie from scratch** [#154](https://github.com/will4skill/algo-review/blob/main/README.md#154-implement-trie-prefix-tree-%EF%B8%8F-%EF%B8%8F)
 13. **Bit manip:**
 
+TechInterviewHandbook.org:
+
+```python3
+num & (1 << k) != 0 # Test kth bit is set
+num |= (1 << k) # Set kth bit
+num &= ~(1 << k) # Turn off kth bit
+num ^= (1 << k) # Toggle the kth bit
+num << k # Multiply by 2k
+num >> k # Divide by 2k
+(num & num - 1) == 0 or (num & (-num)) == num # Check if a number is a power of 2
+num1 ^= num2; num2 ^= num1; num1 ^= num2 # Swapping two variables
+```
+
 [#135](https://github.com/will4skill/algo-review/blob/main/README.md#135-counting-bits-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 ```python3
 # i >> 1 # remove the last bit (divide by 2)
