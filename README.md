@@ -7,7 +7,7 @@ Popular Algorithm Problems
 3. -1 is last element in list  ✅
 4. Initialize arr with value (array = [0]*10)  ✅
 5. List pop, list append  ✅
-6. isDigit, ord(‘b’) - ord(‘a’) ✅
+6. "1".isdigit, ord(‘b’) - ord(‘a’) ✅
 7. Loop enumerate  ✅
 8. Char char in string  ✅
 9. Reverse list .reverse and [::-1]  ✅
