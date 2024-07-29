@@ -63,7 +63,25 @@ print("Sorted array:", sorted_array)
 
 ```python3
 QuickSort: Chat GPT Time: O(nlogn) avg, O(n^2) worst, Space: O(1)
+def quicksort_inplace(arr, low, high):
+    if low < high:
+        pivot_index = partition(arr, low, high)
+
+        quicksort_inplace(arr, low, pivot_index - 1)
+        quicksort_inplace(arr, pivot_index + 1, high)
+
 def partition(arr, low, high):
+    """
+    This function takes the last element as pivot, places
+    the pivot element at its correct position in sorted
+    array, and places all smaller (smaller than pivot)
+    to the left of pivot and all greater elements to the right
+    of pivot.
+    :param arr: List of elements to be sorted
+    :param low: Starting index
+    :param high: Ending index
+    :return: The partitioning index
+    """
     pivot = arr[high]
     i = low - 1
 
@@ -74,13 +92,6 @@ def partition(arr, low, high):
 
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     return i + 1
-
-def quicksort_inplace(arr, low, high):
-    if low < high:
-        pivot_index = partition(arr, low, high)
-
-        quicksort_inplace(arr, low, pivot_index - 1)
-        quicksort_inplace(arr, pivot_index + 1, high)
 
 # Example usage:
 input_array = [64, 25, 12, 22, 11]
