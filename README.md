@@ -77,10 +77,6 @@ def partition(arr, low, high):
     array, and places all smaller (smaller than pivot)
     to the left of pivot and all greater elements to the right
     of pivot.
-    :param arr: List of elements to be sorted
-    :param low: Starting index
-    :param high: Ending index
-    :return: The partitioning index
     """
     pivot = arr[high]
     i = low - 1
