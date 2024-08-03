@@ -79,14 +79,14 @@ def partition(arr, low, high):
     of pivot.
     """
     pivot = arr[high]
-    i = low - 1
+    i = low - 1 # <- where to put elements smaller than pivot
 
-    for j in range(low, high):
+    for j in range(low, high): # Note that j goes up to high - 1
         if arr[j] <= pivot:
             i += 1
             arr[i], arr[j] = arr[j], arr[i]
 
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1] # arr[i + 1] is one idx past the largest element less than pivot
     return i + 1
 
 # Example usage:
