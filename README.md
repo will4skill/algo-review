@@ -4753,7 +4753,7 @@ class Solution:
         result = []
         
         while queue:
-            node, distance = queue.pop(0)
+            node, distance = queue.pop(0) # Tim note: should this be popleft?
             
             if distance == K:
                 result.append(node.val)
