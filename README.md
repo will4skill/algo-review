@@ -100,7 +100,7 @@ print("Sorted array:", input_array)
 5. **Convert tree to graph**  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 6. **Binary search, binary search min/max** [#87](https://github.com/will4skill/algo-review/blob/main/README.md#87-search-in-rotated-sorted-array-%EF%B8%8F)
 7. **Graph bfs (sshotest path) and dfs** [#93](https://github.com/will4skill/algo-review/blob/main/README.md#93-flood-fill-%EF%B8%8F) [#109](https://github.com/will4skill/algo-review/blob/main/README.md#109-word-ladder-%EF%B8%8F) [#113](https://github.com/will4skill/algo-review/blob/main/README.md#113-bus-routes-%EF%B8%8F-%EF%B8%8F)
-8. **edges to adjList**  [#83](https://github.com/will4skill/algo-review/blob/main/README.md#83-serialize-and-deserialize-binary-tree-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
+8. **edges to adjList**  [#82](https://github.com/will4skill/algo-review/blob/main/README.md#82-all-nodes-distance-k-in-binary-tree-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F) undirected, [#96](https://github.com/will4skill/algo-review/blob/main/README.md#96-course-schedule-%EF%B8%8F-%EF%B8%8F) directed 
 9. **Top sort # Graph:** [#94](https://github.com/will4skill/algo-review/blob/main/README.md#94-01-matrix-%EF%B8%8F-%EF%B8%8F) [#105](https://github.com/will4skill/algo-review/blob/main/README.md#105-course-schedule-ii-%EF%B8%8F-%EF%B8%8F) [#112](https://github.com/will4skill/algo-review/blob/main/README.md#112-alien-dictionary-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F)
 	* For Topological Sort to work, the graph must be a directed acyclic graph (DAG)
 
