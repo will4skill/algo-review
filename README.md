@@ -969,10 +969,16 @@ nums = [2,7,11,15], target = 9 #=> [0,1]
 ```
 
 <details>
-  <summary>**Hint:**</summary>
+  <summary> 
+	  **Hint:**
+  </summary>
   Load values into hash map, iterate over nums and check hash map for complement
 </details>
 
+<details>
+  <summary> 
+	  **Solution:**
+  </summary>
 ```python3
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -986,6 +992,8 @@ class Solution:
 ```
 **Time:** O(n)
 **Space:** O(n)
+</details>
+
 
 ## 2. Best Time to Buy and Sell Stock
 **Reference:** https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
