@@ -968,7 +968,10 @@ type("caty") is str #=> True
 nums = [2,7,11,15], target = 9 #=> [0,1]
 ```
 
-**Hint:** Load values into hash map, iterate over nums and check hash map for complement
+<details>
+  <summary>**Hint:**</summary>
+  Load values into hash map, iterate over nums and check hash map for complement
+</details>
 
 ```python3
 class Solution:
