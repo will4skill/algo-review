@@ -969,6 +969,24 @@ nums = [2,7,11,15], target = 9 #=> [0,1]
 ```
 
 <details>
+  <summary>Click me</summary>
+
+  ### Heading
+  1. Foo
+  2. Bar
+     * Baz
+     * Qux
+
+  ### Some Javascript
+  ```js
+  function logSomething(something) {
+    console.log('Something', something);
+  }
+  ```
+</details>
+
+
+<details>
   <summary>**Hint:**</summary>
   Load values into hash map, iterate over nums and check hash map for complement
 </details>
