@@ -4,7 +4,7 @@
 
 **Script:** An algorithm is a list of instructions, organized to complete a specific task. For example, a cake recipe is an algorithm. So is a workout routine for building muscle. In the context of coding problems, an algorithm is a sequence of computer instructions. When you create a computer algorithm, it is important to consider its efficiency. 
 
-You can measure computer algorithm efficiency through time complexity and space complexity. Time and space complexity are the amount of time required and extra memory consumed as the problem size grows.
+You can measure a computer algorithm's efficiency by evaluating its complexity and space complexity. Time and space complexity are the amount of time required and extra memory consumed as the problem size grows.
 
 Here is an example of a coding problem and an algorithm that you can use to solve it
 
