@@ -62,3 +62,18 @@ def binarySearch(nums, target):
       startIdx = midIdx + 1
     return -1
 ```
+
+## Video 3: What is a data structure?
+
+**Script:** Data structures organize computer data in various ways. They have varying strengths and weaknesses that can be leveraged to create efficient algorithms. Here are a few useful data structures and how to create them in Python3:
+
+1. String # store a sequence of characters
+2. List # O(1) access
+3. Map
+4. Set
+5. Deque # O(1) insert/delete
+6. Graph # Represent nodes and vertices
+7. Tree # 
+8. Linked list
+9. Heap
+10. Trie
