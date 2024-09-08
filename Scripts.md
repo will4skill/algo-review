@@ -2,11 +2,15 @@
 
 ## Video 1: What is an algorithm and how can you measure it?
 
-**Script:** Generally speaking, an algorithm is a list of instructions, organized to complete a specific task. For example, a cake recipe is an algorithm. So is a workout routine for building muscle. In the context of coding problems, an algorithm is a sequence of computer instructions. When you create a computer algorithm, it is important to consider its efficiency. You can measure computer algorithm efficiency through time complexity and space complexity. Time and space complexity are the amount of time required and extra memory consumed as the problem size grows.
+**Script:** An algorithm is a list of instructions, organized to complete a specific task. For example, a cake recipe is an algorithm. So is a workout routine for building muscle. In the context of coding problems, an algorithm is a sequence of computer instructions. When you create a computer algorithm, it is important to consider its efficiency. 
 
-Here is an example of a coding problem:
+You can measure computer algorithm efficiency through time complexity and space complexity. Time and space complexity are the amount of time required and extra memory consumed as the problem size grows.
 
-given an array an unsored of positive integers like this one: [1,2,3,4,5,1,5,11] find the largest value. You can solve this with a simple for loop
+Here is an example of a coding problem and an algorithm that you can use to solve it
+
+given an array of unsorted positive integers like this one: [1,2,3,4,5,1,5,11] find the largest value. 
+
+You can solve this problem with a simple for loop
 
 ```python
 def findLargestValue(nums):
@@ -19,7 +23,7 @@ def findLargestValue(nums):
 In this case, the time complexity is O(n)
 And the space complexity is O(1)
 
-**Disclaimer** Yes, you can also solve it like this **max(nums)** and get the same answer
+**Disclaimer** Yes, I am aware that you can also solve it like this **max(nums)** and get the same answer
 
 ## Video 2: What is Big-O Notation?
 
@@ -94,8 +98,9 @@ In the next 10 videos, I'll cover the basics API of each of these
 7. Copy element
 8. isalph()
 9. isdigit
-10. starts with
-11. search list "i" in "string"
+10. Starts with
+11. Search list "i" in "string"
+12. Get length
 ```
 
 ## Video 5: How do Lists work in Python?
@@ -113,14 +118,57 @@ In the next 10 videos, I'll cover the basics API of each of these
 8. reverse
 9. Iterate over
 10. copy
-11. Iterate over list 
+11. Iterate over list
+12. Get length
 ```
 ## Video 6: How do Deques work in Python?
+
+**Script:** A deque or double ended queue is another linear data structures. Because it allows you to insert and remove from either side of the in constant time, they are useful for situations where a stack or traditional queue are needed
+
+1. Create a stack
+2. Create a queue
+3. Add values
+4. pop
+5. popleft
+6. appendleft
+7. Convert to list
+8. Iterate over 
+
 ## Video 7: How do Sets work in Python?
+
+**Script:** A set is another linear data structure that, like arrays, stores sequential data. The main difference is, a set can only store unique values. Because the values in a set are unique, they can be searched for in constant time. 
+
+1. Create a set
+2. Add values
+3. Add duplicate values
+4. Search for value
+5. Remove value
+6. Convert list to set
+7. Convert set to list
+8. Iterate over
+
 ## Video 8: How do Maps work in Python?
 ## Video 9: How can you make a Graph (Adj List) in Python?
 ## Video 10: How do you make a Binary Tree in Python?
 ## Video 11: How do you make a Linked List in Python?
 ## Video 12: How do you make a Heap in Python?
 ## Video 13: How do you make a Trie in Python?
+## Video 14: How do you create a custom sort in Python?
+
+## Video 15: How do you MergeSort/Quicksort in Python?
+## Video 16: How do you reverse a Linked List?
+## Video 17: How do you perform level order traversal on a tree / graph?
+## Video 18: How do you determine the height of a binary tree?
+## Video 19: How do you convert a tree to a graph?
+## Video 20: How do you binary search a sorted list? How do modify to find the min/max?
+## Video 21: How do you bfs (sshortest path) and dfs on a graph?
+## Video 22: How do you convert edges to adjList (undirected, directed)?
+## Video 23: How do you topo sort a graph?
+## Video 24: How do you check for cycles in a graph?
+## Video 25: How do you find the shortest path in a weighted graph?
+## Video 26: How do you create a trie for scratch?
+## Video 27: What are some useful bit manipulation patterns for coding problems?
+## Video 28: How do you calculate Permutations, Combinations and Subsets programatically?
+## Video 29: What are some examples of sliding window variations?
+## Video 30: What are the variations of intervals in coding problems?
 
