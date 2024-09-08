@@ -73,7 +73,54 @@ def binarySearch(nums, target):
 4. Set
 5. Deque # O(1) insert/delete
 6. Graph # Represent nodes and vertices
-7. Tree # 
+7. Binary Tree # 
 8. Linked list
 9. Heap
 10. Trie
+
+In the next 10 videos, I'll cover the basics API of each of these 
+
+## Video 4: How do Strings work in Python?
+
+**Script:** Strings are data structures that store a sequence characters. Here is how to manipulate strings in Python:
+
+```python3
+1. Create a strings
+2. Concatenate strings
+3. Iterate over string
+4. Convert string to ascii
+5. Convert string into an array
+6. Access element
+7. Copy element
+8. isalph()
+9. isdigit
+10. starts with
+11. search list "i" in "string"
+```
+
+## Video 5: How do Lists work in Python?
+
+**Script:** Lists/Arrays are extremely important data structures. Like strings they store sequences of data, but they are not limited to characters. 
+
+```python3
+1. create a list
+2. append element
+3. insert element
+4. remove element
+5. find min/max
+6. sort
+7. slice
+8. reverse
+9. Iterate over
+10. copy
+11. Iterate over list 
+```
+## Video 6: How do Deques work in Python?
+## Video 7: How do Sets work in Python?
+## Video 8: How do Maps work in Python?
+## Video 9: How can you make a Graph (Adj List) in Python?
+## Video 10: How do you make a Binary Tree in Python?
+## Video 11: How do you make a Linked List in Python?
+## Video 12: How do you make a Heap in Python?
+## Video 13: How do you make a Trie in Python?
+
