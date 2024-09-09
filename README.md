@@ -1262,11 +1262,11 @@ const threeSum = (nums) => {
           if(sum === 0){
               const arr=[nums[i], nums[left], nums[right]]
               result.push(arr)
-              while(left < right && nums[left] === nums[left+1]){
+              while(left < right && nums[left] === nums[left+1]){ // Ignore duplicates
                   left++
               }
-              while(left < right && nums[right] === nums[right-1]){
-                  right--
+              while(left < right && nums[right] === nums[right-1]){ // Ignore duplicates
+                  right-- 
               }
               left++
               right--
