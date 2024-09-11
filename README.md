@@ -968,9 +968,14 @@ type("caty") is str #=> True
 nums = [2,7,11,15], target = 9 #=> [0,1]
 ```
 
-**Hint:** Load values into hash map, iterate over nums and check hash map for complement
+<details>
+  <summary>Hint:</summary>
+  Load values into hash map, iterate over nums and check hash map for complement
+</details>
 
-### Some Javascript
+<details>
+  <summary>Solution:</summary>
+
 ```python3
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -982,6 +987,8 @@ class Solution:
 	    numMap[nums[i]] = i
 	return []  # No solution found
 ```
+</details>
+
 **Time:** O(n)
 **Space:** O(n)
 
