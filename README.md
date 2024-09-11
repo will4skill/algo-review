@@ -1517,7 +1517,9 @@ nums = [100,4,200,1,3,2] #=> 4
 nums = [0,3,7,2,5,8,4,6,0,1] #=> 9
 ```
 
-**Hint:** Maybe Recursive DP. Maintain global max. For each number use a set to traverse as for as possible, once you can't, compare that local max with the global max distance, only travere + direction otherwise you'll need some kind of visited set
+**Hint:** Maybe Recursive DP. Maintain global max. 
+
+First, convert the list into a set. For each number in the set, traverse as for as possible. Once you can't go any further, compare that local max with the global max distance. Only traverse in + direction. Otherwise, you'll need some kind of visited set
 
 ```python3
 def longestConsecutive(self, nums):
