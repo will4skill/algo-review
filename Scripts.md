@@ -163,7 +163,7 @@ In the next 10 videos, I'll cover the basics API of each of these
 ## Video 20: How do you binary search a sorted list? How do modify to find the min/max?
 ## Video 21: How do you bfs (sshortest path) and dfs on a graph?
 ## Video 22: How do you convert edges to adjList (undirected, directed)?
-## Video 23: How do you topo sort a graph?
+## Video 23: How do you topo sort a graph? (DFS vs BFS)
 ## Video 24: How do you check for cycles in a graph?
 ## Video 25: How do you find the shortest path in a weighted graph?
 ## Video 26: How do you create a trie for scratch?
