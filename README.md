@@ -1588,6 +1588,11 @@ nums = [0,1,0] #=> 2
 
 **Hint:** Maybe Recursive DP. Keep track of global max, if curr == 0 subract 1 from count if curr == 1 add 1.  If count == 0, start new subarray length 1. If count is in hashmap replace globalMax iff new count is longer if it is not in the hashmap, add a new hashmap for it
 
+![image](https://github.com/user-attachments/assets/d473b182-78c1-4ae5-a1a8-662bc9dc1410)
+
+Tim note: the longest sub array occurs between A and C. This is tracked by adding a particular count idx only once and checking the distance each time it is encountered again in the future. So you are looking for the same count values with the most distance apart. Note that the horizontal line is at -2, so the points don't have to be a zero. 
+
+
 ```python3
 class Solution:
     def findMaxLength(self, nums: List[int]) -> int:
