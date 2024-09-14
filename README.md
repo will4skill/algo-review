@@ -1795,7 +1795,7 @@ nums = [1,3,-1,-3,5,3,6,7], k = 3 #=> [3,3,5,5,6,7]
 nums = [1], k = 1  #=> [1]
 ```
 
-**Hint:** Use deque. Find the max value in the initial window position and save that value in the output array. Start with nums[0] in queue. If new element is smaller, add it to right. Add left most val to output. Max value is always left most value. Remove left value when it is out of bounds. When adding a new value to queue, remove all smaller values. *Monotonically decreasing queue [queue always decreasing]
+**Hint:** This is hard to understand because you are looking for the largest single number, not the window sum. Use deque. Find the max value in the initial window position and save that value in the output array. Start with nums[0] in queue. If new element is smaller, add it to right. Add left most val to output. Max value is always left most value. Remove left value when it is out of bounds. When adding a new value to queue, remove all smaller values. *Monotonically decreasing queue [queue always decreasing]
 
 ```python3
 class Solution:
