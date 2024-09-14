@@ -2102,19 +2102,27 @@ temperatures = [30,40,50,60] #=> [1,1,1,0]
 temperatures = [30,60,90] #=> [1,1,0]
 ```
 
-**Hint:** Create an answer array with same length as temperature array and initialize it to zeros. Iterate over temperatures. If stack is not empty, there are previous days that have not seen a warmer day.  While curr temp is > preday, set answer[prevDay] = currDay - prevDay. Push curr idx (currDay) onto stack. Note: you are pushing an offset, temp tuple. Return stack
+**Hint:** Create an answer array with same length as temperature array and initialize it to zeros. Iterate over temperatures. Use a stack to store days that still need a future temperature. If stack is not empty, there are previous days that have not seen a warmer day.  While curr temp is > preday, set answer[prevDay] = currDay - prevDay. Push curr idx (currDay) onto stack. Note: you are pushing an offset, temp tuple. Return stack
 
 ```python3
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        # Initialize the result list with 0s, one for each temperature
         res = [0] * len(temperatures)
-        stack = []  # pair: [temp, index]
+        # Stack to store pairs of (temperature, index)
+        stack = []
 
+        # Iterate through the list of temperatures with index and value
         for i, t in enumerate(temperatures):
+            # Check if the current temperature is greater than the temperature at the top of the stack
             while stack and t > stack[-1][0]:
+                # Pop the top element from the stack
                 stackT, stackInd = stack.pop()
+                # Calculate the number of days until a warmer temperature
                 res[stackInd] = i - stackInd
+            # Push the current temperature and its index onto the stack
             stack.append((t, i))
+        
         return res
 ```
 **Time:** O(n)
