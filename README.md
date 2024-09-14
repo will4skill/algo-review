@@ -1800,23 +1800,32 @@ nums = [1], k = 1  #=> [1]
 ```python3
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        output = []
-        q = collections.deque()  # index
-        l = r = 0
-        # O(n) O(n)
+        output = []  # This will store the maximum values for each window
+        q = collections.deque()  # A deque to store indices of elements in the current window
+        l = r = 0  # Initialize left and right pointers for the sliding window
+
+        # Iterate through the array with the right pointer
         while r < len(nums):
-            # pop smaller values from q
+            # Remove indices from the deque while they are smaller than the current element
+            # This ensures that the deque always has indices of elements in decreasing order
             while q and nums[q[-1]] < nums[r]:
                 q.pop()
+            
+            # Add the current element's index to the deque
             q.append(r)
-            # remove left val from window
+
+            # Remove the leftmost element if it's out of the current window
             if l > q[0]:
                 q.popleft()
+            
+            # If the window has reached size k, record the maximum for this window
             if (r + 1) >= k:
-                output.append(nums[q[0]])
-                l += 1
-            r += 1
-        return output
+                output.append(nums[q[0]])  # The element at the front of the deque is the largest
+                l += 1  # Move the left pointer to shrink the window
+            
+            r += 1  # Expand the window by moving the right pointer
+
+        return output  # Return the list of maximums for each window
 ```
 **Time:** O(n)
 **Space:** O(n)
