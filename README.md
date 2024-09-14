@@ -1622,7 +1622,7 @@ nums = [1,1,1], k = 2 #=> 2
 nums = [1,2,3], k = 3] #=> 2
 ```
 
-**Hint:** Maybe Recursive DP. Keep a global count, use a HashMap. For each number in arr, increament local sum. If sum - k is in the hashmap, increment the global count with hashed value, either way add the sum to the hash map or increment it if it is already there
+**Hint:** Maybe Recursive DP. Keep a global count, use a HashMap. For each number in arr, increament the running sum total. If sum - k is in the hashmap, increment the global count with hashed value, either way add the sum to the hash map or increment it if it is already there (it might be there already, because negatives are possible)
 
 ```python3
 class Solution:
