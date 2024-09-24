@@ -238,7 +238,7 @@ def dijkstra(graph, source):
         # Get the vertex with the smallest distance
         current_distance, current_vertex = heapq.heappop(priority_queue)
         # Check if this path is already longer than the known shortest path
-        if current_distance > distances[current_vertex]:
+        if current_distance > distances[current_vertex]: # Note: you could slightly improve efficiency with a visited set
             continue
         # Explore neighbors
         for neighbor, weight in graph[current_vertex].items():
