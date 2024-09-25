@@ -853,6 +853,10 @@ heapq.heapify(arr) ✅
 while arr:
     print(heapq.heappop(arr)) #=> 1 2 4 5 8
 
+# Tuples in heaps
+# You can add tuples like this (1, "a") or this (1, 5) to your heap.
+# Just make sure all the elements in the tuple are orderable so they can be compared
+
 #################################################################################################
 # Tuples: are like arrays but immutable
 my_tuple = ("vale", "Italy", 105)
