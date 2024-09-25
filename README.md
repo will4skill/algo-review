@@ -224,33 +224,48 @@ Bellman-Ford: Can handle negative weights. Can identify negative cycles.
 ```python3
 # ChatGPT Dijkstra
 # Time: O((V + E) * log(V)), where V is the number of vertices and E is the number of edges in the graph. The log(V) factor comes from the priority queue operations.
-# Space: O(V) for distances and priority_queue
+# Space: O(V + E) for distances and priority_queue (Tim note: and previous structure??)
 
 import heapq
 def dijkstra(graph, source):
-    # Dictionary to store the shortest distances from the source vertex
-    distances = {vertex: float('inf') for vertex in graph}
-    distances[source] = 0
-    # Priority queue to store vertices and their distances
-    priority_queue = [(0, source)]
-
+    # Initialize distances to all nodes as infinity except the source, which is 0
+    dist = {vertex: float('inf') for vertex in graph}
+    dist[source] = 0
+    
+    priority_queue = [(0, source)]  # Min-heap priority (distance, node)
+    visited = set() # Set to keep track of visited nodes
+    
+    # Previous dictionary to store the shortest path
+    previous = {vertex: None for vertex in graph}
+    
+    # While the priority queue is not empty
     while priority_queue:
-        # Get the vertex with the smallest distance
-        current_distance, current_vertex = heapq.heappop(priority_queue)
-        # Check if this path is already longer than the known shortest path
-        if current_distance > distances[current_vertex]: # Note: you could slightly improve efficiency with a visited set
+        # Pop the node with the smallest distance
+        current_dist, current_node = heapq.heappop(priority_queue)
+        
+        # If the node has already been visited, skip it
+        if current_node in visited:
             continue
-        # Explore neighbors
-        for neighbor, weight in graph[current_vertex].items():
-            new_distance = current_distance + weight
-            # If a shorter path is found, update the distance
-            if new_distance < distances[neighbor]:
-                distances[neighbor] = new_distance
-                heapq.heappush(priority_queue, (new_distance, neighbor))
+        # Mark the node as visited
+        visited.add(current_node)
+        # Explore the neighbors of the current node
+        for neighbor_node, weight in graph[current_node].items():
+            if neighbor_node in visited:
+                continue  # Skip if the neighbor has already been visited
 
-    return distances
+            # Calculate the new tentative distance to the neighbor
+            alt = current_dist + weight
+            
+            # If the new distance is shorter, update the shortest known distance
+            if alt < dist[neighbor_node]:
+                dist[neighbor_node] = alt
+                previous[neighbor_node] = current_node  # Update the previous node for path reconstruction
+                heapq.heappush(priority_queue, (alt, neighbor_node))  # Push the neighbor with updated distance
 
-# Example usage:
+    # Return the distances and the previous node dictionary for path reconstruction
+    return dist, previous
+
+# Example usage
 graph = {
     'A': {'B': 1, 'C': 4},
     'B': {'A': 1, 'C': 2, 'D': 5},
@@ -258,10 +273,13 @@ graph = {
     'D': {'B': 5, 'C': 1}
 }
 
-start_vertex = 'A'
-result = dijkstra(graph, start_vertex)
+source = 'A'
+distances, previous = dijkstra(graph, source)
 
-print(f"Shortest distances from {start_vertex}: {result}")
+# Output the shortest distances from the source node
+print(f"Shortest distances from {source}: {distances}")
+# Output the previous node path for path reconstruction
+print(f"Previous nodes (for path reconstruction): {previous}")
 ```
 
 ```python3
