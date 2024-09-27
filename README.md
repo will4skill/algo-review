@@ -454,6 +454,131 @@ print(maxLength)  # Output: 3
 ![intervalPattern](https://github.com/will4skill/algo-review/assets/10373005/1b2a1c9e-b20d-48c8-a385-e2d6efa64204)
 
 17. **Kruskal's MST Algorithm:**
+```python3
+# ChatGPT
+# Kruskal's algorithm: Kruskal's algorithm works well on sparse graphs, especially when the edges are already sorted or when edge sorting is efficient.
+# Time Complexity: O(ElogE) or O(ElogV), where V is the number of vertices and E is the number of edges in the graph.
+# Space Complexity: O(V+E), where V is the number of vertices and E is the number of edges in the graph.
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+
+    def find(self, u):
+        if self.parent[u] != u:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
+
+    def union(self, u, v):
+        rootU = self.find(u)
+        rootV = self.find(v)
+        if rootU != rootV:
+            if self.rank[rootU] > self.rank[rootV]:
+                self.parent[rootV] = rootU
+            elif self.rank[rootU] < self.rank[rootV]:
+                self.parent[rootU] = rootV
+            else:
+                self.parent[rootV] = rootU
+                self.rank[rootU] += 1
+
+def kruskal(graph):
+    # Extract all edges (u, v, weight) and sort them by weight
+    edges = []
+    for u in graph:
+        for v, weight in graph[u].items():
+            edges.append((weight, u, v))
+    edges.sort()  # Sort edges by weight
+    
+    # Initialize Union-Find for cycle detection
+    nodes = {u for u in graph} | {v for v in graph}
+    node_index = {node: idx for idx, node in enumerate(nodes)}
+    uf = UnionFind(len(nodes))
+    
+    mst = []
+    total_weight = 0
+    
+    # Process each edge in increasing order of weight
+    for weight, u, v in edges:
+        u_idx = node_index[u]
+        v_idx = node_index[v]
+        
+        # If u and v are in different components, add the edge to the MST
+        if uf.find(u_idx) != uf.find(v_idx):
+            uf.union(u_idx, v_idx)
+            mst.append((u, v, weight))
+            total_weight += weight
+    
+    return mst, total_weight
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'C': 2, 'D': 6},
+    'C': {'A': 4, 'B': 2, 'D': 3},
+    'D': {'B': 6, 'C': 3}
+}
+
+mst, total_weight = kruskal(graph)
+
+# Output the MST and total weight
+print(f"Minimum Spanning Tree: {mst}")
+print(f"Total weight: {total_weight}")
+```
+
+18. **Prim's MST Algorithm:**
+```python3
+# Prim's algorithm: Prim's algorithm is best when the graph is dense, i.e., E is close to V^2
+# Time Complexity: O((V+E)logV), where V is the number of vertices and E is the number of edges in the graph.
+# Space Complexity: O(V+E), where V is the number of vertices and E is the number of edges in the graph.
+import heapq
+
+def prim(graph, start):
+    # Initialize an empty MST
+    mst = []
+    total_weight = 0
+    
+    # Priority queue to store (weight, node1, node2), starting from the initial node
+    priority_queue = [(0, start, None)]  # (weight, current_node, previous_node)
+    
+    # Set to keep track of visited nodes
+    visited = set()
+    
+    while priority_queue:
+        # Pop the edge with the smallest weight
+        weight, u, prev = heapq.heappop(priority_queue)
+        # If the node has already been visited, skip it
+        if u in visited:
+            continue
+        # Add the edge to the MST (skip the first node as it has no previous)
+        if prev is not None:
+            mst.append((prev, u, weight))
+            total_weight += weight
+        # Mark the current node as visited
+        visited.add(u)
+        # Explore the neighbors
+        for v, edge_weight in graph[u].items():
+            if v not in visited:
+                # Push the edge into the priority queue
+                heapq.heappush(priority_queue, (edge_weight, v, u))
+    
+    return mst, total_weight
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'C': 2, 'D': 6},
+    'C': {'A': 4, 'B': 2, 'D': 3},
+    'D': {'B': 6, 'C': 3}
+}
+
+start = 'A'
+mst, total_weight = prim(graph, start)
+
+# Output the MST and total weight
+print(f"Minimum Spanning Tree: {mst}")
+print(f"Total weight: {total_weight}")
+
+```
 
 ## Python3 Cheatsheet
 ```python3
