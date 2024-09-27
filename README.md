@@ -527,6 +527,7 @@ print(f"Total weight: {total_weight}")
 
 18. **Prim's MST Algorithm:**
 ```python3
+# ChatGPT
 # Prim's algorithm: Prim's algorithm is best when the graph is dense, i.e., E is close to V^2
 # Time Complexity: O((V+E)logV), where V is the number of vertices and E is the number of edges in the graph.
 # Space Complexity: O(V+E), where V is the number of vertices and E is the number of edges in the graph.
@@ -577,8 +578,64 @@ mst, total_weight = prim(graph, start)
 # Output the MST and total weight
 print(f"Minimum Spanning Tree: {mst}")
 print(f"Total weight: {total_weight}")
-
 ```
+
+19. **Union Find Data Structure:**
+```python3
+# ChatGPT:
+# Time Complexity: O(α(V)) for both find and union operations which is nearnly constant time. Note: α is the inverse Ackermann function
+# Space Complexity: O(V), due to the storage of the parent and rank arrays
+import heapq
+
+def prim(graph, start):
+    # Initialize an empty MST
+    mst = []
+    total_weight = 0
+    
+    # Priority queue to store (weight, node1, node2), starting from the initial node
+    priority_queue = [(0, start, None)]  # (weight, current_node, previous_node)
+    
+    # Set to keep track of visited nodes
+    visited = set()
+    
+    while priority_queue:
+        # Pop the edge with the smallest weight
+        weight, u, prev = heapq.heappop(priority_queue)
+        # If the node has already been visited, skip it
+        if u in visited:
+            continue
+        # Add the edge to the MST (skip the first node as it has no previous)
+        if prev is not None:
+            mst.append((prev, u, weight))
+            total_weight += weight
+        # Mark the current node as visited
+        visited.add(u)
+        # Explore the neighbors
+        for v, edge_weight in graph[u].items():
+            if v not in visited:
+                # Push the edge into the priority queue
+                heapq.heappush(priority_queue, (edge_weight, v, u))
+    
+    return mst, total_weight
+
+# Example graph represented as an adjacency list
+graph = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'C': 2, 'D': 6},
+    'C': {'A': 4, 'B': 2, 'D': 3},
+    'D': {'B': 6, 'C': 3}
+}
+
+start = 'A'
+mst, total_weight = prim(graph, start)
+
+# Output the MST and total weight
+print(f"Minimum Spanning Tree: {mst}")
+print(f"Total weight: {total_weight}")
+```
+
+20. **Prefix Sum:**
+21. **Quick Select:** 
 
 ## Python3 Cheatsheet
 ```python3
