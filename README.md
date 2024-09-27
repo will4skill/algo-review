@@ -453,6 +453,8 @@ print(maxLength)  # Output: 3
 16. **Intervals:** https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed
 ![intervalPattern](https://github.com/will4skill/algo-review/assets/10373005/1b2a1c9e-b20d-48c8-a385-e2d6efa64204)
 
+17. **Kruskal's MST Algorithm:**
+
 ## Python3 Cheatsheet
 ```python3
 # https://www.valentinog.com/blog/python-for-js/
