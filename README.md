@@ -62,7 +62,7 @@ print("Sorted array:", sorted_array)
 ```
 
 ```python3
-QuickSort: Chat GPT Time: O(nlogn) avg, O(n^2) worst, Space: O(1)
+# QuickSort: Chat GPT Time: O(nlogn) avg, O(n^2) worst, Space: O(1)
 def quicksort_inplace(arr, low, high):
     if low < high:
         pivot_index = partition(arr, low, high)
@@ -85,8 +85,8 @@ def partition(arr, low, high):
         if arr[j] <= pivot:
             i += 1
             arr[i], arr[j] = arr[j], arr[i]
-
-    arr[i + 1], arr[high] = arr[high], arr[i + 1] # arr[i + 1] is one idx past the largest element less than pivot
+    # arr[i + 1] is one idx past the largest element less than pivot
+    arr[i + 1], arr[high] = arr[high], arr[i + 1] 
     return i + 1
 
 # Example usage:
