@@ -592,9 +592,94 @@ class UnionFind:
     def connected(self, node1, node2):
         # Check if two nodes are in the same set
         return self.find(node1) == self.find(node2)
+```
 
 20. **Prefix Sum:**
-21. **Quick Select:** 
+```python3
+# ChatGPT
+# Time: O(n)
+def prefix_sum(nums):
+    prefix_sums = [0] * len(nums)
+    prefix_sums[0] = nums[0]  # First element is the same
+    for i in range(1, len(nums)):
+        # Add the current element to the sum of previous elements
+        prefix_sums[i] = prefix_sums[i - 1] + nums[i]  
+    return prefix_sums
+# Time: O(1)
+def range_sum_query(nums, left, right):
+    # First, compute the prefix sums
+    prefix_sums = prefix_sum(nums)
+
+    # If left is 0, just return the prefix_sum[right]
+    if left == 0:
+        return prefix_sums[right]
+    # Otherwise, subtract prefix_sum[left - 1] from prefix_sum[right]
+    return prefix_sums[right] - prefix_sums[left - 1]
+
+# Example usage:
+nums = [1, 2, 3, 4, 5]
+left = 1
+right = 3
+range_sum_query(nums, left, right) #=> 9 
+```
+
+22. **Quick Select:**
+```python3
+# ChatGPT
+# Time: O(n) avg, O(n^2) worst Space: O(1)
+import random
+def quickselect(arr, k):
+    """
+    Returns:
+    The k-th smallest element in the array.
+    """
+    def partition(left, right, pivot_index):
+        pivot_value = arr[pivot_index]
+        # Move the pivot to the end
+        arr[pivot_index], arr[right] = arr[right], arr[pivot_index]
+        store_index = left
+        
+        # Move all elements smaller than pivot to the left
+        for i in range(left, right):
+            if arr[i] < pivot_value:
+                arr[store_index], arr[i] = arr[i], arr[store_index]
+                store_index += 1
+        
+        # Move pivot to its final place
+        arr[right], arr[store_index] = arr[store_index], arr[right]
+        return store_index
+
+    def select(left, right, k_smallest):
+        """
+        Recursively partition the array and select the k-th smallest element.
+        """
+        if left == right:  # If the list contains only one element
+            return arr[left]
+        
+        # Select a random pivot index
+        pivot_index = random.randint(left, right)
+
+        # Find the pivot position in a sorted list
+        pivot_index = partition(left, right, pivot_index)
+
+        # If the pivot is in its final sorted position
+        if k_smallest == pivot_index:
+            return arr[k_smallest]
+        elif k_smallest < pivot_index:
+            # Go left
+            return select(left, pivot_index - 1, k_smallest)
+        else:
+            # Go right
+            return select(pivot_index + 1, right, k_smallest)
+
+    # Since k is 1-based, we need to pass k-1 as the zero-based index
+    return select(0, len(arr) - 1, k - 1)
+
+# Example usage
+arr = [3, 2, 1, 5, 6, 4]
+k = 2
+print(f"The {k}-th smallest element is:", quickselect(arr, k))
+```
 
 ## Python3 Cheatsheet
 ```python3
