@@ -459,70 +459,44 @@ print(maxLength)  # Output: 3
 # Kruskal's algorithm: Kruskal's algorithm works well on sparse graphs, especially when the edges are already sorted or when edge sorting is efficient.
 # Time Complexity: O(ElogE) or O(ElogV), where V is the number of vertices and E is the number of edges in the graph.
 # Space Complexity: O(V+E), where V is the number of vertices and E is the number of edges in the graph.
-class UnionFind:
-    def __init__(self, n):
-        self.parent = list(range(n))
-        self.rank = [0] * n
+def kruskal_mst(vertices, edges):
+    """
+    vertices: Number of vertices in the graph (0 to V-1)
+    edges: List of tuples (weight, u, v) where u and v are the vertices and weight is the edge weight
+    """
+    # Sort edges by their weight
+    edges.sort(key=lambda x: x[0])
 
-    def find(self, u):
-        if self.parent[u] != u:
-            self.parent[u] = self.find(self.parent[u])
-        return self.parent[u]
+    # Initialize the Union-Find structure
+    uf = UnionFind(vertices)
 
-    def union(self, u, v):
-        rootU = self.find(u)
-        rootV = self.find(v)
-        if rootU != rootV:
-            if self.rank[rootU] > self.rank[rootV]:
-                self.parent[rootV] = rootU
-            elif self.rank[rootU] < self.rank[rootV]:
-                self.parent[rootU] = rootV
-            else:
-                self.parent[rootV] = rootU
-                self.rank[rootU] += 1
+    mst = []  # To store the edges in the Minimum Spanning Tree
+    mst_cost = 0  # Total cost of the MST
 
-def kruskal(graph):
-    # Extract all edges (u, v, weight) and sort them by weight
-    edges = []
-    for u in graph:
-        for v, weight in graph[u].items():
-            edges.append((weight, u, v))
-    edges.sort()  # Sort edges by weight
-    
-    # Initialize Union-Find for cycle detection
-    nodes = {u for u in graph} | {v for v in graph}
-    node_index = {node: idx for idx, node in enumerate(nodes)}
-    uf = UnionFind(len(nodes))
-    
-    mst = []
-    total_weight = 0
-    
-    # Process each edge in increasing order of weight
     for weight, u, v in edges:
-        u_idx = node_index[u]
-        v_idx = node_index[v]
-        
-        # If u and v are in different components, add the edge to the MST
-        if uf.find(u_idx) != uf.find(v_idx):
-            uf.union(u_idx, v_idx)
-            mst.append((u, v, weight))
-            total_weight += weight
-    
-    return mst, total_weight
+        # Check if adding this edge creates a cycle
+        if not uf.connected(u, v):
+            uf.union(u, v)
+            mst.append((u, v, weight))  # Add the edge to the MST
+            mst_cost += weight  # Add the edge weight to the MST total cost
 
-# Example graph represented as an adjacency list
-graph = {
-    'A': {'B': 1, 'C': 4},
-    'B': {'A': 1, 'C': 2, 'D': 6},
-    'C': {'A': 4, 'B': 2, 'D': 3},
-    'D': {'B': 6, 'C': 3}
-}
+    return mst, mst_cost
 
-mst, total_weight = kruskal(graph)
+# Example usage:
+vertices = 5  # Number of vertices in the graph (0 to 4)
+edges = [
+    (1, 0, 1),
+    (4, 0, 2),
+    (3, 1, 2),
+    (2, 1, 3),
+    (5, 2, 3),
+    (7, 3, 4),
+    (6, 2, 4)
+]
 
-# Output the MST and total weight
-print(f"Minimum Spanning Tree: {mst}")
-print(f"Total weight: {total_weight}")
+mst, mst_cost = kruskal_mst(vertices, edges)
+print("Minimum Spanning Tree:", mst)
+print("Total Cost of MST:", mst_cost)
 ```
 
 18. **Prim's MST Algorithm:**
@@ -587,52 +561,37 @@ print(f"Total weight: {total_weight}")
 # Space Complexity: O(V), due to the storage of the parent and rank arrays
 import heapq
 
-def prim(graph, start):
-    # Initialize an empty MST
-    mst = []
-    total_weight = 0
-    
-    # Priority queue to store (weight, node1, node2), starting from the initial node
-    priority_queue = [(0, start, None)]  # (weight, current_node, previous_node)
-    
-    # Set to keep track of visited nodes
-    visited = set()
-    
-    while priority_queue:
-        # Pop the edge with the smallest weight
-        weight, u, prev = heapq.heappop(priority_queue)
-        # If the node has already been visited, skip it
-        if u in visited:
-            continue
-        # Add the edge to the MST (skip the first node as it has no previous)
-        if prev is not None:
-            mst.append((prev, u, weight))
-            total_weight += weight
-        # Mark the current node as visited
-        visited.add(u)
-        # Explore the neighbors
-        for v, edge_weight in graph[u].items():
-            if v not in visited:
-                # Push the edge into the priority queue
-                heapq.heappush(priority_queue, (edge_weight, v, u))
-    
-    return mst, total_weight
+class UnionFind:
+    def __init__(self, size):
+        # Initialize the parent and rank arrays
+        self.parent = list(range(size))  # Each element is its own parent initially
+        self.rank = [1] * size  # Rank (size of the tree) starts at 1 for each element
 
-# Example graph represented as an adjacency list
-graph = {
-    'A': {'B': 1, 'C': 4},
-    'B': {'A': 1, 'C': 2, 'D': 6},
-    'C': {'A': 4, 'B': 2, 'D': 3},
-    'D': {'B': 6, 'C': 3}
-}
+    def find(self, node):
+        # Find the root of the node, with path compression
+        if self.parent[node] != node:
+            self.parent[node] = self.find(self.parent[node])  # Path compression
+        return self.parent[node]
 
-start = 'A'
-mst, total_weight = prim(graph, start)
+    def union(self, node1, node2):
+        # Union two sets, with union by rank
+        root1 = self.find(node1)
+        root2 = self.find(node2)
 
-# Output the MST and total weight
-print(f"Minimum Spanning Tree: {mst}")
-print(f"Total weight: {total_weight}")
-```
+        if root1 != root2:
+            # Union by rank: attach the smaller tree under the larger tree
+            if self.rank[root1] > self.rank[root2]:
+                self.parent[root2] = root1
+            elif self.rank[root1] < self.rank[root2]:
+                self.parent[root1] = root2
+            else:
+                # If ranks are the same, choose one root and increase its rank
+                self.parent[root2] = root1
+                self.rank[root1] += 1
+
+    def connected(self, node1, node2):
+        # Check if two nodes are in the same set
+        return self.find(node1) == self.find(node2)
 
 20. **Prefix Sum:**
 21. **Quick Select:** 
