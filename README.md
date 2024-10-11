@@ -288,17 +288,17 @@ def bellman_ford(graph, start):
     # Relax edges repeatedly
     for _ in range(vertices - 1):
 	# Iterate through all edges and update distances
-        for u in range(vertices):
-            for v, weight in graph[u].items():
-                if distances[u] + weight < distances[v]:
-                    distances[v] = distances[u] + weight
+        for node in range(vertices):
+            for neighbor, weight in graph[node].items():
+                if distances[node] + weight < distances[neighbor]:
+                    distances[neighbor] = distances[node] + weight
 
     # Check for negative cycles
-    for u in range(vertices):
-        for v, weight in graph[u].items():
-            if distances[u] + weight < distances[v]:
+    for node in range(vertices):
+        for neighbor, weight in graph[node].items():
+            if distances[node] + weight < distances[neighbor]:
                 raise ValueError("Graph contains a negative cycle")
-
+	
     return distances
 
 # Example usage:
