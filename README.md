@@ -228,40 +228,32 @@ Bellman-Ford: Can handle negative weights. Can identify negative cycles.
 
 import heapq
 def dijkstra(graph, source):
-    # Initialize distances to all nodes as infinity except the source, which is 0
+    # Initialize distances to all nodes as infinity except the source (0)
     dist = {vertex: float('inf') for vertex in graph}
     dist[source] = 0
-    
     priority_queue = [(0, source)]  # Min-heap priority (distance, node)
-    visited = set() # Set to keep track of visited nodes
+    visited = set([source]) # Set to keep track of visited nodes
     
     # Previous dictionary to store the shortest path
     previous = {vertex: None for vertex in graph}
     
-    # While the priority queue is not empty
     while priority_queue:
         # Pop the node with the smallest distance
         current_dist, current_node = heapq.heappop(priority_queue)
-        
-        # If the node has already been visited, skip it
-        if current_node in visited:
-            continue
-        # Mark the node as visited
-        visited.add(current_node)
         # Explore the neighbors of the current node
         for neighbor_node, weight in graph[current_node].items():
-            if neighbor_node in visited:
-                continue  # Skip if the neighbor has already been visited
-
-            # Calculate the new tentative distance to the neighbor
-            alt = current_dist + weight
-            
-            # If the new distance is shorter, update the shortest known distance
-            if alt < dist[neighbor_node]:
-                dist[neighbor_node] = alt
-                previous[neighbor_node] = current_node  # Update the previous node for path reconstruction
-                heapq.heappush(priority_queue, (alt, neighbor_node))  # Push the neighbor with updated distance
-
+            if neighbor_node not in visited:
+                visited.add(neighbor_node)
+                # Calculate the new tentative distance to the neighbor
+                alt = current_dist + weight
+                # If the new distance is shorter, 
+                # update the shortest known distance
+                if alt < dist[neighbor_node]:
+                    dist[neighbor_node] = alt
+                    # Update the previous node for path reconstruction
+                    previous[neighbor_node] = current_node  
+                    # Push the neighbor with updated distance
+                    heapq.heappush(priority_queue, (alt, neighbor_node))  
     # Return the distances and the previous node dictionary for path reconstruction
     return dist, previous
 
