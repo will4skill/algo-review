@@ -1106,6 +1106,10 @@ while arr:
 # Tuples in heaps
 # You can add tuples like this (1, "a") or this (1, 5) to your heap.
 # Just make sure all the elements in the tuple are orderable so they can be compared
+heapq.heappush(heap, (3, 'apple'))
+heapq.heappush(heap, (1, 'banana'))
+heapq.heappush(heap, (2, 'cherry'))
+# Note, first the most left element is used to order. If there is a tie, the next element is used
 
 #################################################################################################
 # Tuples: are like arrays but immutable
