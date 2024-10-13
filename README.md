@@ -906,7 +906,7 @@ s = "abc"
 print(s[0:2]) #=> ab
 
 # But they are immutable
-# s[0] = "A"
+# s[0] = "A" #=> Error
 
 # So this creates a new string
 s += "def"
@@ -930,6 +930,9 @@ strings = ["ab", "cd", "ef"]
 print("".join(strings)) #=> abcdef JS: strings.join("")
 "ab,cd,ef".split(',') #=> ["ab", "cd", "ef"] Note: " " is the default delim
 list("abcdef") #=> ['a', 'b', 'c', 'd', 'e', 'f'] # JS: "abcdef".split("")
+
+my_string = "test"
+my_string = my_string[:idx] + my_string[idx - 1:] # Remove char at idx 
 
 a = 5
 b = 10
