@@ -2055,6 +2055,8 @@ nums = [1], k = 1  #=> [1]
 
 **Hint:** This is hard to understand because you are looking for the largest single number, not the window sum. Use deque. Find the max value in the initial window position and save that value in the output array. Start with nums[0] in queue. If new element is smaller, add it to right. Add left most val to output. Max value is always left most value. Remove left value when it is out of bounds. When adding a new value to queue, remove all smaller values. *Monotonically decreasing queue [queue always decreasing]
 
+*Notes: you are adding the indices to the deque not the values. That way, you can keep track of when the current max element is out of bounds. 
+
 ```python3
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
