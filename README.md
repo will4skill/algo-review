@@ -3913,31 +3913,27 @@ s = "ABAB", k = 2 #=> 4
 s = "AABABBA", k = 1 #=> 4
 ```
 
-**Hint:** Use sliding window starting with L and R ptrs at idx 0. Use a map to count the number of current char. If the length of the window - the freq of the most frequent char in window is <= k, keep moving right ptr right. Else move left ptr until valid again. Return largest window
+**Hint:** Use a sliding window. Expand to the right and shrink from the left until it's valid again. 
+Note that you can avoid the 26 char scan by only tracking the maxFreq char, but that's not really needed. 
 
 ```python3
-class Solution:
-    def characterReplacement(self, s: str, k: int) -> int:
+class Solution(object):
+    def characterReplacement(self, s, k):
         count = {}
-        startIdx = 0
-        maxCount = 0
-        maxLength = 0
+        res = 0
+        l = 0
 
-        for endIdx in range(len(s)): # Keep expanding the window to the right
-            endChar = s[endIdx]
-            count[endChar] = count.get(endChar, 0) + 1
-            maxCount = max(maxCount, count[endChar])
-
-            if endIdx - startIdx + 1 - maxCount > k: # Too many bad chars, shrink the window
-                startChar = s[startIdx]
-                count[startChar] -= 1
-                startIdx += 1
-
-            maxLength = max(maxLength, endIdx - startIdx + 1) # Update global max if possible
-
-        return maxLength  
+        for r in range(len(s)):
+            count[s[r]] = 1 + count.get(s[r], 0)
+            # technically scanning 26 chars takes constant time
+            while (r - l + 1) - max(count.values()) > k:
+                count[s[l]] -= 1
+                l += 1
+            
+            res = max(res, r - l + 1)
+        return res
 ```
-**Time:** O(n)
+**Time:** O(26 * n)
 **Space:** O(n)
 
 ## 63. Largest Number ☠️
