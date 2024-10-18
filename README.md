@@ -3647,7 +3647,7 @@ class Solution:
 **Space:** O(1)
 
 ## 57. Longest Substring Without Repeating Characters ☠️ ☠️
-**Reference:** [https://leetcode.com/problems/longest-substring-without-repeating-characters/solutions/127839/longest-substring-without-repeating-characters/](https://neetcode.io/problems/longest-substring-without-duplicates)
+**Reference:** https://neetcode.io/problems/longest-substring-without-duplicates
 
 **Description:** Given a string, find the length of the longest substring without repeating characters.
 
@@ -3898,7 +3898,7 @@ class Solution:
 **Space:** O(n)
 
 ## 62. Longest Repeating Character Replacement ☠️ ☠️
-**Reference:** https://leetcode.com/problems/longest-repeating-character-replacement/solutions/91271/java-12-lines-o-n-sliding-window-solution-with-explanation/
+**Reference:** https://neetcode.io/problems/longest-repeating-substring-with-replacement
 
 **Description:** You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.
 
@@ -4057,8 +4057,7 @@ class Solution:
 **Space:** O(n)
 
 ## 65. Minimum Window Substring ☠️ ☠️ ☠️
-**Reference:** https://leetcode.com/problems/minimum-window-substring/solutions/26808/here-is-a-10-line-template-that-can-solve-most-substring-problems/
-ndec09
+**Reference:** https://neetcode.io/problems/minimum-window-with-characters
 
 **Description:** Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "". The testcases will be generated such that the answer is unique. Follow up: Could you find an algorithm that runs in O(m + n) time?
 
@@ -4075,7 +4074,7 @@ s = "a", t = "a" #=> "a"
 s = "a", t = "aa" #=> ""
 ```
 
-**Hint:** use a hashmap assisted with two pointers
+**Hint:** use a hashmap assisted with two pointers. Maintain has and need variables to quickly compare map to desired substring.
 "1. Use two pointers: start and end to represent a window.
 2. Move end to find a valid window.
 3. When a valid window is found, move start to find a smaller window."
@@ -4083,34 +4082,34 @@ s = "a", t = "aa" #=> ""
 ```python3
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        map = {}
-        for char in t:
-            map[char] = map.get(char, 0) + 1
+        if t == "":
+            return ""
 
-        startIdx, endIdx = 0, 0
-        minStart, minLen = 0, float('inf')
-        missingCharCount = len(t) # how many char is missing from current window
+        countT, window = {}, {}
+        for c in t:
+            countT[c] = 1 + countT.get(c, 0)
 
-        while endIdx < len(s):
-            char1 = s[endIdx]
-            map[char1] = map.get(char1, 0) # Add char1 to map if it is not already there
-            if map[char1] > 0: # is char1 a target character?
-                missingCharCount -= 1 # we shrink count because char is a target
-            map[char1] -= 1 # reduce count of seen char
-            endIdx += 1 # expand window
+        have, need = 0, len(countT)
+        res, resLen = [-1, -1], float("infinity")
+        l = 0
+        for r in range(len(s)):
+            c = s[r]
+            window[c] = 1 + window.get(c, 0)
 
-            while missingCharCount == 0: # all targets have been found
-                if minLen > endIdx - startIdx: # if we found a new best minLen
-                    minLen = endIdx - startIdx # update global minLen
-                    minStart = startIdx # Update start of new minWindow
+            if c in countT and window[c] == countT[c]:
+                have += 1
 
-                char2 = s[startIdx]
-                map[char2] = map.get(char2, 0) + 1 # add char2 back into targets
-                if map[char2] > 0: # Note that char2 could be negative (ie not in t)
-                    missingCharCount += 1 # increment count because we need to find char2
-                startIdx += 1 # shrink window startIdx
-
-        return "" if minLen == float('inf') else s[minStart:minStart + minLen]
+            while have == need:
+                if (r - l + 1) < resLen:
+                    res = [l, r]
+                    resLen = r - l + 1
+                    
+                window[s[l]] -= 1
+                if s[l] in countT and window[s[l]] < countT[s[l]]:
+                    have -= 1
+                l += 1
+        l, r = res
+        return s[l : r + 1] if resLen != float("infinity") else ""
 ```
 **Time:** O(n + m) ??? Tim note: you have to scan the t and n
 **Space:** O(n + m) ??? Tim note: to hold the chars of t and n in a map
