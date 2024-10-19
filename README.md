@@ -5288,6 +5288,36 @@ nums = [1], target = 0 #=> -1
 **Hint:** Use binary search. Find lowest number (modified binary search with if and else only). Determine which side of min target is on. Use normal binary search on appropriate side of array. Reurn target idx or -1.
 
 ```python3
+# Tim solution: use offset (shiftedIdx = (idx + offset) % len(nums)
+class Solution(object):
+    def search(self, nums, target):
+        startIdx , endIdx = 0, len(nums) - 1 
+        
+        while startIdx < endIdx:
+            midIdx = startIdx + (endIdx - startIdx) // 2
+            if nums[midIdx] > nums[endIdx]:
+                startIdx = midIdx + 1
+            else:
+                endIdx = midIdx
+                
+        offset = startIdx # 🔑 this gives you the first smallest
+        startIdx = 0
+        endIdx = len(nums) - 1
+
+        while startIdx <= endIdx:
+            midIdx = startIdx + (endIdx - startIdx) // 2
+            idxWithOffset = (midIdx + offset) % len(nums) # 🔑
+            midValue = nums[idxWithOffset]
+            if midValue == target: 
+                return idxWithOffset
+            elif midValue > target:
+                endIdx = midIdx - 1
+            else:
+                startIdx = midIdx + 1
+        return -1
+```
+
+```python3
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         # O(log n) Time Complexity
