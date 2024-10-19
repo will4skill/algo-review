@@ -5673,26 +5673,26 @@ class Solution:
         total = len(nums1) + len(nums2)
         half = total // 2
 
-        if len(B) < len(A):
+        if len(B) < len(A): # only run binary search on smaller arr
             A, B = B, A
 
         l, r = 0, len(A) - 1
-        while True:
-            i = (l + r) // 2  # A
-            j = half - i - 2  # B
+        while True: # Median is guarenteed
+            i = (l + r) // 2  # ptr to A right side of partition
+            j = half - i - 2  # ptr to B right side of partition
 
-            Aleft = A[i] if i >= 0 else float("-infinity")
-            Aright = A[i + 1] if (i + 1) < len(A) else float("infinity")
-            Bleft = B[j] if j >= 0 else float("-infinity")
-            Bright = B[j + 1] if (j + 1) < len(B) else float("infinity")
+            Aleft = A[i] if i >= 0 else float("-infinity") # value @ end of left
+            Aright = A[i + 1] if (i + 1) < len(A) else float("infinity") # value @ start of right
+            Bleft = B[j] if j >= 0 else float("-infinity") # value @ end of left
+            Bright = B[j + 1] if (j + 1) < len(B) else float("infinity") # value @ start of right
 
             # partition is correct
             if Aleft <= Bright and Bleft <= Aright:
                 # odd
-                if total % 2:
-                    return min(Aright, Bright)
+                if total % 2: # Same as total % 2 == 1
+                    return min(Aright, Bright) # If one middle element, find smallest
                 # even
-                return (max(Aleft, Bleft) + min(Aright, Bright)) / 2
+                return (max(Aleft, Bleft) + min(Aright, Bright)) / 2 # take average
             elif Aleft > Bright:
                 r = i - 1
             else:
