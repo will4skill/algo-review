@@ -1016,6 +1016,7 @@ print(myMap["alice"]) #=> alice
 
 print("alice" in myMap) #=> True
 myMap.pop("alice") #=> remove value JS: delete myMap.alice;
+myMap.pop("alice", None) #=> return None instead of throwing error if key doesn't exist
 print("alice" in myMap) #=> False
 
 myMap["random"] #=> **Throws Exception**
