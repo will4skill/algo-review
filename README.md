@@ -9397,7 +9397,7 @@ class MedianFinder:
 **Space:** O(n)
 
 ## 152. Merge k Sorted Lists ☠️
-**Reference:** https://leetcode.com/problems/merge-k-sorted-lists/solutions/354814/Java-Heap-Solution/
+**Reference:** Tim original 😤
  
 **Description:** You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
 
@@ -9417,32 +9417,42 @@ lists = [[]] #=> []
 ```
 
 **Hint:** 
-1. Create a custom comparator to compare list node.val
-2. Add all of your list nodes to your heap
-3. Create a new sentenel list node
-4. Poll entire heap while creating a LL chain 
-5. Return sentinel.next 
+Use merge logic from merge sort. Note that you need a dummy node to merge into. You also still need to add leftovers at the end. This is because the last value you added in the while loop will always be pointing at null. 
 
 ```python3
-class Solution:
+class Solution:  
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        heap = []
-        for linked_list in lists:
-            while linked_list:
-                heapq.heappush(heap, linked_list.val)
-                linked_list = linked_list.next
+        result = None
+        for list1 in lists:
+            result = self.merge(result, list1)
+        return result
+    
+    def merge(self, list1, list2):
+        dummy = ListNode(0)
+        ptr = dummy
+        if not list1 and list2: return list2
+        if list1 and not list2: return list1
+
+        while list1 and list2:
+            if list1.val < list2.val:
+                dummy.next = list1
+                list1 = list1.next
+            else:
+                dummy.next = list2
+                list2 = list2.next
+            dummy = dummy.next
+
         
-        sentinel = ListNode(-1)
-        cur = sentinel
-        while heap:
-            cur.next = ListNode(heapq.heappop(heap))
-            cur = cur.next
-        
-        return sentinel.next
+        if list1:
+            dummy.next = list1
+        if list2:
+            dummy.next = list2
+
+        return ptr.next
 ```
 
 **Time:** O(N log k)
-**Space:** O(N) # Tim note: couldn't you use merge from merge sort and have O(1) space??
+**Space:** O(1) # Tim note: couldn't you use merge from merge sort and have O(1) space??
 
 ## 153. Smallest Range Covering Elements from K Lists ☠️ ☠️
 **Reference:** https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/solutions/104893/java-code-using-priorityqueue-similar-to-merge-k-array/
