@@ -8753,7 +8753,7 @@ class Solution:
 **Space:** O(1)
 
 ## 140. Find the Duplicate Number ☠️
-**Reference:** https://leetcode.com/problems/find-the-duplicate-number/solutions/1893098/bit-manipulation-explained/
+**Reference:** https://neetcode.io/problems/find-duplicate-integer
 
 **Description:** Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
 
@@ -8778,35 +8778,24 @@ nums = [3,1,3,4,2] #=> 3
 ```
 
 **Hint:** 
-For each possible bit used in the numbers in [1,n] we will count how many of the numbers in nums use that bit, and compare that with the count we would get looking only at the numbers from in [1,n] only once. If the difference of the counts is positive, we add that bit to our answer.
-
-🤮 Tim note: I absolutely hate this solution 🤮
+Use Floyd's Tortoise and Hare algorithm. Traverse the array like a LL. Use fast and slow ptrs to find intersection. Stop slow at intersection. Run two slow ptrs, one from start and one from intersection until they meet. That value is the answer.
 
 ```python3
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        n = len(nums) - 1
-		# gives the maximum binary length of a number in [1,n]
-        max_length = n.bit_length()
-        ans = 0
-        
-        for j in range(max_length):
-			# moves the bits in 1 j positons to the left
-			# thus mask has a 1 in the j-th position and 0s everywhere else
-            mask = 1 << j
-            count = 0
-            for i in range(n + 1):
-				# if nums[i] has a 1 in the j-th position
-                if nums[i] & mask > 0:
-                    count += 1
-				# if i has a 1 in the j-th position
-                if i & mask > 0:
-                    count -= 1
-			#if we found extra 1s in the j-th position add that bit to ans
-            if count > 0:
-                ans |= mask
-                    
-        return ans
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            if slow == slow2:
+                return slow
 ```
 
 **Time:** O(n log(n))
