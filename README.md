@@ -9397,7 +9397,7 @@ class MedianFinder:
 **Space:** O(n)
 
 ## 152. Merge k Sorted Lists ☠️
-**Reference:** Tim original 😤
+**Reference:** https://neetcode.io/problems/merge-k-sorted-linked-lists
  
 **Description:** You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
 
@@ -9419,40 +9419,44 @@ lists = [[]] #=> []
 **Hint:** 
 Use merge logic from merge sort. Note that you need a dummy node to merge into. You also still need to add leftovers at the end. This is because the last value you added in the while loop will always be pointing at null. 
 
+Hard part: merge two lists at a time and converge into 1 to avoid repeated work
+
 ```python3
-class Solution:  
+class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        result = None
-        for list1 in lists:
-            result = self.merge(result, list1)
-        return result
-    
-    def merge(self, list1, list2):
-        dummy = ListNode(0)
-        ptr = dummy
-        if not list1 and list2: return list2
-        if list1 and not list2: return list1
+        if not lists or len(lists) == 0:
+            return None
 
-        while list1 and list2:
-            if list1.val < list2.val:
-                dummy.next = list1
-                list1 = list1.next
+        while len(lists) > 1: # keep going until all lists combined
+            mergedLists = []
+            for i in range(0, len(lists), 2): # merge two at a time
+                l1 = lists[i]
+                l2 = lists[i + 1] if (i + 1) < len(lists) else None # make sure adj list exisits
+                mergedLists.append(self.mergeList(l1, l2))
+            lists = mergedLists
+        return lists[0]
+
+    def mergeList(self, l1, l2):
+        dummy = ListNode()
+        tail = dummy
+
+        while l1 and l2:
+            if l1.val < l2.val:
+                tail.next = l1
+                l1 = l1.next
             else:
-                dummy.next = list2
-                list2 = list2.next
-            dummy = dummy.next
-
-        
-        if list1:
-            dummy.next = list1
-        if list2:
-            dummy.next = list2
-
-        return ptr.next
+                tail.next = l2
+                l2 = l2.next
+            tail = tail.next
+        if l1:
+            tail.next = l1
+        if l2:
+            tail.next = l2
+        return dummy.next
 ```
 
 **Time:** O(N log k)
-**Space:** O(1) # Tim note: couldn't you use merge from merge sort and have O(1) space??
+**Space:** O(N) # Tim note: couldn't you use merge from merge sort and have O(1) space??
 
 ## 153. Smallest Range Covering Elements from K Lists ☠️ ☠️
 **Reference:** https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/solutions/104893/java-code-using-priorityqueue-similar-to-merge-k-array/
