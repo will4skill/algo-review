@@ -2967,7 +2967,7 @@ class Solution:
 **Space:** O(1)
 
 ## 44. LRU Cache ☠️ ☠️ ☠️ ☠️
-**Reference:** https://leetcode.com/problems/lru-cache/solutions/45911/java-hashtable-double-linked-list-with-a-touch-of-pseudo-nodes/
+**Reference:** https://neetcode.io/problems/lru-cache
 
 **Description:** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
 
@@ -2989,120 +2989,52 @@ At most 2 * 10^5 calls will be made to get and put.
 [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]] #=> [null, null, null, 1, null, -1, null, -1, 3, 4]
 ```
 
-**Hint:** You can use a hashTable with integer keys and double linked list values
+**Hint:** For O(1) insertion and deletion, use a doubly linked list with dummy nodes at far ends. For O(1) lookup, use a hashmap.
 
-```java
-import java.util.Hashtable;
+```python3
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
 
-public class LRUCache {
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.cap = capacity
+        self.cache = {}  # map key to node
+        self.left = Node(0, 0) # left dummy node
+        self.right = Node(0, 0) # right dummy node
+        
+        self.left.next = self.right # point left at right
+        self.right.prev = self.left # point right at left
 
-class DLinkedNode {
-  int key;
-  int value;
-  DLinkedNode pre;
-  DLinkedNode post;
-}
+    def remove(self, node): # Remove from anywhere
+        prev, nxt = node.prev, node.next # ptrs to adj nodes
+        prev.next, nxt.prev = nxt, prev # remove node between 
 
-/**
- * Always add the new node right after head;
- */
-private void addNode(DLinkedNode node) {
-    
-  node.pre = head;
-  node.post = head.post;
+    def insert(self, node): # Only insert at right in of list (behind dummy)
+        prev, nxt = self.right.prev, self.right
+        prev.next = nxt.prev = node
+        node.next, node.prev = nxt, prev
 
-  head.post.pre = node;
-  head.post = node;
-}
+    def get(self, key: int) -> int:
+        if key in self.cache:
+            self.remove(self.cache[key]) # remove node from back
+            self.insert(self.cache[key]) # move node to front
+            return self.cache[key].val # return value
+        return -1
 
-/**
- * Remove an existing node from the linked list.
- */
-private void removeNode(DLinkedNode node){
-  DLinkedNode pre = node.pre;
-  DLinkedNode post = node.post;
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache: 
+            self.remove(self.cache[key]) # remove from wherever it is
+        self.cache[key] = Node(key, value) # <= Tim note: you don't need to always replace
+        self.insert(self.cache[key]) # Place node at end
 
-  pre.post = post;
-  post.pre = pre;
-}
-
-/**
- * Move certain node in between to the head.
- */
-private void moveToHead(DLinkedNode node){
-  this.removeNode(node);
-  this.addNode(node);
-}
-
-// pop the current tail. 
-private DLinkedNode popTail(){
-  DLinkedNode res = tail.pre;
-  this.removeNode(res);
-  return res;
-}
-
-private Hashtable<Integer, DLinkedNode> 
-  cache = new Hashtable<Integer, DLinkedNode>();
-private int count;
-private int capacity;
-private DLinkedNode head, tail;
-
-public LRUCache(int capacity) {
-  this.count = 0;
-  this.capacity = capacity;
-
-  head = new DLinkedNode();
-  head.pre = null;
-
-  tail = new DLinkedNode();
-  tail.post = null;
-
-  head.post = tail;
-  tail.pre = head;
-}
-
-public int get(int key) {
-
-  DLinkedNode node = cache.get(key);
-  if(node == null){
-    return -1; // should raise exception here.
-  }
-
-  // move the accessed node to the head;
-  this.moveToHead(node);
-
-  return node.value;
-}
-
-
-public void put(int key, int value) {
-  DLinkedNode node = cache.get(key);
-
-  if(node == null){
-
-    DLinkedNode newNode = new DLinkedNode();
-    newNode.key = key;
-    newNode.value = value;
-
-    this.cache.put(key, newNode);
-    this.addNode(newNode);
-
-    ++count;
-
-    if(count > capacity){
-      // pop the tail
-      DLinkedNode tail = this.popTail();
-      this.cache.remove(tail.key);
-      --count;
-    }
-  }else{
-    // update the value.
-    node.value = value;
-    this.moveToHead(node);
-  }
-}
-
-}
+        if len(self.cache) > self.cap: # If you reach max key number
+            lru = self.left.next 
+            self.remove(lru) # remove tail node (right before left dummy)
+            del self.cache[lru.key] # delete the key from the hash_map
 ```
 **Time:** O(1)??
 **Space:** O(n)
