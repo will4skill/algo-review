@@ -4171,7 +4171,7 @@ root = [2,1,3] #=> [2,3,1]
 root = [] #=> []
 ```
 
-**Hint:** Similar to normal recursive DFS except, call recurse on left and right and save the result then swap the results and return root at end
+**Hint:** Similar to normal recursive DFS except, call recurse on left and right and save the result then swap the results and return root at end. Note that you can't assign to root while you calculate the leaves. You have to do that separately.
 
 ```python3
 def invertTree(self, root):
