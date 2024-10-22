@@ -2533,6 +2533,28 @@ height = [4,2,0,3,2,5] #=> 9
 **Hint:** Note: Move smaller height's pointer toward middle. Create left and right pointers at ends of array. Iterate until they converge. If left height < right height if left height >= leftMax, update leftMax. Otherwise, increment answer with leftMax - height[left]. Either way, increment left pointer. If left height >= right height repeat proces on right side, but decrement right pointer
 
 ```python3
+# Tim solution:
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root: return []
+    
+        queue = deque([root]) 
+        output = []
+
+        while queue:
+            length = len(queue)
+            for idx in range(length):
+                curr = queue.popleft()
+                if idx == length - 1:
+                    output.append(curr.val)
+            
+                if curr.left: queue.append(curr.left)
+                if curr.right: queue.append(curr.right)
+
+        return output
+```
+
+```python3
 class Solution:
     def trap(self, height: List[int]) -> int:
         left, right = 0, len(height) - 1
