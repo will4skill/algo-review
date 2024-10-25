@@ -5120,7 +5120,7 @@ root = [-10,9,20,null,null,15,7] #=> 42
 ![image](https://github.com/will4skill/algo-review/assets/10373005/00ba8c51-9752-4a58-a24b-de4198853b82)
 
 
-**Hint:** Similar to diameter, but when you calculated left and right max, if they are < 0, return 0. When updating global, include current node's value.
+**Hint:** Similar to diameter, but when you calculated left and right max, if they are < 0, return 0. When updating global, include current node's value. NOTE: you use both left and right branches to update the global, but you only pass one branch to the parent. This is because the parent can't take both paths. 
 
 ```python3
 class Solution:
