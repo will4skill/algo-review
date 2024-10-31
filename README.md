@@ -6964,6 +6964,8 @@ board = [["a","b"],["c","d"]], words = ["abcb"] #=> []
 2. Insert all words into trie
 3. Maintain visited set to avoid duplicate letters
 5. DFS over mxn board, searching for your words * backtrack by pushing to visited before dfs and popping from visited after dfs *
+6. KEY: 🔑 You are only searching if a word in your list starts with the same letter as your graph starting place (prefix search)
+   You are not doing some kind of additional searching for new starting letters in the middle of your current search. 
 
 ```python3
 class TrieNode:
