@@ -950,6 +950,8 @@ for char in "string":  ✅
 "abcd".startswith("abc") #=> True ✅
 "abcd".startswith("x") #=> False ✅
 
+"How to Reverse a String"[::-1] #=> gnirtS a esreveR ot woH
+
 #################################################################################################
 # Queues
 from collections import deque  ✅
