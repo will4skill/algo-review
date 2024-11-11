@@ -1214,6 +1214,8 @@ type("caty") is str #=> True
 # }
 # const tom = new Person("Tom", 44)
 # console.log(tom instanceof Person) #=> true
+
+# Note: you can compare the references of two objects with the == operator
 ```
 
 
